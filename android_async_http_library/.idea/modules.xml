@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Shinva.iml" filepath="$PROJECT_DIR$/../Shinva.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android_async_http_library.iml" filepath="$PROJECT_DIR$/android_async_http_library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../app/app.iml" filepath="$PROJECT_DIR$/../app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../libzxing/libzxing.iml" filepath="$PROJECT_DIR$/../libzxing/libzxing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../stick_header_view_pager_library/stick_header_view_pager_library.iml" filepath="$PROJECT_DIR$/../stick_header_view_pager_library/stick_header_view_pager_library.iml" />
+    </modules>
+  </component>
+</project>

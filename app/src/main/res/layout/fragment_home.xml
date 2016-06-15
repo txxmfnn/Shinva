@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+              android:background="@color/bg_White"
+              android:orientation="vertical"
+             tools:context="com.yanz.machine.shinva.HomeFragment">
+
+    <include layout="@layout/top_menu"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.yanz.machine.shinva.view.AbSlidingPlayView
+                android:id="@+id/viewPager_menu"
+                android:background="@color/bg_Black"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+            </com.yanz.machine.shinva.view.AbSlidingPlayView>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/bg_Gray" />
+            <com.yanz.machine.shinva.MyView.MyGridView
+                android:id="@+id/my_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:horizontalSpacing="10dp"
+                android:numColumns="4"
+                android:verticalSpacing="10dp">
+            </com.yanz.machine.shinva.MyView.MyGridView>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/bg_Gray" />
+            <TextView
+                android:text="操作"
+                android:textSize="24sp"
+                android:textColor="@color/tv_bgblue"
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <com.yanz.machine.shinva.MyView.MyGridView
+                android:id="@+id/gridview_second"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:horizontalSpacing="10dp"
+                android:numColumns="4"
+                android:verticalSpacing="10dp">
+            </com.yanz.machine.shinva.MyView.MyGridView>
+            <View
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/bg_Gray" />
+            <GridView
+                android:id="@+id/gridView_find_life"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="#00000000"
+                android:numColumns="4"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" >
+            </GridView>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

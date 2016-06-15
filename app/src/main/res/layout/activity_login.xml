@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:layout_gravity="center_horizontal"
+    android:stretchColumns="1"
+    android:background="@color/bg_Gray_light"
+    tools:context="com.yanz.machine.sacn.LoginActivity" android:paddingTop="56dp">
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:scaleType="fitCenter"
+        android:src="@drawable/logo"
+        android:contentDescription="logo"/>
+    <TextView
+        android:text="欢迎使用"
+        android:id="@+id/tv_welcome"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="30px"
+        />
+    <!--输入用户名的行-->
+    <TableRow android:paddingLeft="20dp" android:paddingRight="30dp">
+        <TextView
+            android:text="用户名:"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+        <EditText
+            android:id="@+id/userEditText"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/main_black"
+            android:inputType="text"
+            android:layout_marginRight="50dp"/>
+    </TableRow>
+    <!--输入密码的行-->
+    <TableRow android:paddingTop="10dp" android:paddingLeft="20dp" android:paddingRight="30dp">
+        <TextView
+            android:text="密码:"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:text=""
+            android:id="@+id/pwdEditText"
+            android:textColor="@color/main_black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" android:layout_marginRight="50dp"/>
+    </TableRow>
+    <!--定义记住密码checkbox-->
+    <RelativeLayout
+        android:id="@+id/forgetpassword"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <CheckBox
+            android:id="@+id/save"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="30dp"
+            android:text="记住密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/accent_material_dark"/>
+
+    </RelativeLayout>
+    <!--定义登陆，取消按钮-->
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:gravity="center">
+        <Button
+            android:id="@+id/sLogin"
+            android:text="登陆"
+            android:onClick="login_main"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" android:paddingRight="10dp"/>
+        <Button
+            android:id="@+id/bnCancel"
+            android:text="@string/cancel"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content" android:paddingLeft="10dp"/>
+
+    </LinearLayout>
+    <!--检测更新-->
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:gravity="center">
+
+        <Button
+            android:id="@+id/bn_check"
+            android:text="检查更新..."
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" android:paddingLeft="10dp"/>
+
+    </LinearLayout>
+
+
+</TableLayout>

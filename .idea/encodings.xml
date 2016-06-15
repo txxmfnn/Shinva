@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/libs/jackson-annotations-2.2.3.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/jackson-core-2.2.3.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/jackson-core-asl-1.9.13.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/jackson-mapper-asl-1.9.13.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/libs/jackson-module-jaxb-annotations-2.2.3.jar" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/yanz/machine/shinva/Tools/IBtnCallListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/yanz/machine/shinva/view/AbAppData.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/yanz/machine/shinva/view/AbInnerViewPager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/yanz/machine/shinva/view/AbOnItemClickListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/yanz/machine/shinva/view/AbOnScrollListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/yanz/machine/shinva/view/AbOnTouchListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/yanz/machine/shinva/view/AbSlidingPlayView.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/yanz/machine/shinva/view/AbViewPagerAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/face_activity.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/top.xml" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/library" charset="GBK" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:stretchColumns="1"
+    android:background="@color/bg_White"
+    android:orientation="vertical"
+    tools:context="com.yanz.machine.shinva.SearchResultActivity">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="ID" />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="NAME" />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="CODE" />
+
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/material_info_list"
+        android:fadingEdge="none"
+        android:divider="@color/main_blue_light"
+        android:dividerHeight="2px"
+        android:listSelector="@color/greenyellow"
+        android:cacheColorHint="@null"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent">
+
+    </ListView>
+
+
+</LinearLayout>

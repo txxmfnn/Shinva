@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:stretchColumns="1"
+    android:background="@color/bg_White"
+    tools:context="com.yanz.machine.shinva.SearchConditionActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_Gray_light">
+        <TableRow>
+            <TextView
+                android:text="物料名称："
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                />
+            <EditText
+                android:id="@+id/et_materialName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_black"
+                android:inputType="text"
+                />
+
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="物料编码"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/et_materialCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_black"
+                android:inputType="text"
+                />
+        </TableRow>
+
+
+        <LinearLayout android:orientation="horizontal"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:gravity="center">
+            <Button
+                android:id="@+id/serachMaterial"
+                android:text="查询"
+                android:onClick="search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+    </TableLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <ListView
+            android:id="@+id/material_info_list"
+            android:fadingEdge="none"
+            android:divider="@color/main_blue_light"
+            android:dividerHeight="2px"
+            android:listSelector="@color/greenyellow"
+            android:cacheColorHint="@null"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip">
+
+        </ListView>
+
+    </LinearLayout>
+
+
+
+</TableLayout>

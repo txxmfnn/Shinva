@@ -1,0 +1,13 @@
+<resources>
+    <style name="AppTheme" parent="MyThemeBlue"></style>
+    <!-- Base application theme. -->
+    <style name="MyThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/main_blue_light</item>
+        <item name="colorPrimaryDark">@color/main_blue_dark</item>
+        <item name="colorAccent">@color/main_blue_light</item>
+        <!--正常状态下的字体颜色和icon颜色-->
+        <item name="android:textColorPrimary">@color/main_white</item>
+    </style>
+
+</resources>
