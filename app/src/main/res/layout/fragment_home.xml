@@ -4,6 +4,7 @@
              android:layout_height="match_parent"
               android:background="@color/bg_White"
               android:orientation="vertical"
+              android:paddingLeft="10dp"
              tools:context="com.yanz.machine.shinva.HomeFragment">
 
     <include layout="@layout/top_menu"/>
