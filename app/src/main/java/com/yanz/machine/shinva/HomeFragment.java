@@ -7,18 +7,24 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.GridLayout;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 import com.yanz.machine.shinva.Adapter.Adapter_GridView;
+import com.yanz.machine.shinva.Adapter.MyGridAdapter;
+import com.yanz.machine.shinva.MyView.MyGridView;
 import com.yanz.machine.shinva.entity.UpdateInfo;
 import com.yanz.machine.shinva.update.UpdateManager;
 import com.yanz.machine.shinva.view.AbOnItemClickListener;
@@ -33,14 +39,13 @@ public class HomeFragment extends Fragment {
     private TextView tv_top_title;
     //分类的九宫格
     private GridView gridView_classify;
-    //第二个
-    private GridView gridView_classify_second;
+
     //调用9宫格
     private Adapter_GridView adapter_gridView_classify;
-    //第二个
-    private Adapter_GridView adapter_gridView_second;
-    private GridView my_gridView_life;
-    private Adapter_GridView adapter_GridView_life;
+    //第一个查询需要
+    private MyGridView menuGridViewSearch;
+    //第二个操作需要
+    private MyGridView menuGridView;
     //扫一扫
     private ImageView iv_shao;
     //输一输
@@ -49,34 +54,42 @@ public class HomeFragment extends Fragment {
     private AbSlidingPlayView viewPage;
     //分类九宫格的资源文件
     private int[] pic_patch_classify = {
-            R.drawable.menu_guide_1,
-            R.drawable.menu_guide_2,
-            R.drawable.menu_guide_3,
-            R.drawable.menu_guide_4,
-            R.drawable.menu_guide_5,
-            R.drawable.menu_guide_6,
-            R.drawable.menu_guide_7
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge
     };
-    private int[] txt_patch_classify = {
-            R.string.test1,
-            R.string.test2,
-            R.string.test3,
-            R.string.test4
-    };
+
     //第二个
-    private int[] pic_second_classify = {
-            R.drawable.menu_guide_1,
-            R.drawable.menu_guide_1,
-            R.drawable.menu_guide_1,
-            R.drawable.menu_guide_1,
-            R.drawable.menu_guide_1
+    public int[] img_menu_classify = {
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge
     };
+    public String[] img_menu_text = {
+            "测试1",
+            "测试2",
+            "测试3",
+            "测试4",
+            "测试5",
+            "测试6"
+    };
+
     //存储首页轮播的界面
     private ArrayList<View> allListView;
     //首页轮播的界面的资源
     private int[] resId = {R.drawable.viewpage1,R.drawable.viewpage2};
 
     //定义view接收后，初始化init
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,6 +99,9 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+
+
     //初始化
     private void initView(View view){
         iv_shao = (ImageView) view.findViewById(R.id.iv_shao);
@@ -122,22 +138,14 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        gridView_classify = (GridView) view.findViewById(R.id.my_gridview);
+        gridView_classify = (GridView) view.findViewById(R.id.gv_menu_search);
         gridView_classify.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter_gridView_classify = new Adapter_GridView(getActivity(),pic_patch_classify);
         gridView_classify.setAdapter(adapter_gridView_classify);
 
         //第二个
-        gridView_classify_second = (GridView) view.findViewById(R.id.gridview_second);
-        gridView_classify_second.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        adapter_gridView_second = new Adapter_GridView(getActivity(),pic_second_classify);
-        gridView_classify_second.setAdapter(adapter_gridView_second);
-        //
-        my_gridView_life = (GridView) view.findViewById(R.id.gridView_find_life);
-        my_gridView_life.setSelector(new ColorDrawable(Color.TRANSPARENT));
-        adapter_GridView_life = new Adapter_GridView(getActivity(),pic_second_classify);
-        my_gridView_life.setAdapter(adapter_GridView_life);
-
+        menuGridView = (MyGridView) view.findViewById(R.id.gv_menu);
+        menuGridView.setAdapter(new MyGridAdapter(getActivity(),img_menu_classify,img_menu_text));
         //公告展示栏
         viewPage = (AbSlidingPlayView) view.findViewById(R.id.viewPager_menu);
         //设置播放方式为顺序播放
@@ -145,7 +153,21 @@ public class HomeFragment extends Fragment {
         //设置播放间隔时间
         viewPage.setSleepTime(3000);
 
+        menuGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                switch (position){
+                    case 0:
+                        intent.setClass(getActivity(), SearchConditionActivity.class);
+                        intent.putExtra("webRequest","stock");
+                        startActivity(intent);
+                        break;
+                    case 1:
 
+                }
+            }
+        });
 
         gridView_classify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             //点击事件
@@ -159,12 +181,11 @@ public class HomeFragment extends Fragment {
                         startActivity(intent);
                         break;
                     case 1:
-                        intent.setClass(getActivity(),TestActivity.class);
-                        startActivity(intent);
-                        break;
+
                 }
             }
         });
+
         initViewPager();
     }
 
