@@ -64,24 +64,20 @@ public class HomeFragment extends Fragment {
     };*/
     //第一个search操作
     public int[] img_menu_classify_search = {
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
+            R.drawable.menu_search_1,
+            R.drawable.menu_search_2,
+            R.drawable.menu_search_3,
             R.drawable.app_phonecharge,
             R.drawable.app_phonecharge,
             R.drawable.app_phonecharge
     };
     public String[] img_menu_text_search = {
+            "生产跟踪",
             "物料查询",
-            "订单查询",
-            "订单追踪",
-            "加工查询",
-            "测试查询",
-            "测试查询",
-            "测试查询",
-            "测试查询"
+            "成品订单",
+            "质量事故",
+            "入库台账",
+            "出库台账"
     };
     //第二个menu操作
     public int[] img_menu_classify = {
@@ -89,16 +85,14 @@ public class HomeFragment extends Fragment {
             R.drawable.app_phonecharge,
             R.drawable.app_phonecharge,
             R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
             R.drawable.app_phonecharge
     };
     public String[] img_menu_text = {
-            "测试1",
-            "测试2",
-            "测试3",
-            "测试4",
-            "测试5",
-            "测试6"
+            "二次派工",
+            "检验汇报",
+            "物流周转",
+            "周转接收",
+            "库存盘点"
     };
 
     //存储首页轮播的界面
