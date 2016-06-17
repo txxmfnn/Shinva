@@ -37,14 +37,14 @@ public class HomeFragment extends Fragment {
 
     //顶部标题栏
     private TextView tv_top_title;
-    //分类的九宫格
+    /*//分类的九宫格
     private GridView gridView_classify;
 
     //调用9宫格
-    private Adapter_GridView adapter_gridView_classify;
-    //第一个查询需要
+    private Adapter_GridView adapter_gridView_classify;*/
+    //第一个search操作
     private MyGridView menuGridViewSearch;
-    //第二个操作需要
+    //第二个menu操作
     private MyGridView menuGridView;
     //扫一扫
     private ImageView iv_shao;
@@ -53,7 +53,18 @@ public class HomeFragment extends Fragment {
     //首页轮播
     private AbSlidingPlayView viewPage;
     //分类九宫格的资源文件
-    private int[] pic_patch_classify = {
+    /*private int[] pic_patch_classify = {
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge,
+            R.drawable.app_phonecharge
+    };*/
+    //第一个search操作
+    public int[] img_menu_classify_search = {
+            R.drawable.app_phonecharge,
             R.drawable.app_phonecharge,
             R.drawable.app_phonecharge,
             R.drawable.app_phonecharge,
@@ -62,8 +73,17 @@ public class HomeFragment extends Fragment {
             R.drawable.app_phonecharge,
             R.drawable.app_phonecharge
     };
-
-    //第二个
+    public String[] img_menu_text_search = {
+            "物料查询",
+            "订单查询",
+            "订单追踪",
+            "加工查询",
+            "测试查询",
+            "测试查询",
+            "测试查询",
+            "测试查询"
+    };
+    //第二个menu操作
     public int[] img_menu_classify = {
             R.drawable.app_phonecharge,
             R.drawable.app_phonecharge,
@@ -138,11 +158,13 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        gridView_classify = (GridView) view.findViewById(R.id.gv_menu_search);
+        /*gridView_classify = (GridView) view.findViewById(R.id.gv_menu_search);
         gridView_classify.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter_gridView_classify = new Adapter_GridView(getActivity(),pic_patch_classify);
-        gridView_classify.setAdapter(adapter_gridView_classify);
-
+        gridView_classify.setAdapter(adapter_gridView_classify);*/
+        //第一个search操作
+        menuGridViewSearch = (MyGridView) view.findViewById(R.id.gv_menu_search);
+        menuGridViewSearch.setAdapter(new MyGridAdapter(getActivity(),img_menu_classify_search,img_menu_text_search));
         //第二个
         menuGridView = (MyGridView) view.findViewById(R.id.gv_menu);
         menuGridView.setAdapter(new MyGridAdapter(getActivity(),img_menu_classify,img_menu_text));
@@ -152,7 +174,21 @@ public class HomeFragment extends Fragment {
         viewPage.setPlayType(1);
         //设置播放间隔时间
         viewPage.setSleepTime(3000);
+        menuGridViewSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                switch (position){
+                    case 0:
+                        intent.setClass(getActivity(), SearchConditionActivity.class);
+                        intent.putExtra("webRequest","stock");
+                        startActivity(intent);
+                        break;
+                    case 1:
 
+                }
+            }
+        });
         menuGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -169,7 +205,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        gridView_classify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*gridView_classify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             //点击事件
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -184,7 +220,7 @@ public class HomeFragment extends Fragment {
 
                 }
             }
-        });
+        });*/
 
         initViewPager();
     }

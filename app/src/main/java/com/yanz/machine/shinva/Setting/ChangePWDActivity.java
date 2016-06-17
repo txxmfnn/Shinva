@@ -26,7 +26,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class ChangePWDActivity extends Activity {
     String uri = "/login/changePWD";
-    EditText etCode,etPassword,etNewPWD;
+    EditText etCode,etPassword,etNewPWD,etCheckPWD;
     Button btChange;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class ChangePWDActivity extends Activity {
         etCode = (EditText) findViewById(R.id.et_changePWD_code);
         etPassword = (EditText) findViewById(R.id.et_changePWD_password);
         etNewPWD = (EditText) findViewById(R.id.et_changePWD_newPWD);
+        etCheckPWD = (EditText) findViewById(R.id.et_changePWD_newPWD_check);
         btChange = (Button) findViewById(R.id.bt_changePWD_submit);
     }
 
@@ -43,8 +44,15 @@ public class ChangePWDActivity extends Activity {
         final String code = etCode.getText().toString();
         String password = etPassword.getText().toString();
         final String newPWD = etNewPWD.getText().toString();
+        String checkPWD = etCheckPWD.getText().toString();
         String url ;
-        if (StrUtil.isNotEmpty(code)&&StrUtil.isNotEmpty(password)&&StrUtil.isNotEmpty(newPWD)){
+        if (checkPWD.equals(newPWD)==false){
+            new AlertDialog.Builder(ChangePWDActivity.this)
+                    .setIcon(getResources().getDrawable(R.drawable.waring_icon,null))
+                    .setTitle("警告")
+                    .setMessage("两次新密码不一致")
+                    .create().show();
+        }else if (StrUtil.isNotEmpty(code)&&StrUtil.isNotEmpty(password)&&StrUtil.isNotEmpty(newPWD)){
             AsyncHttpClient client = new AsyncHttpClient();
             url = HttpUtil.BASE_URL+uri;
             RequestParams params = new RequestParams();

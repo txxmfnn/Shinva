@@ -4,7 +4,7 @@
              android:layout_height="match_parent"
               android:background="@color/bg_White"
               android:orientation="vertical"
-              android:paddingLeft="10dp"
+
              tools:context="com.yanz.machine.shinva.HomeFragment">
 
     <include layout="@layout/top_menu"/>
@@ -30,11 +30,14 @@
                 android:background="@color/bg_Gray" />
             <com.yanz.machine.shinva.MyView.MyGridView
                 android:id="@+id/gv_menu_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:horizontalSpacing="10dp"
+                android:horizontalSpacing="0dp"
+                android:listSelector="@null"
                 android:numColumns="4"
-                android:verticalSpacing="10dp">
+                android:scrollbars="none"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             </com.yanz.machine.shinva.MyView.MyGridView>
             <View
                 android:layout_marginTop="10dp"
