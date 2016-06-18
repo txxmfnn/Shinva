@@ -64,12 +64,12 @@ public class HomeFragment extends Fragment {
     };*/
     //第一个search操作
     public int[] img_menu_classify_search = {
-            R.drawable.menu_search_1,
-            R.drawable.menu_search_2,
-            R.drawable.menu_search_3,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge
+            R.drawable.menu_produce_track,
+            R.drawable.menu_stock_search,
+            R.drawable.menu_product_factory,
+            R.drawable.menu_quality_accident,
+            R.drawable.menu_warehouse_ledger,
+            R.drawable.menu_delivery_ledger
     };
     public String[] img_menu_text_search = {
             "生产跟踪",
@@ -81,11 +81,11 @@ public class HomeFragment extends Fragment {
     };
     //第二个menu操作
     public int[] img_menu_classify = {
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge
+            R.drawable.menu_work_dispatching,
+            R.drawable.menu_work_report,
+            R.drawable.menu_work_logistics,
+            R.drawable.menu_work_receive,
+            R.drawable.menu_work_inventory
     };
     public String[] img_menu_text = {
             "二次派工",
