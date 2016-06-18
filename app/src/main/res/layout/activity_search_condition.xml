@@ -42,8 +42,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/main_black"
+                android:enabled="false"
                 android:inputType="text"
                 />
+            <EditText
+                android:id="@+id/et_materialCode_Second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_black"
+                android:inputType="text"
+                />
+            <Button
+                android:id="@+id/bt_condition_search_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_black"
+                android:text="选择"
+                />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="仓库"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <EditText
+                android:id="@+id/et_condition_search_whName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
         </TableRow>
 
 
