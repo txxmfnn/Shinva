@@ -14,10 +14,10 @@ import java.net.URL;
  */
 public class HttpUtil {
         //创建连接服务器的连接
-        public static final String BASE_URL =
-                "http://192.168.4.244:8080/graduation";
         /*public static final String BASE_URL =
-            "http://192.168.1.66:8080/graduation";*/
+                "http://192.168.4.244:8080/graduation";*/
+        public static final String BASE_URL =
+            "http://192.168.1.106:8080/graduation";
          public static String sendPost(String url,String params) throws IOException {
               URL realUrl = null;
               BufferedReader in = null;
