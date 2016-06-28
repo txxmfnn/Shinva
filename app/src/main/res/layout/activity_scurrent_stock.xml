@@ -4,10 +4,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.yanz.machine.shinva.SCurrentStock.SCurrentStockActivity">
+    <RelativeLayout
+        android:id="@+id/rl_currentStock_top"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="@drawable/top_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/bt_currentStock_search"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:background="@drawable/search_btn_background"
+            android:text="搜索"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:id="@+id/rl_currentStock_partstd"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@id/bt_currentStock_search"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/tv_currentStock_partstd"
+                android:text="编码:"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="@color/tv_Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/et_del_search"
+                android:layout_toRightOf="@+id/tv_currentStock_partstd"
+                android:inputType="textPhonetic"
+                android:layout_marginRight="10dp"
+
+                android:paddingLeft="32dp"
+                android:textSize="12sp"
+                android:text=""
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/iv_del_deleteText"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/delete"
+                android:layout_centerInParent="true"
+                android:paddingRight="20dp"
+                android:visibility="gone"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_currentStock_check"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@id/bt_currentStock_search"
+
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <TextView
+                android:id="@+id/tv_currentStock_partstd"
+                android:text="编码:"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="@color/tv_Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/et_del_search"
+                android:layout_toRightOf="@+id/tv_currentStock_partstd"
+                android:inputType="textPhonetic"
+                android:layout_marginRight="10dp"
+
+                android:paddingLeft="32dp"
+                android:textSize="12sp"
+                android:text=""
+                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/iv_del_deleteText"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/delete"
+                android:layout_centerInParent="true"
+                android:paddingRight="20dp"
+                android:visibility="gone"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>
