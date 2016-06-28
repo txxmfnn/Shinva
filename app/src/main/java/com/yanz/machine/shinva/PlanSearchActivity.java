@@ -197,7 +197,7 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
                 @Override
                 public void run() {
                     tv_makerName.setText(splan.getCwpMakerName().toString());
-                    tv_fwpQuantity.setText(splan.getFwpQuantity().toString());
+                    tv_fwpQuantity.setText(splan.getFwpPlanQuantity().toString());
                     tv_partCode.setText(splan.getCwpPartCode().toString());
                     tv_partName.setText(splan.getCwpPartName().toString());
                 }

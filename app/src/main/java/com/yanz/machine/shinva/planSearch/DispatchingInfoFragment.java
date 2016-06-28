@@ -99,6 +99,7 @@ public class DispatchingInfoFragment extends Fragment {
                             return -1;
                         }
                     });
+
                     adapter = new DispatchingInfoAdapter(sDispachingSeconds);
                     lvDispatching.setAdapter(adapter);
                 } catch (JsonParseException e) {
@@ -147,7 +148,7 @@ public class DispatchingInfoFragment extends Fragment {
             tvReport.setText(sDispachingSeconds.get(position).getCfinisherName());
             tvContent.setText(sDispachingSeconds.get(position).getCmemo()+"派工:"+sDispachingSeconds.get(position).getFquantity()+"|完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
                 +"计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
-                +"派工:"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,10));
+                +"派工:"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,19));
 
             return convertView;
         }

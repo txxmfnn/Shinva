@@ -26,6 +26,7 @@ import com.yanz.machine.shinva.Adapter.Adapter_GridView;
 import com.yanz.machine.shinva.Adapter.MyGridAdapter;
 import com.yanz.machine.shinva.MyView.MyGridView;
 import com.yanz.machine.shinva.entity.UpdateInfo;
+import com.yanz.machine.shinva.planSearch.InputPlanActivity;
 import com.yanz.machine.shinva.update.UpdateManager;
 import com.yanz.machine.shinva.view.AbOnItemClickListener;
 import com.yanz.machine.shinva.view.AbSlidingPlayView;
@@ -148,7 +149,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //暂时测试
-                Intent intent = new Intent(getActivity(), PlanSearchActivity.class);
+                Intent intent = new Intent(getActivity(), InputPlanActivity.class);
                 startActivity(intent);
             }
         });

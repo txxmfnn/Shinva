@@ -12,7 +12,7 @@
         android:paddingRight="10dp"
         android:background="@drawable/top_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="100dp">
 
         <Button
             android:id="@+id/bt_currentStock_search"
@@ -27,14 +27,13 @@
         <RelativeLayout
             android:id="@+id/rl_currentStock_partstd"
             android:layout_centerVertical="true"
-            android:gravity="center_vertical"
             android:layout_toLeftOf="@id/bt_currentStock_search"
             android:layout_width="match_parent"
             android:layout_height="30dp">
             <TextView
                 android:id="@+id/tv_currentStock_partstd"
                 android:text="编码:"
-                android:layout_centerVertical="true"
+
                 android:textSize="16sp"
                 android:textColor="@color/tv_Black"
                 android:layout_width="wrap_content"
@@ -63,13 +62,13 @@
             android:layout_centerVertical="true"
             android:gravity="center_vertical"
             android:layout_toLeftOf="@id/bt_currentStock_search"
-
             android:layout_width="match_parent"
             android:layout_height="30dp">
             <TextView
                 android:id="@+id/tv_currentStock_partstd"
-                android:text="编码:"
-                android:layout_centerVertical="true"
+                android:text="物料名称:"
+                android:layout_below="@id/rl_currentStock_partstd"
+
                 android:textSize="16sp"
                 android:textColor="@color/tv_Black"
                 android:layout_width="wrap_content"

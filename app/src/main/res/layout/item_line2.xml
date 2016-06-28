@@ -1,82 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bg_White"
     android:orientation="vertical"
-    android:paddingRight="10dp">
-    <View
-        android:id="@+id/v_upLine2"
-        android:layout_width="2dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="30dp"
-        android:background="#E9F01D"
-        />
-    <TextView
-        android:id="@+id/tv_show_cwpCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <ImageView
-        android:id="@+id/img_circular"
-        android:layout_below="@+id/v_upLine2"
-        android:src="@drawable/timeline_green"
-        android:layout_marginLeft="24dp"
-        android:layout_width="15dp"
-        android:layout_height="15dp"/>
-    <View
-        android:id="@+id/v_downLine2"
-        android:layout_below="@+id/img_circular"
-        android:layout_marginLeft="30dp"
-        android:background="#E9F01D"
-        android:layout_width="2dp"
-        android:layout_height="50dp"/>
-    <RelativeLayout
-        android:id="@+id/rl_content"
-        android:layout_below="@+id/img_circular"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="-15dp"
-        android:layout_toRightOf="@+id/img_circular"
-        android:background="@drawable/timeline_content"
-        android:padding="5dp"
-        android:layout_width="fill_parent"
+    android:paddingLeft="20dp"
+    android:background="@color/bg_White"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/tv_report2"
-            android:paddingLeft="10dp"
-            android:text="孟天翔"
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:id="@+id/tv_item_head"
+            android:paddingRight="10dp"
+            android:text="测试"
+            android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <TextView
-            android:id="@+id/tv_content2"
-            android:layout_marginLeft="7dp"
-            android:layout_toRightOf="@+id/tv_report2"
-            android:text="磨光，汇报完工"
-            android:textSize="14sp"
+            android:id="@+id/tv_item_other"
+            android:text=""
+            android:textSize="16sp"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </RelativeLayout>
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_item_num"
+            android:paddingRight="24dp"
+            android:text="20"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_item_report"
+            android:paddingRight="20dp"
+            android:text="V206"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    </LinearLayout>
     <TextView
-        android:textColor="@color/tv_White"
-        android:layout_marginLeft="5dp"
-        android:id="@+id/tv_cwpCode2"
-        android:layout_above="@+id/img_circular"
-        android:layout_marginTop="1dp"
-        android:gravity="center"
-        android:text="工序:1"
-        android:background="@drawable/timeline_cwpcode"
-        android:textSize="14sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <!--<View
-        android:id="@+id/v_down2Line"
-        android:layout_alignLeft="@+id/v_downLine"
-        android:layout_below="@+id/v_downLine"
-        android:background="@color/red"
-        android:layout_width="2dp"
-        android:layout_height="50dp"/>-->
-
-
-</RelativeLayout>
+        android:id="@+id/tv_item_mid"
+        android:text="嘿嘿"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tv_item_foot"
+        android:text="10101-003.01.05.00"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+</LinearLayout>
