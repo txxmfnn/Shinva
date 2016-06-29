@@ -146,9 +146,10 @@ public class DispatchingInfoFragment extends Fragment {
             //加载数据
             tvCwpCode.setText("工序:"+sDispachingSeconds.get(position).getIgxh());
             tvReport.setText(sDispachingSeconds.get(position).getCfinisherName());
-            tvContent.setText(sDispachingSeconds.get(position).getCmemo()+"派工:"+sDispachingSeconds.get(position).getFquantity()+"|完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
-                +"计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
-                +"派工:"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,19));
+            tvContent.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
+                    +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                    +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
+                    +"|派工:"+sDispachingSeconds.get(position).getFquantity()+"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
 
             return convertView;
         }

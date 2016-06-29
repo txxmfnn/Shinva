@@ -193,18 +193,17 @@ public class PlanDetailFragment extends Fragment {
             TextView tvContent = (TextView) convertView.findViewById(R.id.tv_planDetail_content);
 
             tvCwpCode.setText("工序:"+sPlanDetails.get(position).getCwpCode());
-            tvReport.setText(sPlanDetails.get(position).getCwpDepartmentName());
+            tvReport.setText(sPlanDetails.get(position).getCwpDepartmentName().substring(0,3));
 
-            tvContent.setText("派工:"+sPlanDetails.get(position).getFwpQuantity()+"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
-                +"|工时:"+sPlanDetails.get(position).getFwpMhtime()+"|不合格数量:"+sPlanDetails.get(position).getFwpFailedQuantity());
-
+            tvContent.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
+                    +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
+                    +"|品质:"+sPlanDetails.get(position).getCwpQuality()
+                    +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
             return convertView;
         }
     }
 
-/*"派工:"+sPlanDetails.get(position).getFwpQuantity().toString()+"|合格:"+
-                sPlanDetails.get(position).getFwpFinishQuantity().toString()+"|不合格数量:"+sPlanDetails.get(position).getFwpFailedQuantity().toString()
-                +"|工时:"+sPlanDetails.get(position).getFwpMhtime().toString()*/
+
 
 
 }
