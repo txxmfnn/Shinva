@@ -121,9 +121,10 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
             }
         });
         fragments.add(new PlanInfoFragment(1));
-        fragments.add(new PlanDetailFragment());
+
         //fragments.add(new DispatchingInfoFragment());
         fragments.add(new DispatchingInfoFragment());
+        fragments.add(new PlanDetailFragment());
         fragments.add(new LogisticsPlanFragment());
         fragments.add(new AllPlanFragment());
         //adapter = new MyFragmentAdapter(getSupportFragmentManager(),fragments);
