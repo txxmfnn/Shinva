@@ -144,9 +144,6 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
 
 
     }
-
-
-
     public  void initData(){
         System.out.println("开始加载数据...");
 
@@ -226,10 +223,10 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
             case R.id.id_ll_planInfo://计划信息
                 currentPosition = 0 ;
                 break;
-            case R.id.id_ll_planDetail://派工明细
+            case R.id.id_ll_dispatching://派工明细
                 currentPosition = 1;
                 break;
-            case R.id.id_ll_dispatching://汇报明细
+            case R.id.id_ll_planDetail://汇报明细
                 currentPosition = 2;
                 break;
             case R.id.id_ll_logisticPlan://物流明细
@@ -266,9 +263,9 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         Resources resources = getResources();
         mPlanInfo.setTextColor(currentPosition == 0 ? resources.getColor(R.color.text_color_press) : resources.getColor(R.color.text_color_normal));
 
-        mPlanDetail.setTextColor(currentPosition == 1 ? resources.getColor(R.color.text_color_press) : resources.getColor(R.color.text_color_normal));
+        mPlanDetail.setTextColor(currentPosition == 2 ? resources.getColor(R.color.text_color_press) : resources.getColor(R.color.text_color_normal));
 
-        mDispatching.setTextColor(currentPosition == 2 ? resources.getColor(R.color.text_color_press):resources.getColor(R.color.text_color_normal));
+        mDispatching.setTextColor(currentPosition == 1 ? resources.getColor(R.color.text_color_press):resources.getColor(R.color.text_color_normal));
 
         mLogisticPlan.setTextColor(currentPosition == 3 ? resources.getColor(R.color.text_color_press) : resources.getColor(R.color.text_color_normal));
 
