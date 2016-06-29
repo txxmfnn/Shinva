@@ -19,6 +19,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.yanz.machine.shinva.entity.SPlan;
+import com.yanz.machine.shinva.planSearch.AllPlanFragment;
 import com.yanz.machine.shinva.planSearch.DispatchingInfoFragment;
 import com.yanz.machine.shinva.planSearch.LogisticsPlanFragment;
 import com.yanz.machine.shinva.planSearch.PlanDetailFragment;
@@ -63,7 +64,7 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
     private TextView mPlanDetail;
     private TextView mDispatching;
     private TextView mLogisticPlan;
-
+    private TextView mPlanAll;
 
 
     @Override
@@ -101,6 +102,8 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         mDispatching = (TextView) findViewById(R.id.id_tv_dispathing);//汇报明细
         findViewById(R.id.id_ll_logisticPlan).setOnClickListener(this);
         mLogisticPlan = (TextView) findViewById(R.id.id_tv_logisticPlan);//物流明细
+        findViewById(R.id.id_ll_planAll).setOnClickListener(this);
+        mPlanAll = (TextView)findViewById(R.id.id_tv_planAll);//综合信息
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -122,9 +125,10 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         //fragments.add(new DispatchingInfoFragment());
         fragments.add(new DispatchingInfoFragment());
         fragments.add(new LogisticsPlanFragment());
+        fragments.add(new AllPlanFragment());
         //adapter = new MyFragmentAdapter(getSupportFragmentManager(),fragments);
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),fragments);
-        viewPager.setOffscreenPageLimit(1);//改变预加载页面
+        viewPager.setOffscreenPageLimit(5);//改变预加载页面
         viewPager.setAdapter(mainPagerAdapter);
         changeSelectedState(0);
         initData();
@@ -168,7 +172,6 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
                             plans = objectMapper.readValue(
                                     result,
                                     new TypeReference<List<SPlan>>() {
-
                                     }
                             );
                             loadInfo();
@@ -232,10 +235,13 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
             case R.id.id_ll_logisticPlan://物流明细
                 currentPosition = 3;
                 break;
+            case R.id.id_ll_planAll://综合信息
+                currentPosition = 4;
+                break;
         }
         changeSelectedState(currentPosition);
 
-        //viewPager.setCurrentItem(currentPosition, false);
+        viewPager.setCurrentItem(currentPosition, false);
     }
     class MainPagerAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragmentList;
@@ -265,6 +271,8 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         mDispatching.setTextColor(currentPosition == 2 ? resources.getColor(R.color.text_color_press):resources.getColor(R.color.text_color_normal));
 
         mLogisticPlan.setTextColor(currentPosition == 3 ? resources.getColor(R.color.text_color_press) : resources.getColor(R.color.text_color_normal));
+
+        mPlanAll.setTextColor(currentPosition==4 ? resources.getColor(R.color.text_color_press):resources.getColor(R.color.text_color_normal));
     }
 
 

@@ -70,6 +70,19 @@
                 android:id="@+id/id_tv_logisticPlan"
                 android:text="物流" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/id_ll_planAll"
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:id="@+id/id_tv_planAll"
+                android:text="综合" />
+        </LinearLayout>
     </LinearLayout>
 
 
