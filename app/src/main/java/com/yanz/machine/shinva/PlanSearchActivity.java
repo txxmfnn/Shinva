@@ -104,20 +104,27 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         mLogisticPlan = (TextView) findViewById(R.id.id_tv_logisticPlan);//物流明细
         findViewById(R.id.id_ll_planAll).setOnClickListener(this);
         mPlanAll = (TextView)findViewById(R.id.id_tv_planAll);//综合信息
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        /*viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
             @Override
             public void onPageSelected(int position) {
                 changeSelectedState(position);
             }
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });*/
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+            @Override
+            public void onPageSelected(int position) {
+                changeSelectedState(position);
+            }
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
         fragments.add(new PlanInfoFragment(1));

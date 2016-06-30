@@ -1,6 +1,7 @@
 package com.yanz.machine.shinva.planSearch;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
-
+@SuppressLint("ValidFragment")
 public class PlanInfoFragment extends Fragment {
 
     private String uri = "/splan/find";
@@ -41,6 +42,9 @@ public class PlanInfoFragment extends Fragment {
     private List<Map<String,Object>> listItems;
     public PlanInfoFragment(int index){
         this.mIndex = index;
+    }
+    public PlanInfoFragment(){
+
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {

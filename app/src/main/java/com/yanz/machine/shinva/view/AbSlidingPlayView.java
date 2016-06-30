@@ -37,6 +37,7 @@ import java.util.List;
  * @version
  */
 @SuppressLint("HandlerLeak")
+
 public class AbSlidingPlayView extends LinearLayout {
 
 	/** The tag. */
@@ -138,6 +139,7 @@ public class AbSlidingPlayView extends LinearLayout {
 	 * @param context
 	 * @throws
 	 */
+	@SuppressWarnings("ResourceType")
 	public void initView(Context context) {
 		this.context = context;
 		layoutParamsFF = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);

@@ -57,40 +57,6 @@
                 android:visibility="gone"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/rl_currentStock_check"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:layout_toLeftOf="@id/bt_currentStock_search"
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-            <TextView
-                android:id="@+id/tv_currentStock_partstd"
-                android:text="物料名称:"
-                android:layout_below="@id/rl_currentStock_partstd"
 
-                android:textSize="16sp"
-                android:textColor="@color/tv_Black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/et_del_search"
-                android:layout_toRightOf="@+id/tv_currentStock_partstd"
-                android:inputType="textPhonetic"
-                android:layout_marginRight="10dp"
-
-                android:paddingLeft="32dp"
-                android:textSize="12sp"
-                android:text=""
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-            <ImageView
-                android:id="@+id/iv_del_deleteText"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/delete"
-                android:layout_centerInParent="true"
-                android:paddingRight="20dp"
-                android:visibility="gone"
-                android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-        </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
