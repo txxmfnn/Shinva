@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,105 +9,93 @@
     android:background="@color/bg_White"
     tools:context="com.yanz.machine.shinva.SearchConditionActivity">
 
-    <TableLayout
+    <com.library.StickHeaderViewPager
+        android:id="@+id/shvp_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/bg_Gray_light">
-        <TableRow>
-            <TextView
-                android:text="物料名称："
-                android:textSize="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                />
-            <EditText
-                android:id="@+id/et_materialName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_black"
-                android:inputType="text"
-                />
+        android:layout_height="match_parent"
+        >
 
-        </TableRow>
-
-        <TableRow>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@android:color/white"
+            >
             <TextView
-                android:text="物料编码"
-                android:textSize="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <EditText
-                android:id="@+id/et_materialCode"
+                android:id="@+id/tv_stockSearch_ptd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/main_black"
-                android:enabled="false"
-                android:inputType="text"
-                />
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:text="物料规格:"
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"
+                android:textColor="@color/tv_Black"/>
+            <AutoCompleteTextView
+                android:id="@+id/actv_StockSearch_ptd"
+
+                android:textColor="@color/tv_Black"
+                android:textSize="12sp"
+                android:dropDownWidth="250dp"
+                android:layout_toRightOf="@id/tv_stockSearch_ptd"
+                android:layout_width="100dp"
+                android:layout_marginTop="5dp"
+                android:layout_height="36dp" />
             <EditText
-                android:id="@+id/et_materialCode_Second"
+                android:id="@+id/et_stockSearch_materialName"
+                android:layout_alignTop="@id/actv_StockSearch_ptd"
+                android:layout_marginLeft="20dp"
+                android:hint="物料名称"
+                android:textSize="12sp"
+                android:layout_toRightOf="@id/actv_StockSearch_ptd"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_black"
-                android:inputType="text"
-                />
+                android:layout_height="36dp" />
+
+            <TextView
+                android:id="@+id/tv_stockSearch_whome"
+                android:layout_below="@id/tv_stockSearch_ptd"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:paddingTop="3dp"
+                android:textColor="@color/tv_Black"
+                android:textSize="18sp"
+                android:text="仓库:"
+                android:layout_alignLeft="@id/tv_stockSearch_ptd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
             <Button
-                android:id="@+id/bt_condition_search_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/main_black"
-                android:text="选择"
-                />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:text="仓库"
-                android:textSize="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <EditText
-                android:id="@+id/et_condition_search_whName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-
-        </TableRow>
-
-
-        <LinearLayout android:orientation="horizontal"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:gravity="center">
+                android:id="@+id/bn_stockSearch_whome"
+                android:layout_toRightOf="@id/tv_stockSearch_whome"
+                android:layout_below="@id/tv_stockSearch_ptd"
+                android:layout_alignTop="@id/tv_stockSearch_whome"
+                android:onClick="wHomeClick"
+                android:textSize="12sp"
+                android:layout_width="150dp"
+                android:layout_height="32dp" />
             <Button
-                android:id="@+id/serachMaterial"
-                android:text="查询"
+                android:id="@+id/bn_stockSearch_search"
+                android:layout_alignLeft="@id/bn_stockSearch_whome"
+                android:text="搜 索"
                 android:onClick="search"
+                android:layout_below="@id/tv_stockSearch_whome"
+                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:layout_alignParentBottom="true"
+                android:background="#cccccc"/>
+        </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="#cccccc"/>
         </LinearLayout>
-    </TableLayout>
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-        <ListView
-            android:id="@+id/material_info_list"
-            android:fadingEdge="none"
-            android:divider="@color/main_blue_light"
-            android:dividerHeight="2px"
-            android:listSelector="@color/greenyellow"
-            android:cacheColorHint="@null"
-            android:layout_weight="1"
-            android:layout_width="fill_parent"
-            android:layout_height="0dip">
+    </com.library.StickHeaderViewPager>
 
-        </ListView>
-
-    </LinearLayout>
-
-
-
-</TableLayout>
+</RelativeLayout>
