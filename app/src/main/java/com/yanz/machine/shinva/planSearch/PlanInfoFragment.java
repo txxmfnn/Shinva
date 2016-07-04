@@ -44,23 +44,13 @@ public class PlanInfoFragment extends Fragment {
         this.mIndex = index;
     }
     public PlanInfoFragment(){
-
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = getActivity().getLayoutInflater();
         mMainView = inflater.inflate(R.layout.fragment_plan_info, (ViewGroup) getActivity().findViewById(R.id.pager),false);
-
-
     }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-
     @Override
     public void onStart() {
         super.onStart();

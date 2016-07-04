@@ -67,11 +67,11 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
     private TextView mPlanAll;
 
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
-        fragments.get(0).setUserVisibleHint(true);
-    }
+        fragments.get(4).setUserVisibleHint(true);
+    }*/
 
 
     @Override
@@ -86,12 +86,7 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         tv_fwpQuantity = (TextView) findViewById(R.id.tv_fwpQuantity);
         tv_makerName = (TextView) findViewById(R.id.tv_makerName);
         tv_planCode.setText(planCode);
-        /*PlanSearchActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tv_planCode.setText(planCode);
-            }
-        });*/
+
 
         viewPager = (ViewPager) findViewById(R.id.pager);
         findViewById(R.id.id_ll_planInfo).setOnClickListener(this);
@@ -104,16 +99,7 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         mLogisticPlan = (TextView) findViewById(R.id.id_tv_logisticPlan);//物流明细
         findViewById(R.id.id_ll_planAll).setOnClickListener(this);
         mPlanAll = (TextView)findViewById(R.id.id_tv_planAll);//综合信息
-        /*viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-            @Override
-            public void onPageSelected(int position) {
-                changeSelectedState(position);
-            }
-            @Override
-            public void onPageScrollStateChanged(int state) {}
-        });*/
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -134,29 +120,14 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         fragments.add(new PlanDetailFragment());
         fragments.add(new LogisticsPlanFragment());
         fragments.add(new AllPlanFragment());
-        //adapter = new MyFragmentAdapter(getSupportFragmentManager(),fragments);
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),fragments);
         viewPager.setOffscreenPageLimit(5);//改变预加载页面
         viewPager.setAdapter(mainPagerAdapter);
         changeSelectedState(0);
         initData();
-        //调试
-        //list = new ArrayList<Map<String, Object>>();
-
-        //模拟加载数据
-
-        //listView = (ListView) this.findViewById(R.id.lv_cwpList);
-        //listView.setDividerHeight(0);
-        //传递给fragment数据
-
-
-
     }
     public  void initData(){
-        System.out.println("开始加载数据...");
-
         String url = HttpUtil.BASE_URL+uri;
-
         RequestParams params = new RequestParams();
         params.put("planCode",planCode);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -165,7 +136,6 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Toast.makeText(PlanSearchActivity.this, "连接错误PlanSearchActivity", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, String msg) {
                 if (statusCode == 200) {
@@ -191,9 +161,7 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
                 }
             }
         });
-
     }
-
     //处理显示信息
     public void loadInfo() throws InterruptedException{
         listItems = new ArrayList<Map<String, Object>>();
@@ -210,18 +178,7 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
                     tv_partName.setText(splan.getCwpPartName().toString());
                 }
             });
-            /*for (int i = 0 ;i<plans.size();i++){
-                listItem.put("planCode","工序:"+plan.getCwpCode());
-                listItem.put("report",plan.getCwpPstatusFlag());
-                listItem.put("content","|"+plan.getDwpPlanEdate().substring(0,10)+"|"+plan.getCwpDepartmentName()+"|"+plan.getCwpName());
-                listItems.add(listItem);
-            }*/
         }
-        /*SimpleAdapter simpleAdapter = new SimpleAdapter(this,listItems,
-                R.layout.item_line,new String[]{"planCode","report","content"},
-                new int[]{R.id.tv_cwpCode,R.id.tv_report,R.id.tv_content});
-        listView.setAdapter(simpleAdapter);*/
-
     }
     @Override
     @SuppressLint("Recycle")
@@ -245,22 +202,18 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
                 break;
         }
         changeSelectedState(currentPosition);
-
         viewPager.setCurrentItem(currentPosition, false);
     }
     class MainPagerAdapter extends FragmentPagerAdapter {
         private List<Fragment> fragmentList;
-
         public MainPagerAdapter(FragmentManager fragmentManager, List<Fragment> fragmentList) {
             super(fragmentManager);
             this.fragmentList = fragmentList;
         }
-
         @Override
         public Fragment getItem(int position) {
             return fragmentList.get(position);
         }
-
         @Override
         public int getCount() {
             return fragmentList.size();
