@@ -6,27 +6,45 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
+import com.yanz.machine.shinva.Adapter.BaseViewHolder;
 import com.yanz.machine.shinva.entity.SCurrentStock;
+import com.yanz.machine.shinva.entity.SPlan;
+import com.yanz.machine.shinva.util.HttpUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchConditionActivity extends Activity {
+import cz.msebera.android.httpclient.Header;
 
+public class SearchConditionActivity extends Activity {
+    private String uri = "/stock/findStock";
     private EditText materialName;
     private AutoCompleteTextView partStd;
     private Button wHome;
     private Button bnSearch;
-    String uri ="/stock/find";
+    private ListView lvResult;
     List<SCurrentStock> stocks = new ArrayList<SCurrentStock>();
+    List<SCurrentStock> list = new ArrayList<SCurrentStock>();
+    private StockAdapter adapter;
     //设置仓库数据的数据
     final String[] wHomes = {
             "011101|不锈钢板材库",
@@ -36,7 +54,8 @@ public class SearchConditionActivity extends Activity {
             "011105|耗材库",
             "011106|焊材库",
             "011107|刀具库",
-            "011121|半成品库"
+            "011121|半成品库",
+            ""
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +65,9 @@ public class SearchConditionActivity extends Activity {
         partStd = (AutoCompleteTextView) findViewById(R.id.actv_StockSearch_ptd);
         wHome = (Button) findViewById(R.id.bn_stockSearch_whome);
         bnSearch = (Button) findViewById(R.id.bn_stockSearch_search);
+        lvResult = (ListView) findViewById(R.id.lv_stockSearch_result);
+        adapter = new StockAdapter(this,stocks);
+        lvResult.setAdapter(adapter);
         materialName.requestFocus();
         //加载物料规格
         List<String> stdList = new ArrayList<String>();
@@ -74,6 +96,13 @@ public class SearchConditionActivity extends Activity {
                 }
             }
         });
+        lvResult.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(SearchConditionActivity.this,"点击功能暂未开放",Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
     public void wHomeClick(View view){
         int id = view.getId();
@@ -102,7 +131,82 @@ public class SearchConditionActivity extends Activity {
         String name = materialName.getText().toString();
         String code = partStd.getText().toString();
         String whName = wHome.getText().toString();
+        Log.e("meng","获取的仓库名称"+whName);
+        //String[] whName1 = whName.split("@@");
+        String whCode = whName.substring(0,6);
+        Log.e("meng","获取的仓库编码"+whCode);
+        String url = HttpUtil.BASE_URL+uri;
+        RequestParams params = new RequestParams();
+        params.put("partStd",code);
+        params.put("materialName",name);
+        params.put("whCode",whCode);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(SearchConditionActivity.this,"链接错误",Toast.LENGTH_SHORT).show();
+                SCurrentStock s4 = new SCurrentStock();
+                s4.setCcsPartStd("error");
+                s4.setFcsQuantity(0.0);
+                stocks.clear();
+                stocks.add(s4);
+                adapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    Gson gson = new Gson();
+                    list = gson.fromJson(responseString,new TypeToken<List<SCurrentStock>>(){}.getType());
+                    stocks.clear();
+                    stocks.addAll(list);
+                    adapter.notifyDataSetChanged();
+            }
+        });
     }
+    class StockAdapter extends BaseAdapter{
+        Context mContext;
+        List<SCurrentStock> list;
+        public StockAdapter(Context mContext, List<SCurrentStock> list){
+            this.list = list;
+            this.mContext = mContext;
+        }
 
+        @Override
+        public int getCount() {
+            return list.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return list.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return i;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            if (view==null){
+                view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_line2,viewGroup,false);
+            }
+            TextView tvWhName = BaseViewHolder.get(view,R.id.tv_item_head);
+            TextView tvQuantity = BaseViewHolder.get(view,R.id.tv_item_num);
+            TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);
+            TextView tvPartStd = BaseViewHolder.get(view,R.id.tv_item_foot);
+            TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_report);
+            TextView tvBottomQuantity = BaseViewHolder.get(view,R.id.tv_item_other);
+            SCurrentStock stock = list.get(i);
+            tvWhName.setText(stock.getCcsWhName());
+            tvPartName.setText(stock.getCcsPartName());
+            tvPartStd.setText(stock.getCcsPartStd());
+            tvQuantity.setText(stock.getFcsQuantity().toString());
+            tvPosition.setText(stock.getCcsPosition());
+            tvBottomQuantity.setText("↑"+stock.getFcsBottomQuantity()+"↓0"+stock.getFcsTopQuantity());
+            tvBottomQuantity.setTextColor(getResources().getColor(R.color.tv_bgblue));
+            tvQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
+            return view;
+        }
+    }
 }

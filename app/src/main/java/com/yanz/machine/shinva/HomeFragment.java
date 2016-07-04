@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),TestActivity.class);
                 startActivity(intent);*/
                 new AlertDialog.Builder(getActivity())
-                        .setIcon(getResources().getDrawable(R.drawable.waring_icon,null))
+                        .setIcon(getResources().getDrawable(R.drawable.waring_icon))
                         .setTitle("SHINVA")
                         .setMessage("新华医疗机械制造厂@ \n  version 1.0.1")
                         .create().show();
@@ -175,11 +175,13 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent();
                 switch (position){
                     case 0:
+                        Toast.makeText(getActivity(),"生产跟踪功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
                         intent.setClass(getActivity(), SearchConditionActivity.class);
                         intent.putExtra("webRequest","stock");
                         startActivity(intent);
                         break;
-                    case 1:
 
                 }
             }
@@ -190,9 +192,7 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent();
                 switch (position){
                     case 0:
-                        intent.setClass(getActivity(), SearchConditionActivity.class);
-                        intent.putExtra("webRequest","stock");
-                        startActivity(intent);
+                        Toast.makeText(getActivity(),"二次派工功能暂未开放",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
 
