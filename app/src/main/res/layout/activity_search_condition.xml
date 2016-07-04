@@ -72,6 +72,7 @@
                 android:layout_width="150dp"
                 android:layout_height="32dp" />
             <EditText
+                android:id="@+id/et_stockSearch_partCode"
                 android:layout_alignTop="@id/tv_stockSearch_whome"
                 android:layout_toRightOf="@id/bn_stockSearch_whome"
                 android:hint="物料编码"

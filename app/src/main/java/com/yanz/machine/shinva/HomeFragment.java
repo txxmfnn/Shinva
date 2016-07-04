@@ -182,7 +182,18 @@ public class HomeFragment extends Fragment {
                         intent.putExtra("webRequest","stock");
                         startActivity(intent);
                         break;
-
+                    case 2:
+                        Toast.makeText(getActivity(),"成品订单功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        Toast.makeText(getActivity(),"质量事故功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 4:
+                        Toast.makeText(getActivity(),"入库台账功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 5:
+                        Toast.makeText(getActivity(),"出库台账功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         });
@@ -195,7 +206,17 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getActivity(),"二次派工功能暂未开放",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-
+                        Toast.makeText(getActivity(),"检验汇报功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        Toast.makeText(getActivity(),"物流周转功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        Toast.makeText(getActivity(),"周转接收功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
+                    case 4:
+                        Toast.makeText(getActivity(),"库存盘点功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         });

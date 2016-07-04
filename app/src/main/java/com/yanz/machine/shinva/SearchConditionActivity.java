@@ -38,6 +38,7 @@ import cz.msebera.android.httpclient.Header;
 public class SearchConditionActivity extends Activity {
     private String uri = "/stock/findStock";
     private EditText materialName;
+    private EditText partCode;
     private AutoCompleteTextView partStd;
     private Button wHome;
     private Button bnSearch;
@@ -64,6 +65,7 @@ public class SearchConditionActivity extends Activity {
         materialName = (EditText) findViewById(R.id.et_stockSearch_materialName);
         partStd = (AutoCompleteTextView) findViewById(R.id.actv_StockSearch_ptd);
         wHome = (Button) findViewById(R.id.bn_stockSearch_whome);
+        partCode = (EditText) findViewById(R.id.et_stockSearch_partCode);
         bnSearch = (Button) findViewById(R.id.bn_stockSearch_search);
         lvResult = (ListView) findViewById(R.id.lv_stockSearch_result);
         adapter = new StockAdapter(this,stocks);
@@ -131,8 +133,6 @@ public class SearchConditionActivity extends Activity {
         String name = materialName.getText().toString();
         String code = partStd.getText().toString();
         String whName = wHome.getText().toString();
-        Log.e("meng","获取的仓库名称"+whName);
-        //String[] whName1 = whName.split("@@");
         String whCode = whName.substring(0,6);
         Log.e("meng","获取的仓库编码"+whCode);
         String url = HttpUtil.BASE_URL+uri;
@@ -140,6 +140,7 @@ public class SearchConditionActivity extends Activity {
         params.put("partStd",code);
         params.put("materialName",name);
         params.put("whCode",whCode);
+        params.put("partCode",partCode.getText().toString());
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
@@ -203,7 +204,7 @@ public class SearchConditionActivity extends Activity {
             tvPartStd.setText(stock.getCcsPartStd());
             tvQuantity.setText(stock.getFcsQuantity().toString());
             tvPosition.setText(stock.getCcsPosition());
-            tvBottomQuantity.setText("↑"+stock.getFcsBottomQuantity()+"↓0"+stock.getFcsTopQuantity());
+            tvBottomQuantity.setText("↑"+stock.getFcsBottomQuantity()+"↓"+stock.getFcsTopQuantity());
             tvBottomQuantity.setTextColor(getResources().getColor(R.color.tv_bgblue));
             tvQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
             return view;
