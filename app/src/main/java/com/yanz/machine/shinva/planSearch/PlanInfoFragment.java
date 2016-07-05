@@ -62,34 +62,15 @@ public class PlanInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        /*View view = inflater.inflate(R.layout.fragment_plan_info, container, false);
-
-*/
+        /*View view = inflater.inflate(R.layout.fragment_plan_info, container, false);*/
         ViewGroup p = (ViewGroup) mMainView.getParent();
         if (p!=null){
             p.removeAllViewsInLayout();
-
         }
         planCode = getActivity().getIntent().getStringExtra("planCode");
         initData();
-
         return mMainView;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mIndex==1){
-            setUserVisibleHint(true);
-        }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-    }
-
     public  void initData(){
 
         String url = HttpUtil.BASE_URL+uri;

@@ -31,19 +31,6 @@ public class AllPlanFragment extends Fragment {
     private TextView tvGuiHao,tvDingdan,tvU8,tvStockCode,tvStockName,tvStockGuige,tvGyr,tvLingliao;
     private List<SPlan> sPlanList;
     public AllPlanFragment() {
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -52,7 +39,6 @@ public class AllPlanFragment extends Fragment {
         planCode = getActivity().getIntent().getStringExtra("planCode");
         initData();
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,7 +54,6 @@ public class AllPlanFragment extends Fragment {
         tvLingliao = (TextView) mMainView.findViewById(R.id.tv_planAll_llccCode);
         return mMainView;
     }
-
     protected void initData(){
         String url = HttpUtil.BASE_URL+uri;
         RequestParams params = new RequestParams();
@@ -77,9 +62,7 @@ public class AllPlanFragment extends Fragment {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
             }
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 if (responseString.contains("true@@")){

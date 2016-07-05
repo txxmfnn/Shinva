@@ -113,13 +113,12 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
             public void onPageScrollStateChanged(int state) {
             }
         });
+        fragments.add(new AllPlanFragment());
         fragments.add(new PlanInfoFragment(1));
-
         //fragments.add(new DispatchingInfoFragment());
         fragments.add(new DispatchingInfoFragment());
         fragments.add(new PlanDetailFragment());
         fragments.add(new LogisticsPlanFragment());
-        fragments.add(new AllPlanFragment());
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(),fragments);
         viewPager.setOffscreenPageLimit(5);//改变预加载页面
         viewPager.setAdapter(mainPagerAdapter);
