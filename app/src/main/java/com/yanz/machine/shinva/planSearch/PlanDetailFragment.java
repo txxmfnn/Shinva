@@ -163,10 +163,29 @@ public class PlanDetailFragment extends Fragment {
         });
     }
     class PlanDetailAdapter extends BaseAdapter{
+        final int VIEW_TYPE= 0;
+        final int TYPE_ALL = 1;
+        final int TYPE_SAME = 2;
         List<SPlanDetail> sPlanDetails;
         public PlanDetailAdapter(List<SPlanDetail> sPlanDetails){
             this.sPlanDetails = sPlanDetails;
         }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position==0){
+                return TYPE_ALL;
+            }
+            int fXh = sPlanDetails.get(position-1).getCwpCode();
+            int sXh = sPlanDetails.get(position).getCwpCode();
+            if (fXh==sXh){
+                return TYPE_SAME;
+            }else {
+                return TYPE_ALL;
+            }
+
+        }
+
         @Override
         public int getCount() {
             return sPlanDetails.size();
@@ -184,21 +203,35 @@ public class PlanDetailFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            int type = getItemViewType(position);
             if (convertView == null) {
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.plan_detail_item, null);
+                switch (type){
+                    case TYPE_ALL:
+                        convertView = getActivity().getLayoutInflater().inflate(R.layout.plan_detail_item, null);
+                        TextView tvCwpCode = (TextView) convertView.findViewById(R.id.tv_planDetail_cwpCode);
+                        TextView tvReport = (TextView) convertView.findViewById(R.id.tv_planDetail_report);
+                        TextView tvContent = (TextView) convertView.findViewById(R.id.tv_planDetail_content);
+
+                        tvCwpCode.setText("工序:"+sPlanDetails.get(position).getCwpCode());
+                        tvReport.setText(sPlanDetails.get(position).getCwpDepartmentName().substring(0,3));
+
+                        tvContent.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
+                                +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
+                                +"|品质:"+sPlanDetails.get(position).getCwpQuality()
+                                +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
+                        break;
+                    case TYPE_SAME:
+                        convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line_same, null);
+                        TextView tvReport2= (TextView) convertView.findViewById(R.id.tv_same_report);
+                        TextView tvContent2= (TextView) convertView.findViewById(R.id.tv_same_content);
+                        tvReport2.setText(sPlanDetails.get(position).getCwpDepartmentName().substring(0,3));
+                        tvContent2.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
+                                +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
+                                +"|品质:"+sPlanDetails.get(position).getCwpQuality()
+                                +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
+                        break;
+                }
             }
-            //
-            TextView tvCwpCode = (TextView) convertView.findViewById(R.id.tv_planDetail_cwpCode);
-            TextView tvReport = (TextView) convertView.findViewById(R.id.tv_planDetail_report);
-            TextView tvContent = (TextView) convertView.findViewById(R.id.tv_planDetail_content);
-
-            tvCwpCode.setText("工序:"+sPlanDetails.get(position).getCwpCode());
-            tvReport.setText(sPlanDetails.get(position).getCwpDepartmentName().substring(0,3));
-
-            tvContent.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
-                    +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
-                    +"|品质:"+sPlanDetails.get(position).getCwpQuality()
-                    +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
             return convertView;
         }
     }

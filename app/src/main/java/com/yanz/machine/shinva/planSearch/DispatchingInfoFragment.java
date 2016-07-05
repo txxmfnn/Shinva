@@ -168,7 +168,6 @@ public class DispatchingInfoFragment extends Fragment {
                         TextView tvReport = (TextView) convertView.findViewById(R.id.tv_report);
                         TextView tvContent = (TextView) convertView.findViewById(R.id.tv_content);
                         //加载数据
-
                         tvCwpCode.setText("工序:"+sDispachingSeconds.get(position).getIgxh());
                         tvReport.setText(sDispachingSeconds.get(position).getCfinisherName());
                         tvContent.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
