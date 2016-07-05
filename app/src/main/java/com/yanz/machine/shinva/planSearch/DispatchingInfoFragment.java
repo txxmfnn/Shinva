@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class DispatchingInfoFragment extends Fragment {
     private String uri ="/splan/findDispaching";
     private ListView lvDispatching;
     private String planCode;
+    List<SDispachingSecond> itemList = new ArrayList<SDispachingSecond>();
     List<SDispachingSecond> sDispachingSeconds = new ArrayList<SDispachingSecond>();
     private DispatchingInfoAdapter adapter;
 
@@ -54,6 +56,8 @@ public class DispatchingInfoFragment extends Fragment {
         View mMainView = inflater.inflate(R.layout.fragment_dispatching_info, (ViewGroup) getActivity().findViewById(R.id.pager), false);
         lvDispatching = (ListView) mMainView.findViewById(R.id.lv_dispatching);
         lvDispatching.setDividerHeight(0);
+        adapter = new DispatchingInfoAdapter(itemList);
+        lvDispatching.setAdapter(adapter);
         return mMainView;
     }
 
@@ -99,9 +103,11 @@ public class DispatchingInfoFragment extends Fragment {
                             return -1;
                         }
                     });
-
-                    adapter = new DispatchingInfoAdapter(sDispachingSeconds);
-                    lvDispatching.setAdapter(adapter);
+                    itemList.clear();
+                    itemList.addAll(sDispachingSeconds);
+                    adapter.notifyDataSetChanged();
+//                    adapter = new DispatchingInfoAdapter(sDispachingSeconds);
+//                    lvDispatching.setAdapter(adapter);
                 } catch (JsonParseException e) {
                     e.printStackTrace();
                 } catch (JsonMappingException e) {
@@ -114,9 +120,26 @@ public class DispatchingInfoFragment extends Fragment {
     }
 
     class DispatchingInfoAdapter extends BaseAdapter{
+        final int VIEW_TYPE= 0;
+        final int TYPE_ALL = 1;
+        final int TYPE_SAME = 2;
         List<SDispachingSecond> sDispachingSeconds;
         public DispatchingInfoAdapter(List<SDispachingSecond> sDispachingSeconds){
             this.sDispachingSeconds = sDispachingSeconds;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            if (position==0){
+                return TYPE_ALL;
+            }
+            int fXh = sDispachingSeconds.get(position-1).getIgxh();
+            int sXh = sDispachingSeconds.get(position).getIgxh();
+            if (fXh==sXh){
+                return TYPE_SAME;
+            }else{
+                return TYPE_ALL;
+            }
         }
 
         @Override
@@ -136,21 +159,35 @@ public class DispatchingInfoFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            int type = getItemViewType(position);
             if (convertView == null){
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line,null);
+                switch (type){
+                    case TYPE_ALL:
+                        convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line,null);
+                        TextView tvCwpCode = (TextView) convertView.findViewById(R.id.tv_cwpCode);
+                        TextView tvReport = (TextView) convertView.findViewById(R.id.tv_report);
+                        TextView tvContent = (TextView) convertView.findViewById(R.id.tv_content);
+                        //加载数据
 
+                        tvCwpCode.setText("工序:"+sDispachingSeconds.get(position).getIgxh());
+                        tvReport.setText(sDispachingSeconds.get(position).getCfinisherName());
+                        tvContent.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
+                                +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                                +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
+                                +"|派工:"+sDispachingSeconds.get(position).getFquantity()+"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
+                        break;
+                    case TYPE_SAME:
+                        convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line_same,null);
+                        TextView tvReport2 = (TextView) convertView.findViewById(R.id.tv_same_report);
+                        TextView tvContent2 = (TextView)convertView.findViewById(R.id.tv_same_content);
+                        tvReport2.setText(sDispachingSeconds.get(position).getCfinisherName());
+                        tvContent2.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
+                                +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                                +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
+                                +"|派工:"+sDispachingSeconds.get(position).getFquantity()+"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
+                        break;
+                }
             }
-            TextView tvCwpCode = (TextView) convertView.findViewById(R.id.tv_cwpCode);
-            TextView tvReport = (TextView) convertView.findViewById(R.id.tv_report);
-            TextView tvContent = (TextView) convertView.findViewById(R.id.tv_content);
-            //加载数据
-            tvCwpCode.setText("工序:"+sDispachingSeconds.get(position).getIgxh());
-            tvReport.setText(sDispachingSeconds.get(position).getCfinisherName());
-            tvContent.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
-                    +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
-                    +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
-                    +"|派工:"+sDispachingSeconds.get(position).getFquantity()+"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
-
             return convertView;
         }
     }
