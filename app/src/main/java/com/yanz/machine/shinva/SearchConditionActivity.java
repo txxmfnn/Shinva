@@ -198,13 +198,15 @@ public class SearchConditionActivity extends Activity {
             TextView tvPartStd = BaseViewHolder.get(view,R.id.tv_item_foot);
             TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_report);
             TextView tvBottomQuantity = BaseViewHolder.get(view,R.id.tv_item_other);
+            TextView tvCode = BaseViewHolder.get(view,R.id.tv_item_code);
             SCurrentStock stock = list.get(i);
             tvWhName.setText(stock.getCcsWhName());
             tvPartName.setText(stock.getCcsPartName());
             tvPartStd.setText(stock.getCcsPartStd());
             tvQuantity.setText(stock.getFcsQuantity().toString());
             tvPosition.setText(stock.getCcsPosition());
-            tvBottomQuantity.setText("↑"+stock.getFcsBottomQuantity()+"↓"+stock.getFcsTopQuantity());
+            tvCode.setText(stock.getCcspartCode());
+            tvBottomQuantity.setText("↑"+stock.getFcsBottomQuantity().toString()+"↓"+stock.getFcsTopQuantity().toString());
             tvBottomQuantity.setTextColor(getResources().getColor(R.color.tv_bgblue));
             tvQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
             return view;
