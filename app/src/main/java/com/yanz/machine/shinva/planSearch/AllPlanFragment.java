@@ -84,8 +84,8 @@ public class AllPlanFragment extends Fragment {
         tvStockCode.setText(sPlan.getCwpMaterialCode());
         tvStockName.setText(sPlan.getCwpMaterialName());
         tvStockGuige.setText(sPlan.getCwpMaterialStd());
-        tvGyr.setText(sPlan.getCwpSjr()+" 工艺路线:"+sPlan.getCwpSjrq()+" 每坯件数:"+sPlan.getCwpMpjs()+" 毛坯种类:"+sPlan.getCwpMpzl());
-        tvLingliao.setText(sPlan.getCwpLlcc());
+        tvGyr.setText(sPlan.getCwpSjr()+" 工艺路线:"+sPlan.getCwpLxh());
+        tvLingliao.setText(sPlan.getCwpLlcc()+" \n每坯件数:"+sPlan.getCwpMpjs()+" \n毛坯种类:"+sPlan.getCwpMpzl());
         tvStockGuige.setTextColor(getResources().getColor(R.color.tv_Red));
     }
 }
