@@ -69,7 +69,8 @@ public class DispatchingInfoFragment extends Fragment {
     }
 
     protected void initData(){
-        String url = HttpUtil.BASE_URL+uri;
+//        String url = HttpUtil.BASE_URL+uri;
+        String url = "http://192.168.107.36:8080/graduation"+uri;
         RequestParams params = new RequestParams();
         params.put("planCode",planCode);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -92,22 +93,9 @@ public class DispatchingInfoFragment extends Fragment {
                                 }
                         );
                     }
-                    Collections.sort(sDispachingSeconds, new Comparator<SDispachingSecond>() {
-                        @Override
-                        public int compare(SDispachingSecond lhs, SDispachingSecond rhs) {
-                            int s1 = lhs.getIgxh();
-                            int s2 = rhs.getIgxh();
-                            if (s1>s2){
-                                return 1;
-                            }
-                            return -1;
-                        }
-                    });
                     itemList.clear();
                     itemList.addAll(sDispachingSeconds);
                     adapter.notifyDataSetChanged();
-//                    adapter = new DispatchingInfoAdapter(sDispachingSeconds);
-//                    lvDispatching.setAdapter(adapter);
                 } catch (JsonParseException e) {
                     e.printStackTrace();
                 } catch (JsonMappingException e) {
@@ -123,7 +111,7 @@ public class DispatchingInfoFragment extends Fragment {
         final int VIEW_TYPE= 0;
         final int TYPE_ALL = 1;
         final int TYPE_SAME = 2;
-        List<SDispachingSecond> sDispachingSeconds;
+        List<SDispachingSecond> sDispachingSeconds = new ArrayList<SDispachingSecond>();
         public DispatchingInfoAdapter(List<SDispachingSecond> sDispachingSeconds){
             this.sDispachingSeconds = sDispachingSeconds;
         }
@@ -173,7 +161,35 @@ public class DispatchingInfoFragment extends Fragment {
                         tvContent.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
                                 +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
                                 +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
+                                +"|派工:"+sDispachingSeconds.get(position).getFquantity()
+                                +"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
+                        break;
+                    case TYPE_SAME:
+                        convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line_same,null);
+                        TextView tvReport2 = (TextView) convertView.findViewById(R.id.tv_same_report);
+                        TextView tvContent2 = (TextView)convertView.findViewById(R.id.tv_same_content);
+                        tvReport2.setText(sDispachingSeconds.get(position).getCfinisherName());
+                        tvContent2.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
+                                +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                                +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
                                 +"|派工:"+sDispachingSeconds.get(position).getFquantity()+"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
+                        break;
+                }
+            }else {
+                switch (type){
+                    case TYPE_ALL:
+                        convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line,null);
+                        TextView tvCwpCode = (TextView) convertView.findViewById(R.id.tv_cwpCode);
+                        TextView tvReport = (TextView) convertView.findViewById(R.id.tv_report);
+                        TextView tvContent = (TextView) convertView.findViewById(R.id.tv_content);
+                        //加载数据
+                        tvCwpCode.setText("工序:"+sDispachingSeconds.get(position).getIgxh());
+                        tvReport.setText(sDispachingSeconds.get(position).getCfinisherName());
+                        tvContent.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
+                                +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                                +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
+                                +"|派工:"+sDispachingSeconds.get(position).getFquantity()
+                                +"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
                         break;
                     case TYPE_SAME:
                         convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line_same,null);
@@ -187,6 +203,7 @@ public class DispatchingInfoFragment extends Fragment {
                         break;
                 }
             }
+
             return convertView;
         }
     }

@@ -105,26 +105,10 @@ public class LoginActivity extends Activity {
             etPass.setText(password);
             checkBox.setChecked(stat);
         }
-
         //绑定取消事件
-        bnCancel.setOnClickListener(new HomeListener(this));
-        //更新方法
-        Button updateBtn = (Button) findViewById(R.id.bn_check);
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UpdateManager manager = new UpdateManager(LoginActivity.this);
-                //检查软件更新
-                try {
-                    manager.checkUpdate();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        //bnCancel.setOnClickListener(new HomeListener(this));
         //自动检查更新
         Toast.makeText(LoginActivity.this,"正在检查更新...",Toast.LENGTH_SHORT).show();
-
         new Thread(){
             @Override
             public void run() {
@@ -140,7 +124,6 @@ public class LoginActivity extends Activity {
             }
         }.start();
     }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK){
@@ -149,7 +132,6 @@ public class LoginActivity extends Activity {
         }else {
             return super.onKeyDown(keyCode, event);
         }
-
     }
     public void exit(){
         if (!isExit){
@@ -163,7 +145,6 @@ public class LoginActivity extends Activity {
             System.exit(0);
         }
     }
-
     //登陆点击事件
     public void login_main(View v){
         String name = etName.getText().toString();
@@ -213,93 +194,12 @@ public class LoginActivity extends Activity {
             });
         }else if ("".equals(etName.getText().toString())||"".equals(etPass.getText().toString())){
             new AlertDialog.Builder(LoginActivity.this)
-                    .setIcon(getResources().getDrawable(R.drawable.waring_icon,null))
+                    .setIcon(getResources().getDrawable(R.drawable.waring_icon))
                     .setTitle("警告")
                     .setMessage("用户名或密码不能为空")
                     .create().show();
         }
     }
-
-   /* public void loginPro(View view){
-        //获取点击空间的id
-        int id = view.getId();
-        if (R.id.bnLogin == id){
-            //进行登陆操作，获取用户名/密码
-            final String name = etName.getText().toString();
-            final String password = etPass.getText().toString();
-            //进行前台验证
-            if (TextUtils.isEmpty(name)||TextUtils.isEmpty(password)){
-                Toast.makeText(this, "用户名或密码不能为空", Toast.LENGTH_LONG).show();
-            }else {
-                System.out.println("---------请求发送至服务器------");
-                //开启子线程
-                new Thread() {
-                    @Override
-                    public void run() {
-                        loginByPost(name, password);
-                    }
-                }.start();
-            }
-        }
-    }*/
-
-    /*public void loginByPost(String name,String password){
-        try{
-            String spec = "http://192.168.1.66:8080/graduation/user/appLogin";
-            URL url = new URL(spec);
-            HttpURLConnection urlConnection = (HttpURLConnection)url.openConnection();
-            urlConnection.setRequestMethod("POST");
-            urlConnection.setReadTimeout(5000);
-            urlConnection.setConnectTimeout(5000);
-            String data = "name="+ URLEncoder.encode(name, "UTF-8")+"&password="+URLEncoder.encode(password,"UTF-8");
-            urlConnection.setRequestProperty("Connection","keep-alive");
-            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            urlConnection.setRequestProperty("Content-Length",
-                    String.valueOf(data.getBytes().length));
-            urlConnection
-                    .setRequestProperty("User-Agent",
-                            "Mozilla/5.0 (Windows NT 6.3; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0");
-
-            urlConnection.setDoOutput(true); // 发送POST请求必须设置允许输出
-            urlConnection.setDoInput(true); // 发送POST请求必须设置允许输入
-            OutputStream os = urlConnection.getOutputStream();
-            os.write(data.getBytes());
-            os.flush();
-            System.out.println(urlConnection.getResponseCode());
-            if (urlConnection.getResponseCode()==200){
-                InputStream is = urlConnection.getInputStream();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                int len;
-                byte buffer[] = new byte[1024];
-                while ((len = is.read(buffer))!=-1){
-                    baos.write(buffer,0,len);
-                }
-                is.close();
-                baos.close();
-                final String result = new String(baos.toByteArray());
-                System.out.println("****"+result);
-                LoginActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tvWelcome.setText(result);
-                    }
-                });
-                if (result.equals("loginsuccess")){
-                    //启动main activity
-                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                    intent.putExtra("hello",result);
-                    startActivity(intent);
-                    //结束该Activity
-                    finish();
-                }
-            }else{
-                System.out.println("连接失败");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-*/
     //读取用户信息
     public String readUserInfo(){
         SharedPreferences sp = getSharedPreferences("USERINFO",0);

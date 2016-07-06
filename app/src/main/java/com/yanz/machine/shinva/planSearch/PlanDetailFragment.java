@@ -43,6 +43,7 @@ public class PlanDetailFragment extends Fragment {
 
     private ProgressBar pro;
     private boolean isPrepared;
+    List<SPlanDetail> itemList = new ArrayList<SPlanDetail>();
     List<SPlanDetail> sPlanDetails = new ArrayList<SPlanDetail>();
     private ListView lvPlanDetail;
     private String planCode;
@@ -86,6 +87,8 @@ public class PlanDetailFragment extends Fragment {
         pro = (ProgressBar) mMainView.findViewById(R.id.pro_planDetail);
         lvPlanDetail = (ListView) mMainView.findViewById(R.id.lv_planDetail);
         lvPlanDetail.setDividerHeight(0);
+        adapter = new PlanDetailAdapter(itemList);
+        lvPlanDetail.setAdapter(adapter);
         ViewGroup p = (ViewGroup) mMainView.getParent();
         if (p!=null){
             p.removeAllViewsInLayout();
@@ -103,8 +106,6 @@ public class PlanDetailFragment extends Fragment {
         if (isVisibleToUser){
             if (pro!=null){
                 //initializeAdapter();
-
-
                 pro.setVisibility(View.GONE);
             }
 
@@ -120,9 +121,7 @@ public class PlanDetailFragment extends Fragment {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
             }
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, String msg) {
                 try {
@@ -133,7 +132,6 @@ public class PlanDetailFragment extends Fragment {
                         sPlanDetails = objectMapper.readValue(
                                 result,
                                 new TypeReference<List<SPlanDetail>>() {
-
                                 }
                         );
                     }
@@ -148,10 +146,9 @@ public class PlanDetailFragment extends Fragment {
                             return -1;
                         }
                     });
-
-                            adapter = new PlanDetailAdapter(sPlanDetails);
-                            //adapter.notifyDataSetChanged();
-                            lvPlanDetail.setAdapter(adapter);
+                    itemList.clear();
+                    itemList.addAll(sPlanDetails);
+                    adapter.notifyDataSetChanged();
                 } catch (JsonParseException e) {
                     e.printStackTrace();
                 } catch (JsonMappingException e) {
@@ -205,6 +202,33 @@ public class PlanDetailFragment extends Fragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             int type = getItemViewType(position);
             if (convertView == null) {
+                switch (type){
+                    case TYPE_ALL:
+                        convertView = getActivity().getLayoutInflater().inflate(R.layout.plan_detail_item, null);
+                        TextView tvCwpCode = (TextView) convertView.findViewById(R.id.tv_planDetail_cwpCode);
+                        TextView tvReport = (TextView) convertView.findViewById(R.id.tv_planDetail_report);
+                        TextView tvContent = (TextView) convertView.findViewById(R.id.tv_planDetail_content);
+
+                        tvCwpCode.setText("工序:"+sPlanDetails.get(position).getCwpCode());
+                        tvReport.setText(sPlanDetails.get(position).getCwpDepartmentName().substring(0,3));
+
+                        tvContent.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
+                                +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
+                                +"|品质:"+sPlanDetails.get(position).getCwpQuality()
+                                +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
+                        break;
+                    case TYPE_SAME:
+                        convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line_same, null);
+                        TextView tvReport2= (TextView) convertView.findViewById(R.id.tv_same_report);
+                        TextView tvContent2= (TextView) convertView.findViewById(R.id.tv_same_content);
+                        tvReport2.setText(sPlanDetails.get(position).getCwpDepartmentName().substring(0,3));
+                        tvContent2.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
+                                +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
+                                +"|品质:"+sPlanDetails.get(position).getCwpQuality()
+                                +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
+                        break;
+                }
+            }else {
                 switch (type){
                     case TYPE_ALL:
                         convertView = getActivity().getLayoutInflater().inflate(R.layout.plan_detail_item, null);

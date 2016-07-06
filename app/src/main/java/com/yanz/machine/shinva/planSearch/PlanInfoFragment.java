@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,8 +75,8 @@ public class PlanInfoFragment extends Fragment {
         return mMainView;
     }
     public  void initData(){
-
-        String url = HttpUtil.BASE_URL+uri;
+//        String url = HttpUtil.BASE_URL+uri;
+        String url = "http://192.168.107.36:8080/graduation"+uri;
         RequestParams params = new RequestParams();
         params.put("planCode",planCode);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -94,7 +97,6 @@ public class PlanInfoFragment extends Fragment {
                             plans = objectMapper.readValue(
                                     result,
                                     new TypeReference<List<SPlan>>() {
-
                                     }
                             );
                             loadInfo();
@@ -109,9 +111,7 @@ public class PlanInfoFragment extends Fragment {
                 }
             }
         });
-
     }
-
     //处理显示信息
     public void loadInfo() throws InterruptedException{
         listItems = new ArrayList<Map<String, Object>>();
@@ -122,6 +122,7 @@ public class PlanInfoFragment extends Fragment {
                 listItem.put("planCode","工序:"+plan.getCwpCode());
                 listItem.put("report",plan.getCwpPstatusFlag());
                 listItem.put("content","|"+plan.getDwpPlanEdate().substring(0,10)+"|"+plan.getCwpDepartmentName()+"|"+plan.getCwpName());
+
                 listItems.add(listItem);
             }
         }

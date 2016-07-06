@@ -206,7 +206,7 @@ public class SearchConditionActivity extends Activity {
             tvQuantity.setText(stock.getFcsQuantity().toString());
             tvPosition.setText(stock.getCcsPosition());
             tvCode.setText(stock.getCcspartCode());
-            tvBottomQuantity.setText("↑"+stock.getFcsBottomQuantity().toString()+"↓"+stock.getFcsTopQuantity().toString());
+            tvBottomQuantity.setText("↑"+stock.getFcsBottomQuantity()+"↓"+stock.getFcsTopQuantity());
             tvBottomQuantity.setTextColor(getResources().getColor(R.color.tv_bgblue));
             tvQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
             return view;

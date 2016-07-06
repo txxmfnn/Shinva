@@ -92,19 +92,7 @@
             android:layout_height="wrap_content" android:paddingLeft="10dp"/>
 
     </LinearLayout>
-    <!--检测更新-->
-    <LinearLayout android:orientation="horizontal"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center">
 
-        <Button
-            android:id="@+id/bn_check"
-            android:text="检查更新..."
-            android:layout_width="150dp"
-            android:layout_height="wrap_content" android:paddingLeft="10dp"/>
-
-    </LinearLayout>
 
 
 </TableLayout>
