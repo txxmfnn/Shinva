@@ -75,8 +75,7 @@ public class PlanInfoFragment extends Fragment {
         return mMainView;
     }
     public  void initData(){
-//        String url = HttpUtil.BASE_URL+uri;
-        String url = "http://192.168.107.36:8080/graduation"+uri;
+        String url = HttpUtil.BASE_URL+uri;
         RequestParams params = new RequestParams();
         params.put("planCode",planCode);
         AsyncHttpClient client = new AsyncHttpClient();

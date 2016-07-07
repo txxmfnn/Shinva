@@ -28,6 +28,7 @@ import com.yanz.machine.shinva.Adapter.BaseViewHolder;
 import com.yanz.machine.shinva.PlanSearchActivity;
 import com.yanz.machine.shinva.R;
 import com.yanz.machine.shinva.entity.SPlan;
+import com.yanz.machine.shinva.util.ClickUtil;
 import com.yanz.machine.shinva.util.HttpUtil;
 
 import org.codehaus.jackson.map.ser.std.ToStringSerializer;
@@ -82,9 +83,9 @@ public class InputPlanActivity extends Activity {
                 }
             }
         });
-        btSearch.setOnClickListener(new View.OnClickListener() {
+        btSearch.setOnClickListener(new ClickUtil() {
             @Override
-            public void onClick(View view) {
+            protected void onNoDoubleClick(View view) {
                 initData();
             }
         });

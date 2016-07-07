@@ -28,6 +28,7 @@ import com.yanz.machine.shinva.MyView.MyGridView;
 import com.yanz.machine.shinva.entity.UpdateInfo;
 import com.yanz.machine.shinva.planSearch.InputPlanActivity;
 import com.yanz.machine.shinva.update.UpdateManager;
+import com.yanz.machine.shinva.util.ClickUtil;
 import com.yanz.machine.shinva.view.AbOnItemClickListener;
 import com.yanz.machine.shinva.view.AbSlidingPlayView;
 
@@ -139,20 +140,20 @@ public class HomeFragment extends Fragment {
                 new AlertDialog.Builder(getActivity())
                         .setIcon(getResources().getDrawable(R.drawable.waring_icon))
                         .setTitle("SHINVA")
-                        .setMessage("新华医疗机械制造厂@ \n  version 1.0.1")
+                        .setMessage("新华医疗机械制造厂@ \n  version 1.0.4")
                         .create().show();
 
             }
         });
         iv_shu = (ImageView) view.findViewById(R.id.iv_refresh);
-        iv_shu.setOnClickListener(new View.OnClickListener(){
+        iv_shu.setOnClickListener(new ClickUtil() {
             @Override
-            public void onClick(View v) {
-                //暂时测试
+            protected void onNoDoubleClick(View view) {
                 Intent intent = new Intent(getActivity(), InputPlanActivity.class);
                 startActivity(intent);
             }
         });
+
         /*gridView_classify = (GridView) view.findViewById(R.id.gv_menu_search);
         gridView_classify.setSelector(new ColorDrawable(Color.TRANSPARENT));
         adapter_gridView_classify = new Adapter_GridView(getActivity(),pic_patch_classify);

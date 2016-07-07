@@ -2,12 +2,14 @@ package com.yanz.machine.shinva.login;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import com.yanz.machine.shinva.R;
 import com.yanz.machine.shinva.application.MyApplication;
 import com.yanz.machine.shinva.entity.BPerson;
 import com.yanz.machine.shinva.update.UpdateManager;
+import com.yanz.machine.shinva.util.ClickUtil;
 import com.yanz.machine.shinva.util.HttpUtil;
 import com.yanz.machine.shinva.util.JsonUtil;
 import com.yanz.machine.shinva.util.StrUtil;
@@ -99,7 +102,6 @@ public class LoginActivity extends Activity {
             String[] info = msg.split(":");
             String name = info[0];
             String password = info[1];
-
             Boolean stat = Boolean.valueOf(info[2]);
             etName.setText(name);
             etPass.setText(password);
@@ -123,6 +125,65 @@ public class LoginActivity extends Activity {
                 Looper.loop();
             }
         }.start();
+        bnLogin.setOnClickListener(new ClickUtil() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                String name = etName.getText().toString();
+                String password = etPass.getText().toString();
+                final Boolean stat = checkBox.isChecked();
+                if (stat){
+                    saveUserInfo(name,password,stat);
+                }else{
+                    removeUserInfo();
+                }
+                String url;
+                if (StrUtil.isNotEmpty(name)&&StrUtil.isNotEmpty(password)){
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    url = HttpUtil.BASE_URL+uri;
+                    RequestParams params = new RequestParams();
+                    params.put("cpsCode",name);
+                    params.put("password",password);
+                    client.post(url, params, new TextHttpResponseHandler() {
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String message, Throwable throwable) {
+                            Toast.makeText(LoginActivity.this,"网络未连接，请重试",Toast.LENGTH_SHORT).show();
+                        }
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, String message) {
+                            if (statusCode == 200){
+                                try {
+                                    message = new String(message.getBytes("iso8859-1"),"UTF-8");
+                                    if (message.contains("true@@")){
+                                        String[] msg = message.split("@@");
+                                        String result = msg[1];
+                                        BPerson bPerson ;
+                                        bPerson = (BPerson) JsonUtil.jsonToObject(result,BPerson.class);
+                                        MyApplication myApplication = (MyApplication) getApplication();
+                                        Log.e("meng","放入全局变量中:"+bPerson.getCpsPassword());
+                                        System.out.println("放入全局变量中:"+bPerson.getCpsPassword());
+                                        myApplication.setUserInfo(bPerson);
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        Toast.makeText(LoginActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+                            }else {
+                                Toast.makeText(LoginActivity.this,"网络连接失败",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }else if ("".equals(etName.getText().toString())||"".equals(etPass.getText().toString())){
+                    new AlertDialog.Builder(LoginActivity.this)
+                            .setIcon(getResources().getDrawable(R.drawable.waring_icon))
+                            .setTitle("警告")
+                            .setMessage("用户名或密码不能为空")
+                            .create().show();
+                }
+            }
+        });
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -146,7 +207,7 @@ public class LoginActivity extends Activity {
         }
     }
     //登陆点击事件
-    public void login_main(View v){
+    /*public void login_main(View v){
         String name = etName.getText().toString();
         String password = etPass.getText().toString();
         final Boolean stat = checkBox.isChecked();
@@ -177,12 +238,13 @@ public class LoginActivity extends Activity {
                                 BPerson bPerson ;
                                 bPerson = (BPerson) JsonUtil.jsonToObject(result,BPerson.class);
                                 MyApplication myApplication = (MyApplication) getApplication();
+                                Log.e("meng","放入全局变量中:"+bPerson.getCpsPassword());
                                 System.out.println("放入全局变量中:"+bPerson.getCpsPassword());
                                 myApplication.setUserInfo(bPerson);
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                             }else {
-                                Toast.makeText(LoginActivity.this,message,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
                             }
                         }catch (Exception e){
                             e.printStackTrace();
@@ -199,7 +261,7 @@ public class LoginActivity extends Activity {
                     .setMessage("用户名或密码不能为空")
                     .create().show();
         }
-    }
+    }*/
     //读取用户信息
     public String readUserInfo(){
         SharedPreferences sp = getSharedPreferences("USERINFO",0);
