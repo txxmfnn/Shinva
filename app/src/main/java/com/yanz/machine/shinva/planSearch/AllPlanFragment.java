@@ -16,6 +16,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.yanz.machine.shinva.R;
+import com.yanz.machine.shinva.application.MyApplication;
 import com.yanz.machine.shinva.entity.SPlan;
 import com.yanz.machine.shinva.util.HttpUtil;
 
@@ -52,6 +53,7 @@ public class AllPlanFragment extends Fragment {
         tvStockGuige = (TextView) mMainView.findViewById(R.id.tv_planAll_stockPtdCode);
         tvGyr = (TextView) mMainView.findViewById(R.id.tv_planAll_gyrCode);
         tvLingliao = (TextView) mMainView.findViewById(R.id.tv_planAll_llccCode);
+
         return mMainView;
     }
     protected void initData(){
@@ -76,6 +78,7 @@ public class AllPlanFragment extends Fragment {
         });
     }
     private void loadData(){
+//        final MyApplication shinva = (MyApplication) getActivity().getApplication();可以提取全局的信息;
         SPlan sPlan = new SPlan();
         sPlan = sPlanList.get(0);
         tvGuiHao.setText(sPlan.getCwpCntrNo());

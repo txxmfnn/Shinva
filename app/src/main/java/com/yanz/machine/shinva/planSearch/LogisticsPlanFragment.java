@@ -15,6 +15,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.yanz.machine.shinva.R;
+import com.yanz.machine.shinva.application.MyApplication;
 import com.yanz.machine.shinva.entity.SLogisticsPlan;
 import com.yanz.machine.shinva.util.HttpUtil;
 
@@ -33,7 +34,7 @@ import cz.msebera.android.httpclient.Header;
 
 
 public class LogisticsPlanFragment extends Fragment {
-    private String uri ="/splan/findLogistics";
+    private String uri = "/splan/findLogistics";
     private ListView lvLogistics;
     private String planCode;
     List<SLogisticsPlan> sLogisticsPlanList = new ArrayList<SLogisticsPlan>();
@@ -42,9 +43,10 @@ public class LogisticsPlanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View mMainView = inflater.inflate(R.layout.fragment_logistics_plan, (ViewGroup)getActivity().findViewById(R.id.pager), false);
+        View mMainView = inflater.inflate(R.layout.fragment_logistics_plan, (ViewGroup) getActivity().findViewById(R.id.pager), false);
         lvLogistics = (ListView) mMainView.findViewById(R.id.lv_logistics);
         lvLogistics.setDividerHeight(0);
+
         return mMainView;
     }
 
@@ -55,10 +57,10 @@ public class LogisticsPlanFragment extends Fragment {
         initData();
     }
 
-    protected void initData(){
-        String url = HttpUtil.BASE_URL+uri;
+    protected void initData() {
+        String url = HttpUtil.BASE_URL + uri;
         RequestParams params = new RequestParams();
-        params.put("planCode",planCode);
+        params.put("planCode", planCode);
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
@@ -69,7 +71,7 @@ public class LogisticsPlanFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
-                    if (responseString.contains("true@@")){
+                    if (responseString.contains("true@@")) {
                         String[] message = responseString.split("@@");
                         String result = message[1];
                         ObjectMapper objectMapper = new ObjectMapper();
@@ -85,7 +87,7 @@ public class LogisticsPlanFragment extends Fragment {
                         public int compare(SLogisticsPlan lhs, SLogisticsPlan rhs) {
                             int s1 = lhs.getIgxh();
                             int s2 = rhs.getIgxh();
-                            if (s1>s2){
+                            if (s1 > s2) {
                                 return 1;
                             }
                             return -1;
@@ -104,11 +106,13 @@ public class LogisticsPlanFragment extends Fragment {
         });
     }
 
-    class SLogisticsPlanAdapter extends BaseAdapter{
+    class SLogisticsPlanAdapter extends BaseAdapter {
         List<SLogisticsPlan> sLogisticsPlanList;
-        public SLogisticsPlanAdapter(List<SLogisticsPlan> sLogisticsPlanList){
+
+        public SLogisticsPlanAdapter(List<SLogisticsPlan> sLogisticsPlanList) {
             this.sLogisticsPlanList = sLogisticsPlanList;
         }
+
         @Override
         public int getCount() {
             return sLogisticsPlanList.size();
@@ -126,21 +130,20 @@ public class LogisticsPlanFragment extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            if(convertView==null){
-                convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line,null);
+            if (convertView == null) {
+                convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line, null);
             }
             TextView tvCwpCode = (TextView) convertView.findViewById(R.id.tv_cwpCode);
             TextView tvReport = (TextView) convertView.findViewById(R.id.tv_report);
             TextView tvContent = (TextView) convertView.findViewById(R.id.tv_content);
-
-            tvCwpCode.setText("工序:"+sLogisticsPlanList.get(position).getIgxh());
-            tvReport.setText("合格:"+sLogisticsPlanList.get(position).getFquantity());
+            tvCwpCode.setText("工序:" + sLogisticsPlanList.get(position).getIgxh());
+            tvReport.setText("合格:" + sLogisticsPlanList.get(position).getFquantity());
             tvContent.setText(
-                    "转出:"+sLogisticsPlanList.get(position).getCdepartmentName()+"\n"+sLogisticsPlanList.get(position).getDtReportDate().substring(0,16)
-                    +"\n数量:"+sLogisticsPlanList.get(position).getFquantity()
-                    +"|应接收班组:"+sLogisticsPlanList.get(position).getCactReciveDepartmentName()
-                    +"\n|实际接收:"+sLogisticsPlanList.get(position).getCreciveDepartmentName()
-                    +"|"+sLogisticsPlanList.get(position).getCreciverName()+sLogisticsPlanList.get(position).getDtReciveDate().substring(0,16)
+                    "转出:" + sLogisticsPlanList.get(position).getCdepartmentName() + "\n" + sLogisticsPlanList.get(position).getDtReportDate().substring(0, 16)
+                            + "\n数量:" + sLogisticsPlanList.get(position).getFquantity()
+                            + "|应接收班组:" + sLogisticsPlanList.get(position).getCactReciveDepartmentName()
+                            + "\n|实际接收:" + sLogisticsPlanList.get(position).getCreciveDepartmentName()
+                            + "|" + sLogisticsPlanList.get(position).getCreciverName() + sLogisticsPlanList.get(position).getDtReciveDate().substring(0, 16)
             );
             return convertView;
         }

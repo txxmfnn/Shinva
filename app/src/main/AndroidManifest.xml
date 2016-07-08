@@ -56,9 +56,7 @@
             android:enabled="true"
             android:exported="true"></service>
 
-        <activity
-            android:name=".planSearch.PlanSearch2Activity"
-            android:label="PlanSearch2Activity"></activity>
+
         <activity android:name=".Setting.ChangePWDActivity"></activity>
         <activity android:name=".SCurrentStock.SCurrentStockActivity"></activity>
         <activity android:name=".planSearch.InputPlanActivity"></activity>
