@@ -1,1 +1,1 @@
-include ':app', ':android_async_http_library', ':stick_header_view_pager_library', ':libzxing'
+include ':app', ':android_async_http_library', ':stick_header_view_pager_library', ':libzxing', ':DropDownMenulibrary'
