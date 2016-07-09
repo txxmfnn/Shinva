@@ -109,8 +109,6 @@ public class SearchConditionActivity extends Activity {
     public void wHomeClick(View view){
         int id = view.getId();
         if (R.id.bn_stockSearch_whome == id){
-            Toast.makeText(this,"wocaowocao",Toast.LENGTH_SHORT).show();
-
             AlertDialog.Builder builder = new AlertDialog.Builder(SearchConditionActivity.this);
             builder.setIcon(R.drawable.logo);
             builder.setTitle("选择仓库:");
