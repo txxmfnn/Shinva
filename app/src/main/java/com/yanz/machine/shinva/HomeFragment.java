@@ -4,6 +4,8 @@ package com.yanz.machine.shinva;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -138,10 +140,13 @@ public class HomeFragment extends Fragment {
                 /*//跳转搜索界面
                 Intent intent = new Intent(getActivity(),TestActivity.class);
                 startActivity(intent);*/
+                PackageManager pm = getContext().getPackageManager();
+                PackageInfo pi = pm.getPackageInfo(getContext().getPackageName(),0);
+                String versionName = pi.versionName;
                 new AlertDialog.Builder(getActivity())
                         .setIcon(getResources().getDrawable(R.drawable.waring_icon))
                         .setTitle("SHINVA")
-                        .setMessage("新华医疗机械制造厂@ \n  version 1.0.4")
+                        .setMessage("新华医疗机械制造厂@ \n "+versionName)
                         .create().show();
 
             }
@@ -204,7 +209,7 @@ public class HomeFragment extends Fragment {
         menuGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent();
+//                Intent intent = new Intent();
                 switch (position){
                     case 0:
                         Toast.makeText(getActivity(),"二次派工功能暂未开放",Toast.LENGTH_SHORT).show();
