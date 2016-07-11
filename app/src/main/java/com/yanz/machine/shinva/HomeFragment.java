@@ -27,6 +27,7 @@ import com.yanz.machine.shinva.Adapter.MyGridAdapter;
 import com.yanz.machine.shinva.MyView.MyGridView;
 import com.yanz.machine.shinva.entity.UpdateInfo;
 import com.yanz.machine.shinva.planSearch.InputPlanActivity;
+import com.yanz.machine.shinva.planSearch.PlanTrackActivity;
 import com.yanz.machine.shinva.update.UpdateManager;
 import com.yanz.machine.shinva.util.ClickUtil;
 import com.yanz.machine.shinva.view.AbOnItemClickListener;
@@ -176,7 +177,9 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent();
                 switch (position){
                     case 0:
-                        Toast.makeText(getActivity(),"生产跟踪功能功能暂未开放",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(),"生产跟踪功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        intent.setClass(getActivity(), PlanTrackActivity.class);
+                        startActivity(intent);
                         break;
                     case 1:
                         intent.setClass(getActivity(), SearchConditionActivity.class);
