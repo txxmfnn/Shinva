@@ -28,6 +28,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@color/bg_Gray" />
+            <TextView
+                android:text="查询"
+                android:textSize="24sp"
+                android:textColor="@color/tv_bgblue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <com.yanz.machine.shinva.MyView.MyGridView
                 android:id="@+id/gv_menu_search"
                 android:horizontalSpacing="0dp"
@@ -48,7 +54,8 @@
                 android:text="操作"
                 android:textSize="24sp"
                 android:textColor="@color/tv_bgblue"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <com.yanz.machine.shinva.MyView.MyGridView
                 android:id="@+id/gv_menu"
                 android:horizontalSpacing="0dp"

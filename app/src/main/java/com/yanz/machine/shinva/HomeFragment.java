@@ -42,11 +42,7 @@ public class HomeFragment extends Fragment {
 
     //顶部标题栏
     private TextView tv_top_title;
-    /*//分类的九宫格
-    private GridView gridView_classify;
 
-    //调用9宫格
-    private Adapter_GridView adapter_gridView_classify;*/
     //第一个search操作
     private MyGridView menuGridViewSearch;
     //第二个menu操作
@@ -58,15 +54,7 @@ public class HomeFragment extends Fragment {
     //首页轮播
     private AbSlidingPlayView viewPage;
     //分类九宫格的资源文件
-    /*private int[] pic_patch_classify = {
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge,
-            R.drawable.app_phonecharge
-    };*/
+
     //第一个search操作
     public int[] img_menu_classify_search = {
             R.drawable.menu_produce_track,
@@ -103,7 +91,9 @@ public class HomeFragment extends Fragment {
     //存储首页轮播的界面
     private ArrayList<View> allListView;
     //首页轮播的界面的资源
-    private int[] resId = {R.drawable.viewpage1,R.drawable.viewpage2};
+    private int[] resId = {
+            R.drawable.viewpage1,
+            R.drawable.viewpage2};
 
     //定义view接收后，初始化init
 
@@ -141,12 +131,17 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),TestActivity.class);
                 startActivity(intent);*/
                 PackageManager pm = getContext().getPackageManager();
-                PackageInfo pi = pm.getPackageInfo(getContext().getPackageName(),0);
+                PackageInfo pi = null;
+                try {
+                    pi = pm.getPackageInfo(getContext().getPackageName(),0);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
                 String versionName = pi.versionName;
                 new AlertDialog.Builder(getActivity())
                         .setIcon(getResources().getDrawable(R.drawable.waring_icon))
                         .setTitle("SHINVA")
-                        .setMessage("新华医疗机械制造厂@ \n "+versionName)
+                        .setMessage("新华医疗机械制造厂 \n生产管理系统\n版本信息: "+versionName)
                         .create().show();
 
             }
