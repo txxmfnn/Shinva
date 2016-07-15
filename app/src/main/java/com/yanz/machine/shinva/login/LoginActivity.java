@@ -159,8 +159,6 @@ public class LoginActivity extends Activity {
                                         BPerson bPerson ;
                                         bPerson = (BPerson) JsonUtil.jsonToObject(result,BPerson.class);
                                         MyApplication myApplication = (MyApplication) getApplication();
-                                        Log.e("meng","放入全局变量中:"+bPerson.getCpsPassword());
-                                        System.out.println("放入全局变量中:"+bPerson.getCpsPassword());
                                         myApplication.setUserInfo(bPerson);
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         startActivity(intent);

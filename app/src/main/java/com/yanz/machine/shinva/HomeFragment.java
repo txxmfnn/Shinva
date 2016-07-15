@@ -93,7 +93,10 @@ public class HomeFragment extends Fragment {
     //首页轮播的界面的资源
     private int[] resId = {
             R.drawable.viewpage1,
-            R.drawable.viewpage2};
+            R.drawable.viewpage4,
+            R.drawable.viewpage5,
+            R.drawable.viewpage7,
+            R.drawable.viewpage8};
 
     //定义view接收后，初始化init
 

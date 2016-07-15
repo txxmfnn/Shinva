@@ -1,7 +1,13 @@
 package com.yanz.machine.shinva.planSearch;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.format.DateFormat;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -9,24 +15,47 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 import com.yanz.machine.shinva.Adapter.BaseViewHolder;
+import com.yanz.machine.shinva.PlanSearchActivity;
 import com.yanz.machine.shinva.R;
 import com.yanz.machine.shinva.entity.SPlan;
+import com.yanz.machine.shinva.util.HttpUtil;
 import com.yyydjk.library.DropDownMenu;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cz.msebera.android.httpclient.Header;
 
 public class PlanTrackActivity extends Activity {
+    private String uri= "/splan/findList";
+    private EditText outCode;
+    private EditText cntNo ;
+    private EditText partCode;
+    private EditText partName ;
+    private EditText startDate ;
+    private EditText endDate ;
+     String state="";
+     String maker="";
+     String department="";
+
     @InjectView(R.id.v_planTrack_dropDownMenu)
     DropDownMenu mDropDownMenu;
     private PlanTrackAdapter adapter;
@@ -42,9 +71,10 @@ public class PlanTrackActivity extends Activity {
     private ListDropDownAdapter makerAdapter;
     private ListDropDownAdapter departmentAdapter;
 
-    private String states[]= {"不限","完工计划","部分计划","脱期计划","在制计划","未汇报计划","未完工计划"};
-    private String makers[]={"不限","11687|董强","11598|傅强","11012|孙红云","11873|孙培霖","11503|王栋","11601|杨建强","张镇","朱小明"};
-    private String departments[]={"不限","01110405|焊工一班","01110406|焊工二班","01110410|钣金","01110411|配料","01110413|机加工","01110415|组焊班","01110416|零件班","01110420|电抛光班","0111045301|一部半成品仓库"};
+    private String states[]= {"不限","完工","部分","脱期","在制","未汇报","未完工"};
+    private String makers[]={"不限","11687|董强","11012|孙红云","11873|孙培霖","11503|王栋","11601|杨建强","11608|杨玉学","11908|张镇","11985|朱小明"};
+    private String departments[]={"不限","01110405|焊工一班","01110406|焊工二班","01110410|钣金","01110411|配料","01110413|机加工",
+            "01110415|组焊班","01110416|零件班","01110420|电抛光班","0111045301|一部半成品仓库"};
 
     private int constellationPosition = 0;
 
@@ -57,28 +87,67 @@ public class PlanTrackActivity extends Activity {
     }
     private void initView(){
         final ListView stateView = new ListView(this);
+        final ListView makerView = new ListView(this);
+        final ListView departmentView = new ListView(this);
         stateAdapter = new ListDropDownAdapter(this, Arrays.asList(states));
         stateView.setDividerHeight(0);
         stateView.setAdapter(stateAdapter);
 
-        final ListView makerView = new ListView(this);
+
         makerView.setDividerHeight(0);
         makerAdapter = new ListDropDownAdapter(this,Arrays.asList(makers));
         makerView.setAdapter(makerAdapter);
 
-        final ListView departmentView = new ListView(this);
+
         departmentAdapter = new ListDropDownAdapter(this,Arrays.asList(departments));
         departmentView.setDividerHeight(0);
         departmentView.setAdapter(departmentAdapter);
 
         final View filterView = getLayoutInflater().inflate(R.layout.layout_drop_down_menu_filter,null);
+          outCode = ButterKnife.findById(filterView,R.id.et_planTrack_outCode);
+          cntNo = ButterKnife.findById(filterView,R.id.et_planTrack_cntNo);
+          partCode = ButterKnife.findById(filterView,R.id.et_planTrack_partCode);
+          partName = ButterKnife.findById(filterView,R.id.et_planTrack_partName);
+          startDate = ButterKnife.findById(filterView,R.id.et_planTrack_startDate);
+          endDate = ButterKnife.findById(filterView,R.id.et_planTrack_endDate);
         TextView ok = ButterKnife.findById(filterView,R.id.tv_planSearch_search);
+
+        final Calendar c = Calendar.getInstance();
+        startDate.setInputType(InputType.TYPE_NULL);
+        startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog dialog = new DatePickerDialog(PlanTrackActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year,monthOfYear,dayOfMonth);
+                        startDate.setText(DateFormat.format("yyyy-MM-dd",c));
+                    }
+                },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
+            }
+        });
+        endDate.setInputType(InputType.TYPE_NULL);
+        endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog dialog = new DatePickerDialog(PlanTrackActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year,monthOfYear,dayOfMonth);
+                        endDate.setText(DateFormat.format("yyyy-MM-dd",c));
+                    }
+                },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
+            }
+        });
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mDropDownMenu.setTabText(constellationPosition==0?headers[3]:"正在查询...");
                 mDropDownMenu.closeMenu();
+                loadData();
             }
         });
 
@@ -91,7 +160,11 @@ public class PlanTrackActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 stateAdapter.setCheckItem(i);
+                if (i!=0){
+                    state = states[i];
+                }
                 mDropDownMenu.setTabText(i==0 ? headers[0]:states[i]);
+
                 mDropDownMenu.closeMenu();
             }
         });
@@ -99,7 +172,11 @@ public class PlanTrackActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 makerAdapter.setCheckItem(i);
-                mDropDownMenu.setTabText(i==0?headers[1]:makers[i]);
+                String[] test = makers[i].split("\\|");
+                if (i!=0){
+                    maker = test[0];
+                }
+                mDropDownMenu.setTabText(i==0?headers[1]:test[1]/*makers[i].substring(6,makers[i].length())*/);
                 mDropDownMenu.closeMenu();
             }
         });
@@ -107,23 +184,32 @@ public class PlanTrackActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 departmentAdapter.setCheckItem(i);
-                mDropDownMenu.setTabText(i==0?headers[2]:departments[i]);
+                String[] test = departments[i].split("\\|");
+                if (i!=0){
+                    department = test[0];
+                }
+                mDropDownMenu.setTabText(i==0?headers[2]:test[1]/*departments[i].substring(9,departments[i].length())*/);
                 mDropDownMenu.closeMenu();
             }
         });
 
-        ListView listView = new ListView(this);
-        SPlan s1 = new SPlan();
-        s1.setCwpPartCode("215.52165.454");
-        s1.setCwpPartName("图名测试");
-        s1.setCwpPlanCode("575258");
-        s1.setFwpQuantity(200.0);
-        s1.setCwpMakerName("孟天翔");
-        sPlanList.add(s1);
-        listView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));;
+        final ListView listView = new ListView(this);
+        listView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         adapter = new PlanTrackAdapter(sPlanList);
         listView.setAdapter(adapter);
-
+        listView.setDivider(new ColorDrawable(Color.GRAY));
+        listView.setDividerHeight(1);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                SPlan sPlan = (SPlan)listView.getItemAtPosition(i);
+                String planCode = sPlan.getCwpPlanCode().substring(3);
+                Intent intent = new Intent();
+                intent.putExtra("planCode",planCode);
+                intent.setClass(PlanTrackActivity.this, PlanSearchActivity.class);
+                startActivity(intent);
+            }
+        });
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers),popupViews,listView);
     }
 
@@ -178,5 +264,55 @@ public class PlanTrackActivity extends Activity {
 
             return view;
         }
+    }
+
+    private void loadData(){
+        String url = HttpUtil.BASE_URL+uri;
+        RequestParams params = new RequestParams();
+        String outCodeText= outCode.getText().toString();
+        String cntNoText= cntNo.getText().toString();
+        String partCodeText = partCode.getText().toString();
+        String partNameText = partName.getText().toString();
+        String startDateText = startDate.getText().toString();
+        String endDateText = endDate.getText().toString();
+        params.put("outCode",outCodeText);
+        params.put("cntNo",cntNoText);
+        params.put("partCode",partCodeText);
+        params.put("partName",partNameText);
+        params.put("startDate",startDateText);
+        params.put("endDate",endDateText);
+        params.put("state",state);
+        params.put("maker",maker);
+        params.put("department",department);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Toast.makeText(PlanTrackActivity.this,"请检查网络",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                try {
+                    if (responseString.contains("true@@")){
+                        String[] message = responseString.split("@@");
+                        String result = message[1];
+                        Gson gson = new Gson();
+                        List<SPlan> list;
+                        list = gson.fromJson(result,new TypeToken<List<SPlan>>(){}.getType());
+                        sPlanList.clear();
+                        sPlanList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                    }else {
+                        Toast.makeText(PlanTrackActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
     }
 }

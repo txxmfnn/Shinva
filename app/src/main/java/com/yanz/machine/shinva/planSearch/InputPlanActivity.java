@@ -111,7 +111,6 @@ public class InputPlanActivity extends Activity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Toast.makeText(InputPlanActivity.this,"请检查网络配置情况", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {

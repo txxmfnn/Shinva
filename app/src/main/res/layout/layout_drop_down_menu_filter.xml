@@ -25,6 +25,16 @@
         android:hint="图名"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_planTrack_startDate"
+        android:hint="开始日期"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_planTrack_endDate"
+        android:hint="结束日期"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tv_planSearch_search"
         android:layout_width="match_parent"
