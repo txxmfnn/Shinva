@@ -43,6 +43,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.protocol.HTTP;
 
 public class PlanTrackActivity extends Activity {
     private String uri= "/splan/findList";
@@ -72,9 +73,7 @@ public class PlanTrackActivity extends Activity {
     private ListDropDownAdapter departmentAdapter;
 
     private String states[]= {"不限","完工","部分","脱期","在制","未汇报","未完工"};
-    private String makers[]={"不限","11687|董强","11012|孙红云","11873|孙培霖","11503|王栋","11601|杨建强","11608|杨玉学","11908|张镇","11985|朱小明"};
-    private String departments[]={"不限","01110405|焊工一班","01110406|焊工二班","01110410|钣金","01110411|配料","01110413|机加工",
-            "01110415|组焊班","01110416|零件班","01110420|电抛光班","0111045301|一部半成品仓库"};
+
 
     private int constellationPosition = 0;
 
@@ -95,11 +94,11 @@ public class PlanTrackActivity extends Activity {
 
 
         makerView.setDividerHeight(0);
-        makerAdapter = new ListDropDownAdapter(this,Arrays.asList(makers));
+        makerAdapter = new ListDropDownAdapter(this,Arrays.asList(HttpUtil.MAKERS));
         makerView.setAdapter(makerAdapter);
 
 
-        departmentAdapter = new ListDropDownAdapter(this,Arrays.asList(departments));
+        departmentAdapter = new ListDropDownAdapter(this,Arrays.asList(HttpUtil.DEPARTMENTS));
         departmentView.setDividerHeight(0);
         departmentView.setAdapter(departmentAdapter);
 
@@ -111,7 +110,7 @@ public class PlanTrackActivity extends Activity {
           startDate = ButterKnife.findById(filterView,R.id.et_planTrack_startDate);
           endDate = ButterKnife.findById(filterView,R.id.et_planTrack_endDate);
         TextView ok = ButterKnife.findById(filterView,R.id.tv_planSearch_search);
-
+        cntNo.setHint("柜号");
         final Calendar c = Calendar.getInstance();
         startDate.setInputType(InputType.TYPE_NULL);
         startDate.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +171,7 @@ public class PlanTrackActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 makerAdapter.setCheckItem(i);
-                String[] test = makers[i].split("\\|");
+                String[] test = HttpUtil.MAKERS[i].split("\\|");
                 if (i!=0){
                     maker = test[0];
                 }
@@ -184,7 +183,7 @@ public class PlanTrackActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 departmentAdapter.setCheckItem(i);
-                String[] test = departments[i].split("\\|");
+                String[] test = HttpUtil.DEPARTMENTS[i].split("\\|");
                 if (i!=0){
                     department = test[0];
                 }

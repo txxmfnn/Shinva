@@ -33,7 +33,7 @@
                 android:id="@+id/tv_planAll_dingdanCode"
                 android:layout_marginLeft="7dp"
                 android:layout_toRightOf="@+id/tv_planAll_dingdan"
-                android:hint="请稍候..."
+                android:hint=""
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"

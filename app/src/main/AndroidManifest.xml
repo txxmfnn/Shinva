@@ -59,7 +59,8 @@
         <activity android:name=".Setting.ChangePWDActivity" />
         <activity android:name=".SCurrentStock.SCurrentStockActivity" />
         <activity android:name=".planSearch.InputPlanActivity" />
-        <activity android:name=".planSearch.PlanTrackActivity"></activity>
+        <activity android:name=".planSearch.PlanTrackActivity" />
+        <activity android:name=".orderinfo.OrderInfoSearchActivity"></activity>
     </application>
 
 </manifest>

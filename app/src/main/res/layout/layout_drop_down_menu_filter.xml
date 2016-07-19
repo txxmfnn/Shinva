@@ -12,12 +12,13 @@
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/et_planTrack_cntNo"
-        android:hint="柜号"
+        android:hint=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/et_planTrack_partCode"
         android:hint="图号"
+        android:inputType="numberSigned"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
