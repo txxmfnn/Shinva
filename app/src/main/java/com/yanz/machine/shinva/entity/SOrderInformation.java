@@ -25,7 +25,33 @@ public class SOrderInformation implements java.io.Serializable {
 	private String cauditMemo;
 	private Double ffinishQuantity;
 	private Integer iflowFlag;
+	private Integer iworkNeedDays;
+	private Integer ideliveryRemainDays;
+	private String dtPlanEdate;
 
+	public String getDtPlanEdate() {
+		return dtPlanEdate;
+	}
+
+	public void setDtPlanEdate(String dtPlanEdate) {
+		this.dtPlanEdate = dtPlanEdate;
+	}
+
+	public Integer getIworkNeedDays() {
+		return iworkNeedDays;
+	}
+
+	public void setIworkNeedDays(Integer iworkNeedDays) {
+		this.iworkNeedDays = iworkNeedDays;
+	}
+
+	public Integer getIdeliveryRemainDays() {
+		return ideliveryRemainDays;
+	}
+
+	public void setIdeliveryRemainDays(Integer ideliveryRemainDays) {
+		this.ideliveryRemainDays = ideliveryRemainDays;
+	}
 	// Constructors
 
 	/** default constructor */

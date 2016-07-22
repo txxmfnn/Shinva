@@ -17,10 +17,10 @@ import java.util.Map;
  */
 public class HttpUtil {
         //创建连接服务器的连接
-        /*public static final String BASE_URL =
-                "http://192.168.4.244:8080/graduation";*/
         public static final String BASE_URL =
-            "http://192.168.107.41:8080/graduation";
+                "http://192.168.4.244:8080/graduation";
+//        public static final String BASE_URL =
+//            "http://192.168.107.41:8080/graduation";
         public static final String MAKERS[]=
                 {"不限","11687|董强","11012|孙红云","11873|孙培霖","11503|王栋","11601|杨建强","11608|杨玉学","11908|张镇","11985|朱小明"};
         public static final String DEPARTMENTS[]=

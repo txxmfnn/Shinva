@@ -60,7 +60,8 @@
         <activity android:name=".SCurrentStock.SCurrentStockActivity" />
         <activity android:name=".planSearch.InputPlanActivity" />
         <activity android:name=".planSearch.PlanTrackActivity" />
-        <activity android:name=".orderinfo.OrderInfoSearchActivity"></activity>
+        <activity android:name=".orderinfo.OrderInfoSearchActivity" />
+        <activity android:name=".orderinfo.OrderInfoResultActivity"></activity>
     </application>
 
 </manifest>

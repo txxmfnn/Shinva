@@ -1,6 +1,9 @@
 package com.yanz.machine.shinva.orderinfo;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -30,9 +33,12 @@ import com.yanz.machine.shinva.entity.SOrderInformation;
 import com.yanz.machine.shinva.planSearch.ListDropDownAdapter;
 import com.yanz.machine.shinva.util.HttpUtil;
 import com.yyydjk.library.DropDownMenu;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -192,7 +198,24 @@ public class OrderInfoSearchActivity extends Activity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(OrderInfoSearchActivity.this,"成功!",Toast.LENGTH_SHORT).show();
+                SOrderInformation orderInfo = (SOrderInformation)listView.getItemAtPosition(i);
+                String orderCode = orderInfo.getCorderCode();
+                String factory = orderInfo.getCfactoryName();
+                if (orderInfo.getIworkNeedDays()==null){
+                    AlertDialog.Builder builder =new AlertDialog.Builder(OrderInfoSearchActivity.this);
+                    builder.setIcon(R.drawable.logo);
+                    builder.setTitle("错误:");
+                    builder.setMessage("该订单尚未排产，无法查询生产计划!");
+                    builder.show();
+                    return;
+                }
+                Intent intent = new Intent();
+                intent.putExtra("orderCode",orderCode);
+                intent.putExtra("factoryName",factory);
+                intent.putExtra("deliveryDate",orderInfo.getDtDeliveryDate());
+                intent.putExtra("dtPlanEdate",orderInfo.getDtPlanEdate());
+                intent.setClass(OrderInfoSearchActivity.this,OrderInfoResultActivity.class);
+                startActivity(intent);
             }
         });
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers),popupViews,listView);
@@ -206,8 +229,10 @@ public class OrderInfoSearchActivity extends Activity {
         String partNameText = partName.getText().toString();
         String startDateText = startDate.getText().toString();
         String endDateText = endDate.getText().toString();
+
         RequestParams params = new RequestParams();
         params.put("orderCode",orderCodeText);
+        params.put("maker",maker);
         params.put("auditer",auditerText);
         params.put("partCode",partCodeText);
         params.put("partName",partNameText);
@@ -219,7 +244,7 @@ public class OrderInfoSearchActivity extends Activity {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(OrderInfoSearchActivity.this,"请检查网络",Toast.LENGTH_SHORT).show();
+                Toast.makeText(OrderInfoSearchActivity.this,"暂无计划信息，请确认是否排产",Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -287,12 +312,59 @@ public class OrderInfoSearchActivity extends Activity {
             TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);
             TextView tvDeliveryDate = BaseViewHolder.get(view,R.id.tv_item_foot);
             SOrderInformation sOrderInformation = sOrderInfoList.get(i);
-            tvDeliveryDate.setText(sOrderInformation.getDtDeliveryDate());
+            String flowFlag="";
+            int j = 10;
+            if (sOrderInformation.getIflowFlag()!=null){
+                j = sOrderInformation.getIflowFlag();
+            }
+//            工作流 0=订单员取消，1=制作订单；2=提交订单；3=接收订单；4=下达生产计划；5=关联生产计划(未启用)；6=转发订单；7=订单完工；8=退回订单(未启用)；9=计划员终止订单。
+            switch (j){
+                case 0:
+                    flowFlag="订单员取消 ";
+                    break;
+                case 1:
+                    flowFlag="制作订单 ";
+                    break;
+                case 2:
+                    flowFlag="提交订单 ";
+                    break;
+                case 3:
+                    flowFlag="接收订单 ";
+                    break;
+                case 4:
+                    flowFlag="下达生产计划 ";
+                    break;
+                case 5:
+                    flowFlag="关联生产计划 ";
+                    break;
+                case 6:
+                    flowFlag="转发订单 ";
+                    break;
+                case 7:
+                    flowFlag="订单完工 ";
+                    break;
+                case 8:
+                    flowFlag="退回订单(未启用) ";
+                    break;
+                case 9:
+                    flowFlag="计划员种植订单 ";
+                    break;
+                case 10:
+                    flowFlag=" ";
+                    break;
+            }
+            tvDeliveryDate.setText(sOrderInformation.getDtDeliveryDate()+" "+flowFlag+sOrderInformation.getIworkNeedDays()+"$"+sOrderInformation.getIdeliveryRemainDays());
             tvOrderCode.setText(sOrderInformation.getCorderCode());
             tvQuantity.setText(" "+sOrderInformation.getFquantity());
             tvMaker.setText(sOrderInformation.getCmakerName());
             tvPartCode.setText(sOrderInformation.getCpartCode());
             tvPartName.setText(sOrderInformation.getCpartName());
+            if (sOrderInformation.getIdeliveryRemainDays()!=null&&sOrderInformation.getIworkNeedDays()!=null){
+                if (sOrderInformation.getIdeliveryRemainDays()<sOrderInformation.getIworkNeedDays()){
+                    tvDeliveryDate.setBackgroundColor(getResources().getColor(R.color.tv_Red));
+                }
+            }
+            tvPartCode.setTextColor(getResources().getColor(R.color.tv_bgblue));
             return view;
         }
     }

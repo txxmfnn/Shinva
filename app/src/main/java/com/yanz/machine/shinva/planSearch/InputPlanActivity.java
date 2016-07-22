@@ -101,7 +101,6 @@ public class InputPlanActivity extends Activity {
         });
     }
     public void initData(){
-        Log.i("xiu","开始加载数据");
         String url = HttpUtil.BASE_URL+uri;
         RequestParams params = new RequestParams();
         params.put("planCode",etPlanCode.getText().toString());
