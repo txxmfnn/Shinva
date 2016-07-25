@@ -106,17 +106,14 @@ public class OrderInfoResultActivity extends Activity {
         public int getCount() {
             return sPlanList.size();
         }
-
         @Override
         public Object getItem(int i) {
             return sPlanList.get(i);
         }
-
         @Override
         public long getItemId(int i) {
             return i;
         }
-
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
             if (view==null){
