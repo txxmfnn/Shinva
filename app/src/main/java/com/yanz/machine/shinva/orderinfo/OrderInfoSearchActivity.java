@@ -253,7 +253,6 @@ public class OrderInfoSearchActivity extends Activity {
                     if (responseString.contains("true@@")){
                         String[] message = responseString.split("@@");
                         String result = message[1];
-                        Log.e("meng",result);
                         Gson gson = new Gson();
                         List<SOrderInformation> list;
                         list = gson.fromJson(result,new TypeToken<List<SOrderInformation>>(){}.getType());

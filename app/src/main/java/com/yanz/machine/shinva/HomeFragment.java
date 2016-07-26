@@ -31,6 +31,7 @@ import com.yanz.machine.shinva.entity.UpdateInfo;
 import com.yanz.machine.shinva.orderinfo.OrderInfoSearchActivity;
 import com.yanz.machine.shinva.planSearch.InputPlanActivity;
 import com.yanz.machine.shinva.planSearch.PlanTrackActivity;
+import com.yanz.machine.shinva.unqualifyPartDeal.UnqualifyPartDealActivity;
 import com.yanz.machine.shinva.update.UpdateManager;
 import com.yanz.machine.shinva.util.ClickUtil;
 import com.yanz.machine.shinva.view.AbOnItemClickListener;
@@ -195,7 +196,9 @@ public class HomeFragment extends Fragment {
                         startActivity(intent);
                         break;
                     case 3:
-                        Toast.makeText(getActivity(),"质量事故功能功能暂未开放",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity(),"质量事故功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        intent.setClass(getActivity(), UnqualifyPartDealActivity.class);
+                        startActivity(intent);
                         break;
                     case 4:
                         Toast.makeText(getActivity(),"入库台账功能功能暂未开放",Toast.LENGTH_SHORT).show();
