@@ -17,10 +17,10 @@ import java.util.Map;
  */
 public class HttpUtil {
         //创建连接服务器的连接
-//        public static final String BASE_URL =
-//                "http://192.168.4.244:8080/graduation";
         public static final String BASE_URL =
-            "http://192.168.107.41:8080/graduation";
+                "http://192.168.4.244:8080/graduation";
+//        public static final String BASE_URL =
+//            "http://192.168.107.41:8080/graduation";
         public static final String MAKERS[]=
                 {"不限","11687|董强","11012|孙红云","11873|孙培霖","11503|王栋","11601|杨建强","11608|杨玉学","11908|张镇","11985|朱小明"};
         public static final String DEPARTMENTS[]=
@@ -41,6 +41,16 @@ public class HttpUtil {
                 "11414|吴新生","11418|刘国忠","11444|张建波","11498|陈洪文","11702|孙龙","11703|王波",
                 "11726|谷晓冬","11728|高小明","11806|袁文举","11814|徐铭","11916|张金星","11917|贾小龙"
         };
+        public static final String WHOMES[] = {
+                "不限",
+                "011101|不锈钢板材库",
+                "011102|不锈钢型材库",
+                "011103|黑材库",
+                "011104|外购件库",
+                "011105|耗材库",
+                "011106|焊材库",
+                "011107|刀具库",
+                "011121|半成品库"};
          public static String sendPost(String url,String params) throws IOException {
               URL realUrl = null;
               BufferedReader in = null;

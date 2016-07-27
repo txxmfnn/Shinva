@@ -3,6 +3,7 @@ package com.yanz.machine.shinva.login;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,7 +38,11 @@ import cz.msebera.android.httpclient.Header;
 
 public class LoginActivity extends Activity {
 
-
+    //登录后显示loading
+    int MSG_INIT_OK = 1;
+    int MSG_INIT_INFO = 2;
+    int MSG_INIT_TIMEOUT = 9;
+    boolean isTimeOut = false;
 
     private MyApplication application;
 
@@ -48,6 +53,29 @@ public class LoginActivity extends Activity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             isExit = false;
+            if (msg.what==MSG_INIT_TIMEOUT){
+                if (mHandler!=null&&timeOutTask!=null){
+                    mHandler.removeCallbacks(timeOutTask);
+                }
+                Toast.makeText(LoginActivity.this,"timeOut",Toast.LENGTH_SHORT).show();
+                LoginActivity.this.finish();
+            }else if (msg.what == MSG_INIT_OK){
+                if (mHandler!=null&&timeOutTask!=null){
+                    mHandler.removeCallbacks(timeOutTask);
+                }
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+
+            }
+        }
+    };
+    Runnable timeOutTask = new Runnable() {
+        @Override
+        public void run() {
+            isTimeOut = true;
+            Message msg = Message.obtain();
+            msg.what = MSG_INIT_TIMEOUT;
+            mHandler.sendMessage(msg);
         }
     };
     //获取sp内信息
@@ -128,6 +156,7 @@ public class LoginActivity extends Activity {
         bnLogin.setOnClickListener(new ClickUtil() {
             @Override
             protected void onNoDoubleClick(View view) {
+                final ProgressDialog proDialog = ProgressDialog.show(LoginActivity.this,"登录","请稍候...");
                 String name = etName.getText().toString();
                 String password = etPass.getText().toString();
                 final Boolean stat = checkBox.isChecked();
@@ -146,6 +175,7 @@ public class LoginActivity extends Activity {
                     client.post(url, params, new TextHttpResponseHandler() {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String message, Throwable throwable) {
+                            proDialog.dismiss();
                             Toast.makeText(LoginActivity.this,"网络未连接，请重试",Toast.LENGTH_SHORT).show();
                         }
                         @Override
@@ -160,19 +190,28 @@ public class LoginActivity extends Activity {
                                         bPerson = (BPerson) JsonUtil.jsonToObject(result,BPerson.class);
                                         MyApplication myApplication = (MyApplication) getApplication();
                                         myApplication.setUserInfo(bPerson);
-                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(intent);
+//                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                                        startActivity(intent);
+
+                                        Message msg2 = Message.obtain();
+                                        msg2.what = MSG_INIT_OK;
+                                        mHandler.sendMessage(msg2);
+                                        proDialog.dismiss();
                                     }else {
+                                        proDialog.dismiss();
                                         Toast.makeText(LoginActivity.this,"用户名或密码错误",Toast.LENGTH_SHORT).show();
                                     }
                                 }catch (Exception e){
+                                    proDialog.dismiss();
                                     e.printStackTrace();
                                 }
                             }else {
+                                proDialog.dismiss();
                                 Toast.makeText(LoginActivity.this,"网络连接失败",Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
+                    mHandler.postDelayed(timeOutTask,15000);
                 }else if ("".equals(etName.getText().toString())||"".equals(etPass.getText().toString())){
                     new AlertDialog.Builder(LoginActivity.this)
                             .setIcon(getResources().getDrawable(R.drawable.waring_icon))

@@ -101,6 +101,7 @@ public class OrderInfoSearchActivity extends Activity {
 
         final View filterView = getLayoutInflater().inflate(R.layout.layout_drop_down_menu_filter,null);
         orderCode = ButterKnife.findById(filterView,R.id.et_planTrack_outCode);
+        orderCode.setInputType(InputType.TYPE_CLASS_NUMBER);
         auditer = ButterKnife.findById(filterView,R.id.et_planTrack_cntNo);
         partCode = ButterKnife.findById(filterView,R.id.et_planTrack_partCode);
         partName = ButterKnife.findById(filterView,R.id.et_planTrack_partName);

@@ -1,10 +1,14 @@
 package com.yanz.machine.shinva;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -18,6 +22,14 @@ import com.yanz.machine.shinva.Tools.IBtnCallListener;
 public class MainActivity extends FragmentActivity
         implements OnClickListener,IBtnCallListener {
 
+    private boolean isExit;
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
     //界面底部的菜单按钮
     private ImageView[] bt_menu = new ImageView[4];
     //界面底部的菜单按钮id，id在main_fa布局中
@@ -230,5 +242,26 @@ public class MainActivity extends FragmentActivity
         } catch (Exception e) {
         }
         super.onAttachFragment(fragment);
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            exit();
+            return false;
+        }else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+    public void exit(){
+        if (!isExit){
+            isExit= true;
+            Toast.makeText(getApplicationContext(),"再按一次退出程序",Toast.LENGTH_SHORT).show();
+            mHandler.sendEmptyMessageDelayed(0,2000);
+        }else {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+            System.exit(0);
+        }
     }
 }

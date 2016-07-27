@@ -62,11 +62,17 @@
         <activity android:name=".planSearch.PlanTrackActivity" />
         <activity android:name=".orderinfo.OrderInfoSearchActivity" />
         <activity android:name=".orderinfo.OrderInfoResultActivity" />
-        <activity android:name=".unqualifyPartDeal.UnqualifyPartDealActivity"></activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <activity android:name=".unqualifyPartDeal.UnqualifyPartDealActivity" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".rdRecord.RdRecordInActivity" />
+        <activity android:name=".rdRecord.RdRecordOutActivity"></activity>
     </application>
 
 </manifest>
