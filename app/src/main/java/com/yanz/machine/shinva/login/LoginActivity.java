@@ -58,7 +58,7 @@ public class LoginActivity extends Activity {
                     mHandler.removeCallbacks(timeOutTask);
                 }
                 Toast.makeText(LoginActivity.this,"timeOut",Toast.LENGTH_SHORT).show();
-                LoginActivity.this.finish();
+                //LoginActivity.this.finish();
             }else if (msg.what == MSG_INIT_OK){
                 if (mHandler!=null&&timeOutTask!=null){
                     mHandler.removeCallbacks(timeOutTask);
