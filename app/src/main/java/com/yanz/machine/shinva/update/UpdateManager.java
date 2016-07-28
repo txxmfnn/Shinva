@@ -89,10 +89,10 @@ public class UpdateManager {
                     };
                     timer.schedule(task,1);
                     //退出程序
-                    System.exit(0);
+                    System.exit(1000);
                     break;
-                default:
-                    break;
+//                default:
+//                    break;
 
             }
         }

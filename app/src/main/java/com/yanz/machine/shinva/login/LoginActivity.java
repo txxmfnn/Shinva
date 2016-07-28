@@ -137,22 +137,7 @@ public class LoginActivity extends Activity {
         }
         //绑定取消事件
         bnCancel.setOnClickListener(new HomeListener(this));
-        //自动检查更新
-        Toast.makeText(LoginActivity.this,"正在检查更新...",Toast.LENGTH_SHORT).show();
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                Looper.prepare();
-                try {
-                    UpdateManager um= new UpdateManager(LoginActivity.this);
-                    um.checkUpdate();}
-                 catch (IOException e){
-                    e.printStackTrace();
-                }
-                Looper.loop();
-            }
-        }.start();
+
         bnLogin.setOnClickListener(new ClickUtil() {
             @Override
             protected void onNoDoubleClick(View view) {

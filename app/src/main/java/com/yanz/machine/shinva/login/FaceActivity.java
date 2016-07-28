@@ -4,10 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.yanz.machine.shinva.R;
+import com.yanz.machine.shinva.update.UpdateManager;
+
+import java.io.IOException;
 
 
 public class FaceActivity extends Activity {
@@ -32,12 +37,27 @@ public class FaceActivity extends Activity {
         setContentView(R.layout.face_activity);
 
         //getSupportActionBar().hide();//隐藏标题，继承自appActivity，所以用这种方式
-
+        //自动检查更新
+        Toast.makeText(FaceActivity.this,"正在检查更新...",Toast.LENGTH_SHORT).show();
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                Looper.prepare();
+                try {
+                    UpdateManager um= new UpdateManager(FaceActivity.this);
+                    um.checkUpdate();}
+                catch (IOException e){
+                    e.printStackTrace();
+                }
+                Looper.loop();
+            }
+        }.start();
 
         //更改UI
         Message message = new Message();
         message.what = GO_TO_LOGIN_ACTIVITY;
-        handler.sendEmptyMessageDelayed(GO_TO_LOGIN_ACTIVITY,1000);
+        handler.sendEmptyMessageDelayed(GO_TO_LOGIN_ACTIVITY,2000);
     }
     public boolean onKeyDown(int keyCode,KeyEvent event){
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() ==0){
