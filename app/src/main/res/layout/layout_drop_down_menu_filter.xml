@@ -26,16 +26,43 @@
         android:hint="图名"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/et_planTrack_startDate"
-        android:hint="开始日期"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:id="@+id/et_planTrack_endDate"
-        android:hint="结束日期"
+        android:layout_height="wrap_content">
+
+
+        <EditText
+            android:id="@+id/et_planTrack_startDate"
+            android:hint="计划完工起始"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_planTrack_endDate"
+            android:hint="计划完工结束"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/et_planTrack_makeStartDate"
+            android:hint="计划制定起始"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/et_planTrack_makerEnd2Date"
+            android:hint="计划制定结束"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tv_planSearch_search"
         android:layout_width="match_parent"

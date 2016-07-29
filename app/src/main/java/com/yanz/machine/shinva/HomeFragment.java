@@ -6,7 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -268,6 +270,7 @@ public class HomeFragment extends Fragment {
             View view = LayoutInflater.from(getActivity()).inflate(R.layout.pic_item,null);
             ImageView imageView = (ImageView)view.findViewById(R.id.pic_item);
             imageView.setImageResource(resId[i]);
+
             allListView.add(view);
         }
         viewPage.addViews(allListView);
