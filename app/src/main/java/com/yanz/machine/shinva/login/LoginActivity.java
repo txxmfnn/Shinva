@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -116,6 +117,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         //获取界面内两个编辑框
         etName = (EditText) findViewById(R.id.userEditText);
+        etName.setInputType(InputType.TYPE_CLASS_NUMBER);
         etPass = (EditText) findViewById(R.id.pwdEditText);
         //获取按钮
         bnLogin = (Button) findViewById(R.id.sLogin);

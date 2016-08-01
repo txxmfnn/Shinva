@@ -29,38 +29,43 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
 
 
-        <EditText
-            android:id="@+id/et_planTrack_startDate"
+        <Button
+            android:id="@+id/bn_planTrack_startDate"
             android:hint="计划完工起始"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/et_planTrack_endDate"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"/>
+        <Button
+            android:id="@+id/bn_planTrack_endDate"
             android:hint="计划完工结束"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/bt_planTrack_makeStartDate"
+            android:id="@+id/bn_planTrack_makeStartDate"
             android:hint="计划制定起始"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"/>
         <Button
-            android:id="@+id/bt_planTrack_makerEnd2Date"
+            android:id="@+id/bn_planTrack_makeEndDate"
             android:hint="计划制定结束"
             android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"/>
     </LinearLayout>
 
     <TextView

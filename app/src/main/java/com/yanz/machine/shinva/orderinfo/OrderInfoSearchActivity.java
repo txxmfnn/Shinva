@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -51,8 +52,10 @@ public class OrderInfoSearchActivity extends Activity {
     private EditText auditer ;
     private EditText partCode;
     private EditText partName ;
-    private EditText startDate ;
-    private EditText endDate ;
+    private Button startDate ;
+    private Button endDate ;
+    private Button startMakeDate;
+    private Button endMakeDate;
     String factory="";
     String maker="";
     String state="";
@@ -105,8 +108,10 @@ public class OrderInfoSearchActivity extends Activity {
         auditer = ButterKnife.findById(filterView,R.id.et_planTrack_cntNo);
         partCode = ButterKnife.findById(filterView,R.id.et_planTrack_partCode);
         partName = ButterKnife.findById(filterView,R.id.et_planTrack_partName);
-        startDate = ButterKnife.findById(filterView,R.id.et_planTrack_startDate);
-        endDate = ButterKnife.findById(filterView,R.id.et_planTrack_endDate);
+        startDate = ButterKnife.findById(filterView,R.id.bn_planTrack_startDate);
+        endDate = ButterKnife.findById(filterView,R.id.bn_planTrack_endDate);
+        startMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeStartDate);
+        endMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeEndDate);
         TextView ok = ButterKnife.findById(filterView,R.id.tv_planSearch_search);
         auditer.setHint("编辑员");
         //partCode.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
@@ -121,6 +126,7 @@ public class OrderInfoSearchActivity extends Activity {
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         c.set(year,monthOfYear,dayOfMonth);
                         startDate.setText(DateFormat.format("yyyy-MM-dd",c));
+                        endDate.setText(DateFormat.format("yyyy-MM-dd",c));
                     }
                 },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
@@ -134,6 +140,67 @@ public class OrderInfoSearchActivity extends Activity {
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         c.set(year,monthOfYear,dayOfMonth);
                         endDate.setText(DateFormat.format("yyyy-MM-dd",c));
+                    }
+                },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
+            }
+        });
+        startDate.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                startDate.setText(null);
+                endDate.setText(null);
+                return true;
+            }
+        });
+        endDate.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                startDate.setText(null);
+                endDate.setText(null);
+                return true;
+            }
+        });
+        startMakeDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog dialog = new DatePickerDialog(OrderInfoSearchActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year,monthOfYear,dayOfMonth);
+                        startMakeDate.setText(DateFormat.format("yyyy-MM-dd",c));
+                        endMakeDate.setText(DateFormat.format("yyyy-MM-dd",c));
+                    }
+                },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
+            }
+        });
+        startMakeDate.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                startMakeDate.setText(null);
+                endMakeDate.setText(null);
+                return true;
+            }
+        });
+        endMakeDate.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                startMakeDate.setText(null);
+                endMakeDate.setText(null);
+                return true;
+            }
+        });
+        endMakeDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog dialog = new DatePickerDialog(OrderInfoSearchActivity.this, new DatePickerDialog.OnDateSetListener() {
+
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year,monthOfYear,dayOfMonth);
+                        endMakeDate.setText(DateFormat.format("yyyy-MM-dd",c));
                     }
                 },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
@@ -241,6 +308,8 @@ public class OrderInfoSearchActivity extends Activity {
         params.put("endDate",endDateText);
         params.put("factory",factory);
         params.put("state",state);
+        params.put("startMakeDate",startMakeDate.getText().toString());
+        params.put("endMakeDate",endMakeDate.getText().toString());
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(url, params, new TextHttpResponseHandler() {
             @Override

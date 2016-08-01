@@ -7,7 +7,7 @@ android {
     buildToolsVersion "23.0.2"
     defaultConfig {
         applicationId "com.yanz.machine.shinva"
-        minSdkVersion 16
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 7
         versionName "1.0.6"
