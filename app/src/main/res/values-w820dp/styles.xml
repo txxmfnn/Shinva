@@ -1,7 +1,13 @@
 <resources>
-    <style name="AppTheme" parent="MyThemeBlue"></style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/main_blue_light</item>
+        <item name="colorPrimaryDark">@color/main_blue_dark</item>
+        <item name="colorAccent">@color/main_blue_light</item>
+        <item name="android:textColorPrimary">@color/tv_Black</item>
+    </style>
     <!-- Base application theme. -->
-    <style name="MyThemeBlue" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="MyThemeBlue" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/main_blue_light</item>
         <item name="colorPrimaryDark">@color/main_blue_dark</item>

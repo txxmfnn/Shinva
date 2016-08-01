@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.yanz.machine.shinva.R;
@@ -33,7 +34,7 @@ public class FaceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);//无标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);//无标题
         setContentView(R.layout.face_activity);
 
         //getSupportActionBar().hide();//隐藏标题，继承自appActivity，所以用这种方式

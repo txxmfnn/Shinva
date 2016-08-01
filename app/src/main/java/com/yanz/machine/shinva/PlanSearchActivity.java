@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,6 +78,7 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_plan_search);
         Intent intent = getIntent();
         planCode = intent.getStringExtra("planCode");
@@ -86,8 +88,6 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         tv_fwpQuantity = (TextView) findViewById(R.id.tv_fwpQuantity);
         tv_makerName = (TextView) findViewById(R.id.tv_makerName);
         tv_planCode.setText(planCode);
-
-
         viewPager = (ViewPager) findViewById(R.id.pager);
         findViewById(R.id.id_ll_planInfo).setOnClickListener(this);
         mPlanInfo = (TextView) findViewById(R.id.id_tv_planInfo);//计划信息
