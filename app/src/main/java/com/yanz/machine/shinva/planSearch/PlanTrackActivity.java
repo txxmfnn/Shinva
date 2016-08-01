@@ -2,6 +2,7 @@ package com.yanz.machine.shinva.planSearch;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -53,10 +54,11 @@ public class PlanTrackActivity extends Activity {
     private EditText partName ;
     private EditText startDate ;
     private EditText endDate ;
+
      String state="";
      String maker="";
      String department="";
-
+    ProgressDialog proDialog;
     @InjectView(R.id.v_planTrack_dropDownMenu)
     DropDownMenu mDropDownMenu;
     private PlanTrackAdapter adapter;
@@ -65,7 +67,7 @@ public class PlanTrackActivity extends Activity {
             "状态",
             "计划员",
             "班组"
-            ,"筛选"
+            ,"更多"
     };
     private List<View> popupViews = new ArrayList<>();
     private ListDropDownAdapter stateAdapter;
@@ -122,6 +124,7 @@ public class PlanTrackActivity extends Activity {
                         c.set(year,monthOfYear,dayOfMonth);
                         startDate.setText(DateFormat.format("yyyy-MM-dd",c));
                     }
+
                 },c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
             }
@@ -144,6 +147,7 @@ public class PlanTrackActivity extends Activity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                proDialog = ProgressDialog.show(PlanTrackActivity.this,"正在查询","请稍候...");
                 mDropDownMenu.setTabText(constellationPosition==0?headers[3]:"正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
@@ -287,6 +291,7 @@ public class PlanTrackActivity extends Activity {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
                 Toast.makeText(PlanTrackActivity.this,"请检查网络",Toast.LENGTH_SHORT).show();
             }
 
@@ -302,6 +307,7 @@ public class PlanTrackActivity extends Activity {
                         sPlanList.clear();
                         sPlanList.addAll(list);
                         adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
                     }else {
                         Toast.makeText(PlanTrackActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
                     }

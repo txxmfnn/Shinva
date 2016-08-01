@@ -49,14 +49,14 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <EditText
-            android:id="@+id/et_planTrack_makeStartDate"
+        <Button
+            android:id="@+id/bt_planTrack_makeStartDate"
             android:hint="计划制定起始"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/et_planTrack_makerEnd2Date"
+        <Button
+            android:id="@+id/bt_planTrack_makerEnd2Date"
             android:hint="计划制定结束"
             android:layout_weight="1"
             android:layout_width="match_parent"

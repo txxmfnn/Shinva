@@ -65,9 +65,8 @@ public class LogisticsPlanFragment extends Fragment {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Toast.makeText(getActivity(), "连接错误DispatchingInfofragment", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "连接错误DispatchingInfofragment", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {

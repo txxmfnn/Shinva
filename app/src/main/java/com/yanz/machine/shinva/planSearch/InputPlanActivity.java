@@ -1,6 +1,7 @@
 package com.yanz.machine.shinva.planSearch;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ public class InputPlanActivity extends Activity {
     private ListView lvResult;
     private List<SPlan> sPlans = new ArrayList<SPlan>();
     private InputPlanAdapter adapter;
+    ProgressDialog proDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +88,7 @@ public class InputPlanActivity extends Activity {
         btSearch.setOnClickListener(new ClickUtil() {
             @Override
             protected void onNoDoubleClick(View view) {
+                proDialog = ProgressDialog.show(InputPlanActivity.this,"正在查询","请稍候...");
                 initData();
             }
         });
@@ -108,11 +111,13 @@ public class InputPlanActivity extends Activity {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
                 Toast.makeText(InputPlanActivity.this,"请检查网络配置情况", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {
+                    proDialog.dismiss();
                     String[] message = responseString.split("@@");
                     String result = message[1];
                     Gson gson = new Gson();
