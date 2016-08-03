@@ -220,7 +220,6 @@ public class PlanTrackActivity extends Activity {
                 loadData();
             }
         });
-
         popupViews.add(stateView);
         popupViews.add(makerView);
         popupViews.add(departmentView);
@@ -234,7 +233,6 @@ public class PlanTrackActivity extends Activity {
                     state = states[i];
                 }
                 mDropDownMenu.setTabText(i==0 ? headers[0]:states[i]);
-
                 mDropDownMenu.closeMenu();
             }
         });
@@ -324,14 +322,14 @@ public class PlanTrackActivity extends Activity {
             TextView tvMaker = BaseViewHolder.get(view,R.id.tv_item_report);
             TextView tvPartCode = BaseViewHolder.get(view,R.id.tv_item_mid);
             TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_code);
-
+            TextView tvCode = BaseViewHolder.get(view,R.id.tv_item_foot);
             SPlan sPlan = sPlanList.get(i);
             tvPlanCode.setText(sPlan.getCwpPlanCode());
             tvQuantity.setText(" "+sPlan.getFwpPlanQuantity());
             tvMaker.setText(sPlan.getCwpMakerName());
             tvPartCode.setText(sPlan.getCwpPartCode());
             tvPartName.setText(sPlan.getCwpPartName());
-
+            tvCode.setText(sPlan.getCwpCntrNo());
             return view;
         }
     }

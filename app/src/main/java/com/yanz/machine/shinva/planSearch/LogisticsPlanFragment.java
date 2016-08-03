@@ -137,12 +137,17 @@ public class LogisticsPlanFragment extends Fragment {
             TextView tvContent = (TextView) convertView.findViewById(R.id.tv_content);
             tvCwpCode.setText("工序:" + sLogisticsPlanList.get(position).getIgxh());
             tvReport.setText("合格:" + sLogisticsPlanList.get(position).getFquantity());
+            String recive = sLogisticsPlanList.get(position).getDtReciveDate();
+            String reciveDate=" ";
+            if (recive!=null&&recive!=""){
+                reciveDate = recive.substring(0,10);
+            }
             tvContent.setText(
                     "转出:" + sLogisticsPlanList.get(position).getCdepartmentName() + "\n" + sLogisticsPlanList.get(position).getDtReportDate().substring(0, 16)
                             + "\n数量:" + sLogisticsPlanList.get(position).getFquantity()
                             + "|应接收班组:" + sLogisticsPlanList.get(position).getCactReciveDepartmentName()
                             + "\n|实际接收:" + sLogisticsPlanList.get(position).getCreciveDepartmentName()
-                            + "|" + sLogisticsPlanList.get(position).getCreciverName() + sLogisticsPlanList.get(position).getDtReciveDate().substring(0, 16)
+                            + "|" + sLogisticsPlanList.get(position).getCreciverName() +reciveDate
             );
             return convertView;
         }

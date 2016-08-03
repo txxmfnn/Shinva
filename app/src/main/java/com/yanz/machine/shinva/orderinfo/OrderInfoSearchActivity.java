@@ -316,7 +316,6 @@ public class OrderInfoSearchActivity extends Activity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Toast.makeText(OrderInfoSearchActivity.this,"暂无计划信息，请确认是否排产",Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 try {

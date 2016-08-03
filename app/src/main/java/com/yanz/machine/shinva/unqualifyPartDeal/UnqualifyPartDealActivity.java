@@ -67,7 +67,7 @@ public class UnqualifyPartDealActivity extends Activity {
             "班组",
             "检验员",
             "处理人",
-            "处理结果",
+            "结果",
             "更多"
     };
     private List<SUnqualifyPartDeal> dealList = new ArrayList<SUnqualifyPartDeal>();
