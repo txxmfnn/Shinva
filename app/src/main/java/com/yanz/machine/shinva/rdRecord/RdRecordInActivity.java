@@ -2,6 +2,7 @@ package com.yanz.machine.shinva.rdRecord;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -52,6 +53,7 @@ public class RdRecordInActivity extends Activity {
     private Button endDate;
     private Button startMakeDate;
     private Button endMakeDate;
+    ProgressDialog proDialog;
     String dept="";
     String whCode="";
     @InjectView(R.id.v_rdRecord_search_dropDownMenu)
@@ -190,6 +192,7 @@ public class RdRecordInActivity extends Activity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                proDialog = ProgressDialog.show(RdRecordInActivity.this,"正在查询","请稍候...");
                 mDropDownMenu.setTabText(constellationPosition == 0 ? headers[2] : "正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
@@ -254,6 +257,7 @@ public class RdRecordInActivity extends Activity {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
                 Toast.makeText(RdRecordInActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
             }
 
@@ -270,7 +274,9 @@ public class RdRecordInActivity extends Activity {
                         recordList.clear();
                         recordList.addAll(list);
                         adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
                     }else {
+                        proDialog.dismiss();
                         Toast.makeText(RdRecordInActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){

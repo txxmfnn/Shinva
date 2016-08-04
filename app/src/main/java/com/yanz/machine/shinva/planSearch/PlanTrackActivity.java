@@ -268,6 +268,7 @@ public class PlanTrackActivity extends Activity {
         listView.setDivider(new ColorDrawable(Color.GRAY));
         listView.setDividerHeight(1);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 SPlan sPlan = (SPlan)listView.getItemAtPosition(i);

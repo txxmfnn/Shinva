@@ -2,6 +2,7 @@ package com.yanz.machine.shinva.unqualifyPartDeal;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -56,6 +57,7 @@ public class UnqualifyPartDealActivity extends Activity {
     private Button endDate;
     private Button startMakeDate;
     private Button endMakeDate;
+    ProgressDialog proDialog;
     String department;
     String checker;
     String technoliger;
@@ -213,6 +215,7 @@ public class UnqualifyPartDealActivity extends Activity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                proDialog = ProgressDialog.show(UnqualifyPartDealActivity.this,"正在查询","请稍候...");
                 mDropDownMenu.setTabText(constellationPosition == 0 ? headers[3] : "正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
@@ -308,6 +311,7 @@ public class UnqualifyPartDealActivity extends Activity {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
                 Toast.makeText(UnqualifyPartDealActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -322,7 +326,9 @@ public class UnqualifyPartDealActivity extends Activity {
                         dealList.clear();
                         dealList.addAll(list);
                         adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
                     }else {
+                        proDialog.dismiss();
                         Toast.makeText(UnqualifyPartDealActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){

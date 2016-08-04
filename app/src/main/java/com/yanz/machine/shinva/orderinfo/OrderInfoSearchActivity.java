@@ -2,6 +2,7 @@ package com.yanz.machine.shinva.orderinfo;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -56,6 +57,7 @@ public class OrderInfoSearchActivity extends Activity {
     private Button endDate ;
     private Button startMakeDate;
     private Button endMakeDate;
+    ProgressDialog proDialog;
     String factory="";
     String maker="";
     String state="";
@@ -209,6 +211,7 @@ public class OrderInfoSearchActivity extends Activity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                proDialog = ProgressDialog.show(OrderInfoSearchActivity.this,"正在查询","请稍候...");
                 mDropDownMenu.setTabText(constellationPosition==0?headers[3]:"正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
@@ -248,7 +251,6 @@ public class OrderInfoSearchActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 stateAdapter.setCheckItem(i);
-
                 if (i!=0){
                     state = states[i];
                 }
@@ -314,6 +316,7 @@ public class OrderInfoSearchActivity extends Activity {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
                 Toast.makeText(OrderInfoSearchActivity.this,"暂无计划信息，请确认是否排产",Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -328,7 +331,9 @@ public class OrderInfoSearchActivity extends Activity {
                         orderInfoList.clear();
                         orderInfoList.addAll(list);
                         adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
                     }else {
+                        proDialog.dismiss();
                         Toast.makeText(OrderInfoSearchActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){

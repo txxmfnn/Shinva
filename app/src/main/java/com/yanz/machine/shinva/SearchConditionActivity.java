@@ -2,6 +2,7 @@ package com.yanz.machine.shinva;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,6 +44,7 @@ public class SearchConditionActivity extends Activity {
     private Button wHome;
     private Button bnSearch;
     private ListView lvResult;
+    ProgressDialog proDialog;
     List<SCurrentStock> stocks = new ArrayList<SCurrentStock>();
     List<SCurrentStock> list = new ArrayList<SCurrentStock>();
     private StockAdapter adapter;
@@ -124,6 +126,7 @@ public class SearchConditionActivity extends Activity {
     public void search(View view){
         int id = view.getId();
         if (R.id.bn_stockSearch_search == id){
+            proDialog = ProgressDialog.show(SearchConditionActivity.this,"正在查询","请稍候...");
             loadData();
         }
     }
@@ -143,13 +146,9 @@ public class SearchConditionActivity extends Activity {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
                 Toast.makeText(SearchConditionActivity.this,"链接错误",Toast.LENGTH_SHORT).show();
-                SCurrentStock s4 = new SCurrentStock();
-                s4.setCcsPartStd("error");
-                s4.setFcsQuantity(0.0);
-                stocks.clear();
-                stocks.add(s4);
-                adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -159,6 +158,7 @@ public class SearchConditionActivity extends Activity {
                     stocks.clear();
                     stocks.addAll(list);
                     adapter.notifyDataSetChanged();
+                proDialog.dismiss();
             }
         });
     }

@@ -2,6 +2,7 @@ package com.yanz.machine.shinva.rdRecord;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -52,6 +53,7 @@ public class RdRecordOutActivity extends Activity {
     private Button endDate;
     private Button startMakeDate;
     private Button endMakeDate;
+    ProgressDialog proDialog;
     String dept="";
     String whCode="";
     @InjectView(R.id.v_rdRecord_out_dropDownMenu)
@@ -107,6 +109,7 @@ public class RdRecordOutActivity extends Activity {
                     public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                         c.set(year, monthOfYear, dayOfMonth);
                         startDate.setText(DateFormat.format("yyyy-MM-dd", c));
+                        endDate.setText(DateFormat.format("yyyy-MM-dd", c));
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
@@ -189,6 +192,7 @@ public class RdRecordOutActivity extends Activity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                proDialog = ProgressDialog.show(RdRecordOutActivity.this,"正在查询","请稍候...");
                 mDropDownMenu.setTabText(constellationPosition == 0 ? headers[2] : "正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
@@ -205,7 +209,7 @@ public class RdRecordOutActivity extends Activity {
                 if (i!=0){
                     dept = test[0];
                 }
-                mDropDownMenu.setTabText(i==0?headers[0]:test[1]);
+                mDropDownMenu.setTabText(i==0?headers[1]:test[1]);
                 mDropDownMenu.closeMenu();
             }
         });
@@ -253,6 +257,7 @@ public class RdRecordOutActivity extends Activity {
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
                 Toast.makeText(RdRecordOutActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
             }
 
@@ -262,15 +267,16 @@ public class RdRecordOutActivity extends Activity {
                     if (responseString.contains("true@@")){
                         String[] message = responseString.split("@@");
                         String result = message[1];
-                        Log.e("meng",result);
                         Gson gson = new Gson();
                         List<SRdRecord> list;
                         list = gson.fromJson(result,new TypeToken<List<SRdRecord>>(){}.getType());
                         recordList.clear();
                         recordList.addAll(list);
                         adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
                     }else {
                         Toast.makeText(RdRecordOutActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
+                        proDialog.dismiss();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
