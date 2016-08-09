@@ -26,13 +26,36 @@
         android:hint="图名"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_planTrack_techName"
+        android:hint="工艺人员"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_planTrack_stockCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="材料编码"
+        android:visibility="gone"
+        />
+    <EditText
+        android:id="@+id/et_planTrack_stockName"
+        android:hint="材料名称"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/et_planTrack_stockArt"
+        android:hint="材料规格"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp">
-
-
         <Button
             android:id="@+id/bn_planTrack_startDate"
             android:hint="计划完工起始"
@@ -42,7 +65,7 @@
             android:layout_marginRight="5dp"/>
         <Button
             android:id="@+id/bn_planTrack_endDate"
-            android:hint="计划完工结束"
+            android:hint="计划完工截止"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +84,7 @@
             android:layout_marginRight="5dp"/>
         <Button
             android:id="@+id/bn_planTrack_makeEndDate"
-            android:hint="计划制定结束"
+            android:hint="计划制定截止"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

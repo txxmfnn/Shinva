@@ -68,7 +68,7 @@ public class OrderInfoSearchActivity extends Activity {
     private String headers[]={
             "分厂",
             "计划员",
-            "订单状态",
+            "订单类型",
             "更多"
     };
     private List<View> popupViews = new ArrayList<>();
@@ -111,9 +111,13 @@ public class OrderInfoSearchActivity extends Activity {
         partCode = ButterKnife.findById(filterView,R.id.et_planTrack_partCode);
         partName = ButterKnife.findById(filterView,R.id.et_planTrack_partName);
         startDate = ButterKnife.findById(filterView,R.id.bn_planTrack_startDate);
+        startDate.setHint("制定起始");
         endDate = ButterKnife.findById(filterView,R.id.bn_planTrack_endDate);
+        endDate.setHint("制定截止");
         startMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeStartDate);
         endMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeEndDate);
+        startMakeDate.setHint("交货日期起始");
+        endMakeDate.setHint("交货日期截止");
         TextView ok = ButterKnife.findById(filterView,R.id.tv_planSearch_search);
         auditer.setHint("编辑员");
         //partCode.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
@@ -420,7 +424,7 @@ public class OrderInfoSearchActivity extends Activity {
                     flowFlag="退回订单(未启用) ";
                     break;
                 case 9:
-                    flowFlag="计划员种植订单 ";
+                    flowFlag="计划员终止订单 ";
                     break;
                 case 10:
                     flowFlag=" ";

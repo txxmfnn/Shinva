@@ -9,11 +9,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -57,7 +59,12 @@ public class PlanTrackActivity extends Activity {
     private Button endDate ;
     private Button startMakeDate;
     private Button endMakeDate;
-
+    private EditText techName;
+    private EditText stockCode;
+    private EditText stockName;
+    private EditText stockArt;
+    int pageNumber=1;
+    boolean isLastRow = false;
      String state="";
      String maker="";
      String department="";
@@ -108,6 +115,12 @@ public class PlanTrackActivity extends Activity {
         departmentView.setAdapter(departmentAdapter);
 
         final View filterView = getLayoutInflater().inflate(R.layout.layout_drop_down_menu_filter,null);
+        filterView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                mDropDownMenu.closeMenu();
+            }
+        });
           outCode = ButterKnife.findById(filterView,R.id.et_planTrack_outCode);
           cntNo = ButterKnife.findById(filterView,R.id.et_planTrack_cntNo);
           partCode = ButterKnife.findById(filterView,R.id.et_planTrack_partCode);
@@ -116,10 +129,18 @@ public class PlanTrackActivity extends Activity {
           endDate = ButterKnife.findById(filterView,R.id.bn_planTrack_endDate);
         startMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeStartDate);
         endMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeEndDate);
-
+        techName = ButterKnife.findById(filterView,R.id.et_planTrack_techName);
+        stockName = ButterKnife.findById(filterView,R.id.et_planTrack_stockName);
+        stockCode = ButterKnife.findById(filterView,R.id.et_planTrack_stockCode);
+        stockArt = ButterKnife.findById(filterView,R.id.et_planTrack_stockArt);
         TextView ok = ButterKnife.findById(filterView,R.id.tv_planSearch_search);
         cntNo.setHint("柜号");
         cntNo.setInputType(InputType.TYPE_CLASS_NUMBER);
+        techName.setVisibility(View.VISIBLE);
+        stockName.setVisibility(View.VISIBLE);
+        stockArt.setVisibility(View.VISIBLE);
+        stockCode.setVisibility(View.VISIBLE);
+
         final Calendar c = Calendar.getInstance();
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -279,6 +300,28 @@ public class PlanTrackActivity extends Activity {
                 startActivity(intent);
             }
         });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                if (isLastRow&&scrollState==SCROLL_STATE_IDLE){
+                    pageNumber = pageNumber+1;
+                    loadMoreData();
+                    isLastRow = false;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstItem, int itemCount, int totalCount) {
+                Log.e("meng","第一个的id"+firstItem+",数量="+itemCount+"全部数量:"+totalCount);
+                int lastItemId = listView.getLastVisiblePosition();
+                Log.e("meng","这个lastId:"+lastItemId);
+                if ((lastItemId+1)==totalCount){
+                    if (totalCount>0&&totalCount>9){
+                        isLastRow = true;
+                    }
+                }
+            }
+        });
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers),popupViews,listView);
     }
 
@@ -344,6 +387,66 @@ public class PlanTrackActivity extends Activity {
         String partNameText = partName.getText().toString();
         String startDateText = startDate.getText().toString();
         String endDateText = endDate.getText().toString();
+        pageNumber=1;
+        params.put("pageNum",pageNumber);
+        params.put("outCode",outCodeText);
+        params.put("cntNo",cntNoText);
+        params.put("partCode",partCodeText);
+        params.put("partName",partNameText);
+        params.put("startDate",startDateText);
+        params.put("endDate",endDateText);
+        params.put("state",state);
+        params.put("maker",maker);
+        params.put("department",department);
+        params.put("techName",techName.getText().toString());
+        params.put("stockCode",stockCode.getText().toString());
+        params.put("stockArt",stockArt.getText().toString());
+        params.put("startMakeDate",startMakeDate.getText().toString());
+        params.put("endMakeDate",endMakeDate.getText().toString());
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        client.post(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
+                Toast.makeText(PlanTrackActivity.this,"请检查网络",Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                try {
+                    if (responseString.contains("true@@")){
+                        String[] message = responseString.split("@@");
+                        String result = message[1];
+                        Gson gson = new Gson();
+                        List<SPlan> list;
+                        list = gson.fromJson(result,new TypeToken<List<SPlan>>(){}.getType());
+                        sPlanList.clear();
+                        sPlanList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
+
+
+                    }else {
+                        Toast.makeText(PlanTrackActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    private void loadMoreData(){
+        proDialog = ProgressDialog.show(PlanTrackActivity.this,"正在查询","请稍候...");
+        String url = HttpUtil.BASE_URL+uri;
+        RequestParams params = new RequestParams();
+        String outCodeText= outCode.getText().toString();
+        String cntNoText= cntNo.getText().toString();
+        String partCodeText = partCode.getText().toString();
+        String partNameText = partName.getText().toString();
+        String startDateText = startDate.getText().toString();
+        String endDateText = endDate.getText().toString();
+        params.put("pageNum",pageNumber);
         params.put("outCode",outCodeText);
         params.put("cntNo",cntNoText);
         params.put("partCode",partCodeText);
@@ -372,12 +475,14 @@ public class PlanTrackActivity extends Activity {
                         Gson gson = new Gson();
                         List<SPlan> list;
                         list = gson.fromJson(result,new TypeToken<List<SPlan>>(){}.getType());
-                        sPlanList.clear();
+                        //sPlanList.clear();
                         sPlanList.addAll(list);
                         adapter.notifyDataSetChanged();
                         proDialog.dismiss();
+                        pageNumber=pageNumber+1;
                     }else {
-                        Toast.makeText(PlanTrackActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
+                        proDialog.dismiss();
+                        Toast.makeText(PlanTrackActivity.this, "已没有数据", Toast.LENGTH_SHORT).show();
                     }
 
                 }catch (Exception e){

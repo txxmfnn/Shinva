@@ -40,41 +40,28 @@ import cz.msebera.android.httpclient.Header;
 public class PlanSearchActivity extends FragmentActivity implements View.OnClickListener {
 
     private String uri = "/splan/find";
-
     List<SPlan> plans = new ArrayList<SPlan>();
-
-
-
     private TextView tv_planCode;
     private  String planCode;
-
     //以后统一使用item作为加载数据list
     private List<Map<String,Object>> listItems;
-
     private TextView tv_partCode;
     private TextView tv_partName;
     private TextView tv_fwpQuantity;
     private TextView tv_makerName;
-
     private ViewPager viewPager ;
-
     private List<Fragment> fragments = new ArrayList<Fragment>();
     private MainPagerAdapter mainPagerAdapter;
-
     private TextView mPlanInfo;
     private TextView mPlanDetail;
     private TextView mDispatching;
     private TextView mLogisticPlan;
     private TextView mPlanAll;
-
-
     /*@Override
     protected void onResume() {
         super.onResume();
         fragments.get(4).setUserVisibleHint(true);
     }*/
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +76,8 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         tv_makerName = (TextView) findViewById(R.id.tv_makerName);
         tv_planCode.setText(planCode);
         viewPager = (ViewPager) findViewById(R.id.pager);
+        findViewById(R.id.id_ll_planAll).setOnClickListener(this);
+        mPlanAll = (TextView)findViewById(R.id.id_tv_planAll);//综合信息
         findViewById(R.id.id_ll_planInfo).setOnClickListener(this);
         mPlanInfo = (TextView) findViewById(R.id.id_tv_planInfo);//计划信息
         findViewById(R.id.id_ll_planDetail).setOnClickListener(this);
@@ -97,9 +86,6 @@ public class PlanSearchActivity extends FragmentActivity implements View.OnClick
         mDispatching = (TextView) findViewById(R.id.id_tv_dispathing);//汇报明细
         findViewById(R.id.id_ll_logisticPlan).setOnClickListener(this);
         mLogisticPlan = (TextView) findViewById(R.id.id_tv_logisticPlan);//物流明细
-        findViewById(R.id.id_ll_planAll).setOnClickListener(this);
-        mPlanAll = (TextView)findViewById(R.id.id_tv_planAll);//综合信息
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

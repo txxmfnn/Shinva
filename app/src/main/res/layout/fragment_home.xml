@@ -51,7 +51,7 @@
                 android:layout_height="10dp"
                 android:background="@color/bg_Gray" />
             <TextView
-                android:text="操作"
+                android:text="业务"
                 android:textSize="24sp"
                 android:textColor="@color/tv_bgblue"
                 android:layout_width="match_parent"

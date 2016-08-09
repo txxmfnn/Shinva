@@ -297,21 +297,17 @@ public class RdRecordOutActivity extends Activity {
     }
     class RdRecordAdapter extends BaseAdapter {
         List<SRdRecord> sRdRecords;
-
         public RdRecordAdapter(List<SRdRecord> sRdRecords) {
             this.sRdRecords = sRdRecords;
         }
-
         @Override
         public int getCount() {
             return sRdRecords.size();
         }
-
         @Override
         public Object getItem(int i) {
             return sRdRecords.get(i);
         }
-
         @Override
         public long getItemId(int i) {
             return i;
