@@ -312,9 +312,9 @@ public class PlanTrackActivity extends Activity {
 
             @Override
             public void onScroll(AbsListView absListView, int firstItem, int itemCount, int totalCount) {
-                Log.e("meng","第一个的id"+firstItem+",数量="+itemCount+"全部数量:"+totalCount);
+                //Log.e("meng","第一个的id"+firstItem+",数量="+itemCount+"全部数量:"+totalCount);
                 int lastItemId = listView.getLastVisiblePosition();
-                Log.e("meng","这个lastId:"+lastItemId);
+                //Log.e("meng","这个lastId:"+lastItemId);
                 if ((lastItemId+1)==totalCount){
                     if (totalCount>0&&totalCount>9){
                         isLastRow = true;
@@ -427,6 +427,7 @@ public class PlanTrackActivity extends Activity {
 
 
                     }else {
+                        proDialog.dismiss();
                         Toast.makeText(PlanTrackActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
                     }
 
@@ -479,7 +480,7 @@ public class PlanTrackActivity extends Activity {
                         sPlanList.addAll(list);
                         adapter.notifyDataSetChanged();
                         proDialog.dismiss();
-                        pageNumber=pageNumber+1;
+
                     }else {
                         proDialog.dismiss();
                         Toast.makeText(PlanTrackActivity.this, "已没有数据", Toast.LENGTH_SHORT).show();

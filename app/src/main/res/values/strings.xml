@@ -25,5 +25,6 @@
     <string name="test2">测试2</string>
     <string name="test3">测试3</string>
     <string name="test4">测试4</string>
+    <string name="orderInfoState">订单状态:</string>
 
 </resources>

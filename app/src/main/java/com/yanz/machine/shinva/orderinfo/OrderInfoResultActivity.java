@@ -77,7 +77,6 @@ public class OrderInfoResultActivity extends Activity {
                     if (responseString.contains("true@@")){
                         String[] message = responseString.split("@@");
                         String result = message[1];
-                        Log.e("meng",result);
                         Gson gson = new Gson();
                         List<SPlan> list;
                         list = gson.fromJson(result,new TypeToken<List<SPlan>>(){}.getType());

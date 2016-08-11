@@ -8,7 +8,6 @@
     android:stretchColumns="1"
     android:background="@color/bg_White"
     tools:context="com.yanz.machine.shinva.SearchConditionActivity">
-
     <com.library.StickHeaderViewPager
         android:id="@+id/shvp_content"
         android:layout_width="match_parent"
@@ -20,40 +19,30 @@
             android:layout_height="120dp"
             android:background="@android:color/white"
             >
-            <TextView
-                android:id="@+id/tv_stockSearch_ptd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:text="物料规格:"
-                android:layout_marginBottom="5dp"
-                android:textSize="18sp"
-                android:textColor="@color/tv_White"/>
-            <AutoCompleteTextView
-                android:id="@+id/actv_StockSearch_ptd"
-                android:hint="物料规格"
-                android:textColor="@color/tv_Black"
+            <EditText
+                android:id="@+id/et_stockSearch_partCode"
+                android:hint="物料编码"
                 android:textSize="12sp"
-                android:dropDownWidth="250dp"
                 android:layout_marginLeft="20dp"
                 android:layout_width="120dp"
                 android:layout_marginTop="5dp"
-                android:layout_height="36dp" />
+                android:layout_height="36dp"/>
             <EditText
                 android:id="@+id/et_stockSearch_materialName"
-                android:layout_below="@id/actv_StockSearch_ptd"
+                android:layout_below="@id/et_stockSearch_partCode"
                 android:layout_marginLeft="20dp"
                 android:hint="物料名称"
                 android:textSize="12sp"
                 android:layout_width="120dp"
                 android:layout_height="36dp" />
-            <EditText
-                android:id="@+id/et_stockSearch_partCode"
+            <AutoCompleteTextView
+                android:id="@+id/actv_StockSearch_ptd"
                 android:layout_below="@id/et_stockSearch_materialName"
                 android:layout_marginLeft="20dp"
-                android:hint="物料编码"
+                android:hint="物料规格"
+                android:textColor="@color/tv_Black"
                 android:textSize="12sp"
+                android:dropDownWidth="250dp"
                 android:layout_width="120dp"
                 android:layout_height="36dp" />
 
@@ -61,7 +50,7 @@
                 android:id="@+id/bn_stockSearch_whome"
                 android:layout_alignParentRight="true"
                 android:hint="选择仓库"
-                android:layout_alignTop="@id/actv_StockSearch_ptd"
+                android:layout_alignTop="@id/et_stockSearch_partCode"
                 android:onClick="wHomeClick"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content" />
@@ -70,8 +59,10 @@
                 android:id="@+id/bn_stockSearch_search"
                 android:layout_alignLeft="@id/bn_stockSearch_whome"
                 android:layout_below="@id/bn_stockSearch_whome"
-                android:text="搜 索"
+                android:textColor="@color/white"
+                android:text="搜     索"
                 android:onClick="search"
+                android:background="@drawable/bn_bg"
                 android:layout_centerVertical="true"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content" />
@@ -83,15 +74,18 @@
         </RelativeLayout>
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_stockSearch_line"
                 android:layout_width="match_parent"
                 android:layout_height="0.6dp"
                 android:background="#cccccc"/>
         </LinearLayout>
         <ListView
+           android:layout_below="@id/tv_stockSearch_line"
             android:id="@+id/lv_stockSearch_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

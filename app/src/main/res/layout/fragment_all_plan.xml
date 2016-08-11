@@ -38,6 +38,19 @@
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_planAll_dingdanDate"
+                android:layout_alignParentRight="true"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="订单进度:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_toLeftOf="@id/tv_planAll_dingdanDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/rl_planAll_second"

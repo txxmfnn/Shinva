@@ -157,7 +157,7 @@ public class DispatchingInfoFragment extends Fragment {
                         tvCwpCode.setText("工序:"+sDispachingSeconds.get(position).getIgxh());
                         tvReport.setText(sDispachingSeconds.get(position).getCfinisherName());
                         tvContent.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
-                                +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                                +"|计划时间:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
                                 +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
                                 +"|派工:"+sDispachingSeconds.get(position).getFquantity()
                                 +"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
@@ -168,7 +168,7 @@ public class DispatchingInfoFragment extends Fragment {
                         TextView tvContent2 = (TextView)convertView.findViewById(R.id.tv_same_content);
                         tvReport2.setText(sDispachingSeconds.get(position).getCfinisherName());
                         tvContent2.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
-                                +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                                +"|计划时间:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
                                 +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
                                 +"|派工:"+sDispachingSeconds.get(position).getFquantity()+"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
                         break;
@@ -184,7 +184,7 @@ public class DispatchingInfoFragment extends Fragment {
                         tvCwpCode.setText("工序:"+sDispachingSeconds.get(position).getIgxh());
                         tvReport.setText(sDispachingSeconds.get(position).getCfinisherName());
                         tvContent.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
-                                +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                                +"|计划时间:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
                                 +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
                                 +"|派工:"+sDispachingSeconds.get(position).getFquantity()
                                 +"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
@@ -195,7 +195,7 @@ public class DispatchingInfoFragment extends Fragment {
                         TextView tvContent2 = (TextView)convertView.findViewById(R.id.tv_same_content);
                         tvReport2.setText(sDispachingSeconds.get(position).getCfinisherName());
                         tvContent2.setText(sDispachingSeconds.get(position).getCmemo()+sDispachingSeconds.get(position).getCdepartmentName()
-                                +"|计划:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
+                                +"|计划时间:"+sDispachingSeconds.get(position).getDtPlanEdate().substring(0,10)
                                 +"\n完工:"+sDispachingSeconds.get(position).getFfinishQuantity()
                                 +"|派工:"+sDispachingSeconds.get(position).getFquantity()+"\n"+sDispachingSeconds.get(position).getDtMakeDate().substring(0,16));
                         break;

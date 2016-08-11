@@ -44,6 +44,7 @@
             android:id="@+id/tv_report"
             android:paddingLeft="10dp"
             android:text="孟天翔"
+            android:maxLength="5"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:layout_width="wrap_content"

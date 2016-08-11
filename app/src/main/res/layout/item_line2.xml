@@ -14,39 +14,63 @@
             android:paddingRight="10dp"
             android:hint="仓库:"
             android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_item_other"
-            android:hint="数量："
+            android:text="数量："
             android:textSize="16sp"
-            android:textColor="@color/black"
+            android:textColor="@color/tv_Gray"
             android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_item_num"
             android:paddingRight="24dp"
-            android:hint="20"
+            android:lines="1"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_width="wrap_content" android:layout_height="wrap_content"/>
         <TextView
             android:id="@+id/tv_item_report"
             android:paddingRight="20dp"
-            android:hint="货位信息"
+            android:hint=""
             android:textSize="16sp"
             android:textColor="@color/black"
             android:layout_width="wrap_content" android:layout_height="wrap_content"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_item_code"
+            android:hint="物料编码"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tv_item_state_text"
+            android:visibility="gone"
+            android:text="@string/orderInfoState"
+            android:layout_marginLeft="20dp"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Gray"
+            android:gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_state"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tv_item_mid"
         android:text=""
         android:hint="物料名称"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/tv_item_code"
-        android:hint="物料编码"
         android:textSize="16sp"
         android:textColor="@color/black"
         android:layout_width="wrap_content" android:layout_height="wrap_content"/>
@@ -56,4 +80,126 @@
         android:textSize="16sp"
         android:textColor="@color/black"
         android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/ll_item_position"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_item_position_text"
+            android:text="货位信息:"
+            android:textColor="@color/tv_Gray"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_position"
+            android:text="100"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_time_text"
+            android:text="交货期:"
+            android:visibility="gone"
+            android:textColor="@color/tv_Gray"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_time"
+            android:visibility="gone"
+            android:text="100"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_item_men"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_item_maker_text"
+            android:text="制单:"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_maker"
+            android:text="吴孟达"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_auditor_text"
+            android:layout_marginLeft="10dp"
+            android:text="计划:"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_auditor"
+            android:text="周星驰"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_finish_text"
+            android:layout_marginLeft="10dp"
+            android:text="计划完工:"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_finish"
+            android:text="2016-08-08"
+            android:textSize="16sp"
+            android:lines="1"
+            android:textColor="@color/tv_Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_item_upDown"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tv_item_up_text"
+            android:text="库存上限:"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_up"
+            android:textSize="16sp"
+            android:textColor="@color/tv_bgblue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_down_text"
+            android:layout_marginLeft="20dp"
+            android:text="库存下限:"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_item_down"
+            android:textSize="16sp"
+            android:textColor="@color/tv_Red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>

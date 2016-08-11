@@ -8,17 +8,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +61,8 @@ public class OrderInfoSearchActivity extends Activity {
     private Button startMakeDate;
     private Button endMakeDate;
     ProgressDialog proDialog;
+    int pageNumber =1;
+    boolean isLastRow = false;
     String factory="";
     String maker="";
     String state="";
@@ -66,9 +71,9 @@ public class OrderInfoSearchActivity extends Activity {
     private OrderInfoAdapter adapter;
     private List<SOrderInformation> orderInfoList = new ArrayList<SOrderInformation>();
     private String headers[]={
-            "分厂",
+            "成品厂",
             "计划员",
-            "订单类型",
+            "订单状态",
             "更多"
     };
     private List<View> popupViews = new ArrayList<>();
@@ -111,15 +116,15 @@ public class OrderInfoSearchActivity extends Activity {
         partCode = ButterKnife.findById(filterView,R.id.et_planTrack_partCode);
         partName = ButterKnife.findById(filterView,R.id.et_planTrack_partName);
         startDate = ButterKnife.findById(filterView,R.id.bn_planTrack_startDate);
-        startDate.setHint("制定起始");
+        startDate.setHint("制单起始");
         endDate = ButterKnife.findById(filterView,R.id.bn_planTrack_endDate);
-        endDate.setHint("制定截止");
+        endDate.setHint("制单截止");
         startMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeStartDate);
         endMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeEndDate);
-        startMakeDate.setHint("交货日期起始");
-        endMakeDate.setHint("交货日期截止");
+        startMakeDate.setHint("交货期起始");
+        endMakeDate.setHint("交货期截止");
         TextView ok = ButterKnife.findById(filterView,R.id.tv_planSearch_search);
-        auditer.setHint("编辑员");
+        auditer.setHint("制单员");
         //partCode.setInputType(InputType.TYPE_NUMBER_FLAG_SIGNED);
         //partName.setInputType(InputType.TYPE_DATETIME_VARIATION_DATE);
         final Calendar c = Calendar.getInstance();
@@ -216,7 +221,6 @@ public class OrderInfoSearchActivity extends Activity {
             @Override
             public void onClick(View view) {
                 proDialog = ProgressDialog.show(OrderInfoSearchActivity.this,"正在查询","请稍候...");
-                mDropDownMenu.setTabText(constellationPosition==0?headers[3]:"正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
             }
@@ -292,6 +296,27 @@ public class OrderInfoSearchActivity extends Activity {
                 startActivity(intent);
             }
         });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                if (isLastRow&&scrollState==SCROLL_STATE_IDLE){
+                    pageNumber=pageNumber+1;
+                    loadMoreData();
+                    isLastRow = false;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstItem, int itemCount, int totalCount) {
+                int lastItemId = listView.getLastVisiblePosition();
+                if ((lastItemId+1)==totalCount){
+                    if (totalCount>0&&totalCount>9){
+                        isLastRow = true;
+                    }
+                }
+
+            }
+        });
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers),popupViews,listView);
 
     }
@@ -303,8 +328,9 @@ public class OrderInfoSearchActivity extends Activity {
         String partNameText = partName.getText().toString();
         String startDateText = startDate.getText().toString();
         String endDateText = endDate.getText().toString();
-
+        pageNumber = 1;
         RequestParams params = new RequestParams();
+        params.put("pageNum",pageNumber);
         params.put("orderCode",orderCodeText);
         params.put("maker",maker);
         params.put("auditer",auditerText);
@@ -339,6 +365,57 @@ public class OrderInfoSearchActivity extends Activity {
                     }else {
                         proDialog.dismiss();
                         Toast.makeText(OrderInfoSearchActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    private void loadMoreData(){
+        proDialog = ProgressDialog.show(OrderInfoSearchActivity.this,"正在查询","请稍候...");
+        String url = HttpUtil.BASE_URL+uri;
+        String orderCodeText = orderCode.getText().toString();
+        String auditerText = auditer.getText().toString();
+        String partCodeText = partCode.getText().toString();
+        String partNameText = partName.getText().toString();
+        String startDateText = startDate.getText().toString();
+        String endDateText = endDate.getText().toString();
+        RequestParams params = new RequestParams();
+        params.put("pageNum",pageNumber);
+        params.put("orderCode",orderCodeText);
+        params.put("maker",maker);
+        params.put("auditer",auditerText);
+        params.put("partCode",partCodeText);
+        params.put("partName",partNameText);
+        params.put("startDate",startDateText);
+        params.put("endDate",endDateText);
+        params.put("factory",factory);
+        params.put("state",state);
+        params.put("startMakeDate",startMakeDate.getText().toString());
+        params.put("endMakeDate",endMakeDate.getText().toString());
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
+                Toast.makeText(OrderInfoSearchActivity.this,"数据加载错误",Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                try {
+                    String[] message = responseString.split("@@");
+                    String result = message[1];
+                    if (responseString.contains("true@@")){
+                        Gson gson = new Gson();
+                        List<SOrderInformation> list;
+                        list = gson.fromJson(result,new TypeToken<List<SOrderInformation>>(){}.getType());
+                        orderInfoList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
+                    }else {
+                        proDialog.dismiss();
+                        Toast.makeText(OrderInfoSearchActivity.this, result, Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -382,12 +459,28 @@ public class OrderInfoSearchActivity extends Activity {
             if (view==null){
                 view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_line2,null);
             }
-            TextView tvOrderCode = BaseViewHolder.get(view,R.id.tv_item_head);
-            TextView tvQuantity = BaseViewHolder.get(view,R.id.tv_item_num);
-            TextView tvMaker = BaseViewHolder.get(view,R.id.tv_item_report);
-            TextView tvPartCode = BaseViewHolder.get(view,R.id.tv_item_code);
+            TextView tvFactory = BaseViewHolder.get(view,R.id.tv_item_head);
+            TextView tvCustomerText = BaseViewHolder.get(view,R.id.tv_item_other);
+            TextView tvCustomer = BaseViewHolder.get(view,R.id.tv_item_num);
+            TextView tvOrderCode = BaseViewHolder.get(view,R.id.tv_item_code);
+            TextView tvStateText = BaseViewHolder.get(view,R.id.tv_item_state_text);
+            TextView tvState = BaseViewHolder.get(view,R.id.tv_item_state);
+            LinearLayout llOrder = BaseViewHolder.get(view,R.id.ll_item_position);
+            TextView tvQuantityText = BaseViewHolder.get(view,R.id.tv_item_position_text);
+            TextView tvQuantity = BaseViewHolder.get(view,R.id.tv_item_position);
+            LinearLayout llMen = BaseViewHolder.get(view,R.id.ll_item_men);
+            TextView tvMaker = BaseViewHolder.get(view,R.id.tv_item_maker);
+            TextView tvAuditor = BaseViewHolder.get(view,R.id.tv_item_auditor);
+            TextView tvEndDate = BaseViewHolder.get(view,R.id.tv_item_finish);
+            TextView tvPartCode = BaseViewHolder.get(view,R.id.tv_item_foot);
             TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);
-            TextView tvDeliveryDate = BaseViewHolder.get(view,R.id.tv_item_foot);
+            TextView tvDeliveryDateText = BaseViewHolder.get(view,R.id.tv_item_time_text);
+            TextView tvDeliveryDate = BaseViewHolder.get(view,R.id.tv_item_time);
+            LinearLayout llUpDown = BaseViewHolder.get(view,R.id.ll_item_upDown);
+            TextView tvNeedDayText = BaseViewHolder.get(view,R.id.tv_item_up_text);
+            TextView tvNeedDay = BaseViewHolder.get(view,R.id.tv_item_up);
+            TextView tvRemainDayText = BaseViewHolder.get(view,R.id.tv_item_down_text);
+            TextView tvRemainDay = BaseViewHolder.get(view,R.id.tv_item_down);
             SOrderInformation sOrderInformation = sOrderInfoList.get(i);
             String flowFlag="";
             int j = 10;
@@ -430,10 +523,29 @@ public class OrderInfoSearchActivity extends Activity {
                     flowFlag=" ";
                     break;
             }
-            tvDeliveryDate.setText(sOrderInformation.getDtDeliveryDate()+" "+flowFlag+sOrderInformation.getIworkNeedDays()+"$"+sOrderInformation.getIdeliveryRemainDays());
+            tvStateText.setVisibility(View.VISIBLE);
+            tvState.setVisibility(View.VISIBLE);
+            llOrder.setVisibility(View.VISIBLE);
+            tvDeliveryDateText.setVisibility(View.VISIBLE);
+            tvDeliveryDate.setVisibility(View.VISIBLE);
+            llMen.setVisibility(View.VISIBLE);
+            llUpDown.setVisibility(View.VISIBLE);
+            tvNeedDayText.setText("需加工天数:");
+            tvRemainDayText.setText("距离交货天数:");
+            tvCustomerText.setText("客户:");
+            tvNeedDay.setText(" "+sOrderInformation.getIworkNeedDays());
+            tvRemainDay.setText(" "+sOrderInformation.getIdeliveryRemainDays());
+            tvQuantityText.setText("订单量:");
+            tvState.setText(flowFlag);
+            tvFactory.setText(sOrderInformation.getCfactoryName());
+            //
+            tvCustomer.setText(sOrderInformation.getCcustomerName());
+            tvDeliveryDate.setText(sOrderInformation.getDtDeliveryDate());
             tvOrderCode.setText(sOrderInformation.getCorderCode());
             tvQuantity.setText(" "+sOrderInformation.getFquantity());
             tvMaker.setText(sOrderInformation.getCmakerName());
+            tvAuditor.setText(sOrderInformation.getCauditerName());
+            tvEndDate.setText(sOrderInformation.getDtPlanEdate());
             tvPartCode.setText(sOrderInformation.getCpartCode());
             tvPartName.setText(sOrderInformation.getCpartName());
             if (sOrderInformation.getIdeliveryRemainDays()!=null&&sOrderInformation.getIworkNeedDays()!=null){

@@ -113,7 +113,6 @@ public class PlanDetailFragment extends Fragment {
     }
 
     protected void initData(){
-        Log.e("yanz","开始加载数据");
         String url = HttpUtil.BASE_URL+uri;
         RequestParams params = new RequestParams();
         params.put("planCode",planCode);
@@ -215,7 +214,7 @@ public class PlanDetailFragment extends Fragment {
                         tvContent.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
                                 +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
                                 +"|品质:"+sPlanDetails.get(position).getCwpQuality()
-                                +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
+                                +"\n|汇报时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
                         break;
                     case TYPE_SAME:
                         convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line_same, null);
@@ -225,7 +224,7 @@ public class PlanDetailFragment extends Fragment {
                         tvContent2.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
                                 +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
                                 +"|品质:"+sPlanDetails.get(position).getCwpQuality()
-                                +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
+                                +"\n|汇报时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
                         break;
                 }
             }else {
@@ -242,7 +241,7 @@ public class PlanDetailFragment extends Fragment {
                         tvContent.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
                                 +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
                                 +"|品质:"+sPlanDetails.get(position).getCwpQuality()
-                                +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
+                                +"\n|汇报时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
                         break;
                     case TYPE_SAME:
                         convertView = getActivity().getLayoutInflater().inflate(R.layout.item_line_same, null);
@@ -252,7 +251,7 @@ public class PlanDetailFragment extends Fragment {
                         tvContent2.setText("加工人:"+sPlanDetails.get(position).getCwpFinisherName()
                                 +"|合格:"+sPlanDetails.get(position).getFwpFinishQuantity()
                                 +"|品质:"+sPlanDetails.get(position).getCwpQuality()
-                                +"\n|完成时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
+                                +"\n|汇报时间:"+sPlanDetails.get(position).getDwpReportDate().substring(0,16));
                         break;
                 }
             }

@@ -121,7 +121,6 @@ public class PlanInfoFragment extends Fragment {
                 listItem.put("planCode","工序:"+plan.getCwpCode());
                 listItem.put("report",plan.getCwpPstatusFlag());
                 listItem.put("content","|"+plan.getDwpPlanEdate().substring(0,10)+"|"+plan.getCwpDepartmentName()+"|"+plan.getCwpName());
-
                 listItems.add(listItem);
             }
         }

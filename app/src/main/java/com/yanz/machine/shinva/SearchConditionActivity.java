@@ -11,12 +11,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,6 +46,8 @@ public class SearchConditionActivity extends Activity {
     private Button wHome;
     private Button bnSearch;
     private ListView lvResult;
+    int pageNumber = 1;
+    boolean isLastRow = false;
     ProgressDialog proDialog;
     List<SCurrentStock> stocks = new ArrayList<SCurrentStock>();
     List<SCurrentStock> list = new ArrayList<SCurrentStock>();
@@ -106,6 +110,26 @@ public class SearchConditionActivity extends Activity {
                 Toast.makeText(SearchConditionActivity.this,"点击功能暂未开放",Toast.LENGTH_SHORT).show();
             }
         });
+        lvResult.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                if (isLastRow&&scrollState==SCROLL_STATE_IDLE){
+                    pageNumber = pageNumber+1;
+                    loadMoreDate();
+                    isLastRow = false;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstItem, int itemCount, int totalCount) {
+                int lastItemId = lvResult.getLastVisiblePosition();
+                if ((lastItemId+1)==totalCount){
+                    if (totalCount>0&&totalCount>9){
+                        isLastRow = true;
+                    }
+                }
+            }
+        });
 
     }
     public void wHomeClick(View view){
@@ -134,13 +158,61 @@ public class SearchConditionActivity extends Activity {
         String name = materialName.getText().toString();
         String code = partStd.getText().toString();
         String whName = wHome.getText().toString();
-        String whCode = whName.substring(0,6);
-        Log.e("meng","获取的仓库编码"+whCode);
+        if (whName!=null&&whName!=""){
+            whName = whName.substring(0,6);
+        }
+        pageNumber=1;
         String url = HttpUtil.BASE_URL+uri;
         RequestParams params = new RequestParams();
         params.put("partStd",code);
         params.put("materialName",name);
-        params.put("whCode",whCode);
+        params.put("whCode",whName);
+        params.put("partCode",partCode.getText().toString());
+        params.put("pageNum",pageNumber);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
+                Toast.makeText(SearchConditionActivity.this,"链接错误",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                    try {
+                        String[] message = responseString.split("@@");
+                        String result = message[1];
+                        if (responseString.contains("true@@")){
+                            Gson gson = new Gson();
+                            list = gson.fromJson(result,new TypeToken<List<SCurrentStock>>(){}.getType());
+                            stocks.clear();
+                            stocks.addAll(list);
+                            adapter.notifyDataSetChanged();
+                            proDialog.dismiss();
+                        }else {
+                            proDialog.dismiss();
+                            Toast.makeText(SearchConditionActivity.this,result,Toast.LENGTH_SHORT).show();
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+            }
+        });
+    }
+    private void loadMoreDate(){
+        proDialog = ProgressDialog.show(SearchConditionActivity.this,"正在查询","请稍候...");
+        String name = materialName.getText().toString();
+        String code = partStd.getText().toString();
+        String whName = wHome.getText().toString();
+        if (whName!=null&&whName!=""){
+            whName = whName.substring(0,6);
+        }
+        String url = HttpUtil.BASE_URL+uri;
+        RequestParams params = new RequestParams();
+        params.put("pageNum",pageNumber);
+        params.put("partStd",code);
+        params.put("materialName",name);
+        params.put("whCode",whName);
         params.put("partCode",partCode.getText().toString());
         AsyncHttpClient client = new AsyncHttpClient();
         client.post(url, params, new TextHttpResponseHandler() {
@@ -148,17 +220,26 @@ public class SearchConditionActivity extends Activity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 proDialog.dismiss();
                 Toast.makeText(SearchConditionActivity.this,"链接错误",Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                    Gson gson = new Gson();
-                    list = gson.fromJson(responseString,new TypeToken<List<SCurrentStock>>(){}.getType());
-                    stocks.clear();
-                    stocks.addAll(list);
-                    adapter.notifyDataSetChanged();
-                proDialog.dismiss();
+                try {
+                    String[] message = responseString.split("@@");
+                    String result = message[1];
+                    if (responseString.contains("true@@")){
+                        Gson gson = new Gson();
+                        list = gson.fromJson(result,new TypeToken<List<SCurrentStock>>(){}.getType());
+                        stocks.addAll(list);
+                        adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
+                    }else {
+                        proDialog.dismiss();
+                        Toast.makeText(SearchConditionActivity.this,result,Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -194,19 +275,29 @@ public class SearchConditionActivity extends Activity {
             TextView tvQuantity = BaseViewHolder.get(view,R.id.tv_item_num);
             TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);
             TextView tvPartStd = BaseViewHolder.get(view,R.id.tv_item_foot);
-            TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_report);
-            TextView tvBottomQuantity = BaseViewHolder.get(view,R.id.tv_item_other);
+            TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_position);
+            TextView tvBottomQuantity = BaseViewHolder.get(view,R.id.tv_item_down);
+            TextView tvUpQuantity = BaseViewHolder.get(view,R.id.tv_item_up);
             TextView tvCode = BaseViewHolder.get(view,R.id.tv_item_code);
+            LinearLayout llPosition = BaseViewHolder.get(view,R.id.ll_item_position);
+            LinearLayout llUpDown = BaseViewHolder.get(view,R.id.ll_item_upDown);
+            llUpDown.setVisibility(View.VISIBLE);
+            llPosition.setVisibility(View.VISIBLE);
             SCurrentStock stock = list.get(i);
             tvWhName.setText(stock.getCcsWhName());
             tvPartName.setText(stock.getCcsPartName());
             tvPartStd.setText(stock.getCcsPartStd());
-            tvQuantity.setText(stock.getFcsQuantity().toString());
+            tvQuantity.setText(" "+stock.getFcsQuantity());
             tvPosition.setText(stock.getCcsPosition());
             tvCode.setText(stock.getCcspartCode());
-            tvBottomQuantity.setText("↑"+stock.getFcsBottomQuantity()+"↓"+stock.getFcsTopQuantity());
-            tvBottomQuantity.setTextColor(getResources().getColor(R.color.tv_bgblue));
-            tvQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
+            tvBottomQuantity.setText("↓"+stock.getFcsBottomQuantity());
+            tvUpQuantity.setText("↑"+stock.getFcsTopQuantity());
+            tvUpQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
+            tvBottomQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
+            tvQuantity.setTextColor(getResources().getColor(R.color.tv_bgblue));
+            if (stock.getFcsBottomQuantity()>stock.getFcsQuantity()||stock.getFcsTopQuantity()<stock.getFcsQuantity()){
+                tvQuantity.setTextColor(getResources().getColor(R.color.red));
+            }
             return view;
         }
     }

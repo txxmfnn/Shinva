@@ -29,7 +29,7 @@ public class AllPlanFragment extends Fragment {
     private String uri = "/splan/find";
     private View mMainView;
     private String planCode ;
-    private TextView tvGuiHao,tvDingdan,tvU8,tvStockCode,tvStockName,tvStockGuige,tvGyr,tvLingliao;
+    private TextView tvGuiHao,tvDingdan,tvDingdanDate,tvU8,tvStockCode,tvStockName,tvStockGuige,tvGyr,tvLingliao;
     private List<SPlan> sPlanList;
     public AllPlanFragment() {
     }
@@ -47,6 +47,7 @@ public class AllPlanFragment extends Fragment {
         mMainView = inflater.inflate(R.layout.fragment_all_plan,(ViewGroup) getActivity().findViewById(R.id.pager),false);
         tvGuiHao = (TextView) mMainView.findViewById(R.id.tv_planAll_guihaoCode);
         tvDingdan = (TextView) mMainView.findViewById(R.id.tv_planAll_dingdanCode);
+        tvDingdanDate = (TextView) mMainView.findViewById(R.id.tv_planAll_dingdanDate);
         tvU8 = (TextView) mMainView.findViewById(R.id.tv_planAll_u8Code);
         tvStockCode = (TextView) mMainView.findViewById(R.id.tv_planAll_stockCode);
         tvStockName = (TextView) mMainView.findViewById(R.id.tv_planAll_stockNameCode);
@@ -83,12 +84,15 @@ public class AllPlanFragment extends Fragment {
         sPlan = sPlanList.get(0);
         tvGuiHao.setText(sPlan.getCwpCntrNo());
         tvDingdan.setText(sPlan.getCwpOutPlanCode());
+        if (tvDingdan.getText()!=null&&tvDingdan.getText()!=""){
+            tvDingdanDate.setText(sPlan.getDwpOutPlanEdate().toString().substring(0,10));
+        }
         tvU8.setText(sPlan.getCwpErpCode());
         tvStockCode.setText(sPlan.getCwpMaterialCode());
         tvStockName.setText(sPlan.getCwpMaterialName());
         tvStockGuige.setText(sPlan.getCwpMaterialStd());
         tvGyr.setText(sPlan.getCwpSjr()+" 工艺路线:"+sPlan.getCwpLxh());
-        tvLingliao.setText(" 领料尺寸:"+sPlan.getCwpLlcc()+" \n 每坯件数:"+sPlan.getCwpMpjs()+" \n 毛坯种类:"+sPlan.getCwpMpzl());
+        tvLingliao.setText(" 毛坯种类:"+sPlan.getCwpMpzl()+" \n 领料尺寸:"+sPlan.getCwpLlcc()+" \n 每坯件数:"+sPlan.getCwpMpjs());
         tvStockGuige.setTextColor(getResources().getColor(R.color.tv_Red));
     }
 }

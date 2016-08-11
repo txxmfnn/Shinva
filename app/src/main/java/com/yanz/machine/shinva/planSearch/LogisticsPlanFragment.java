@@ -143,9 +143,10 @@ public class LogisticsPlanFragment extends Fragment {
                 reciveDate = recive.substring(0,10);
             }
             tvContent.setText(
-                    "转出:" + sLogisticsPlanList.get(position).getCdepartmentName() + "\n" + sLogisticsPlanList.get(position).getDtReportDate().substring(0, 16)
-                            + "\n数量:" + sLogisticsPlanList.get(position).getFquantity()
-                            + "|应接收班组:" + sLogisticsPlanList.get(position).getCactReciveDepartmentName()
+                    "转出:" + sLogisticsPlanList.get(position).getCdepartmentName()
+                            + "  数量:" + sLogisticsPlanList.get(position).getFquantity()
+                            + "\n" + sLogisticsPlanList.get(position).getDtReportDate().substring(0, 16)
+                            + "\n|应接收班组:" + sLogisticsPlanList.get(position).getCactReciveDepartmentName()
                             + "\n|实际接收:" + sLogisticsPlanList.get(position).getCreciveDepartmentName()
                             + "|" + sLogisticsPlanList.get(position).getCreciverName() +reciveDate
             );

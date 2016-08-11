@@ -6,28 +6,28 @@ public class SOrderInformation implements java.io.Serializable {
 
 
 	private String corderType;
-	private String corderCode;
+	private String corderCode;//订单号
 	private String ccustomerCode;
-	private String ccustomerName;
+	private String ccustomerName;//客户
 	private String cfactoryCode;
-	private String cfactoryName;
-	private String cpartCode;
-	private String cpartName;
-	private Double fquantity;
-	private String dtDeliveryDate;
+	private String cfactoryName;//成品厂
+	private String cpartCode;//图号
+	private String cpartName;//图名
+	private Double fquantity;//订单量
+	private String dtDeliveryDate;//交货期
 	private String cmakeMemo;
 	private String cpaperDrawing;
-	private String cmakerName;
+	private String cmakerName;//制单员
 	private String dtMakeDate;
 	private String dtSubmitDate;
 	private String cauditerName;
-	private String dtAuditDate;
+	private String dtAuditDate;//计划员
 	private String cauditMemo;
 	private Double ffinishQuantity;
-	private Integer iflowFlag;
-	private Integer iworkNeedDays;
-	private Integer ideliveryRemainDays;
-	private String dtPlanEdate;
+	private Integer iflowFlag;//订单状态
+	private Integer iworkNeedDays;//需要加工天数
+	private Integer ideliveryRemainDays;//距离交货天数
+	private String dtPlanEdate;//计划完工
 
 	public String getDtPlanEdate() {
 		return dtPlanEdate;
