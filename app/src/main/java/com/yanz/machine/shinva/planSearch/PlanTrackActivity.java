@@ -115,12 +115,7 @@ public class PlanTrackActivity extends Activity {
         departmentView.setAdapter(departmentAdapter);
 
         final View filterView = getLayoutInflater().inflate(R.layout.layout_drop_down_menu_filter,null);
-        filterView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                mDropDownMenu.closeMenu();
-            }
-        });
+
           outCode = ButterKnife.findById(filterView,R.id.et_planTrack_outCode);
           cntNo = ButterKnife.findById(filterView,R.id.et_planTrack_cntNo);
           partCode = ButterKnife.findById(filterView,R.id.et_planTrack_partCode);
@@ -424,9 +419,8 @@ public class PlanTrackActivity extends Activity {
                         sPlanList.addAll(list);
                         adapter.notifyDataSetChanged();
                         proDialog.dismiss();
-
-
                     }else {
+                        sPlanList.clear();
                         proDialog.dismiss();
                         Toast.makeText(PlanTrackActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
                     }

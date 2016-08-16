@@ -179,7 +179,6 @@ public class LoginActivity extends Activity {
                                         myApplication.setUserInfo(bPerson);
 //                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 //                                        startActivity(intent);
-
                                         Message msg2 = Message.obtain();
                                         msg2.what = MSG_INIT_OK;
                                         mHandler.sendMessage(msg2);

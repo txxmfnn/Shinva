@@ -120,7 +120,11 @@ public class PlanInfoFragment extends Fragment {
                 SPlan plan = plans.get(i);
                 listItem.put("planCode","工序:"+plan.getCwpCode());
                 listItem.put("report",plan.getCwpPstatusFlag());
-                listItem.put("content","|"+plan.getDwpPlanEdate().substring(0,10)+"|"+plan.getCwpDepartmentName()+"|"+plan.getCwpName());
+                String planEnd ="";
+                if (plan.getDwpPlanEdate()!=null&&plan.getDwpPlanEdate()!=""){
+                    planEnd = plan.getDwpPlanEdate().substring(0,10);
+                }
+                listItem.put("content","|"+planEnd+"|"+plan.getCwpDepartmentName()+"|"+plan.getCwpName());
                 listItems.add(listItem);
             }
         }
