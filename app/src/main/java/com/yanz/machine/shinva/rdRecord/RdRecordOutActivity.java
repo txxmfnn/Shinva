@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -54,6 +55,8 @@ public class RdRecordOutActivity extends Activity {
     private Button startMakeDate;
     private Button endMakeDate;
     ProgressDialog proDialog;
+    int pageNumber=1;
+    boolean isLastRow = false;
     String dept="";
     String whCode="";
     @InjectView(R.id.v_rdRecord_out_dropDownMenu)
@@ -192,7 +195,7 @@ public class RdRecordOutActivity extends Activity {
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                proDialog = ProgressDialog.show(RdRecordOutActivity.this,"正在查询","请稍候...");
+                pageNumber=1;
                 mDropDownMenu.setTabText(constellationPosition == 0 ? headers[2] : "正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
@@ -238,9 +241,30 @@ public class RdRecordOutActivity extends Activity {
                 Toast.makeText(getApplicationContext(),"如需点击功能,请联系信息组...", Toast.LENGTH_SHORT).show();
             }
         });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                if (isLastRow&&scrollState==SCROLL_STATE_IDLE){
+                    pageNumber=pageNumber+1;
+                    loadData();
+                    isLastRow = false;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstItem, int itemCount, int totalCount) {
+                int lastItemId = listView.getLastVisiblePosition();
+                if ((lastItemId+1)==totalCount){
+                    if (totalCount>0&&totalCount>9){
+                        isLastRow = true;
+                    }
+                }
+            }
+        });
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers),popupviews,listView);
     }
     private void loadData(){
+        proDialog = ProgressDialog.show(RdRecordOutActivity.this,"正在查询","请稍候...");
         String url = HttpUtil.BASE_URL+uri;
         RequestParams params = new RequestParams();
         params.put("planCode",planCode.getText().toString());
@@ -270,7 +294,9 @@ public class RdRecordOutActivity extends Activity {
                         Gson gson = new Gson();
                         List<SRdRecord> list;
                         list = gson.fromJson(result,new TypeToken<List<SRdRecord>>(){}.getType());
-                        recordList.clear();
+                        if (pageNumber==1){
+                            recordList.clear();
+                        }
                         recordList.addAll(list);
                         adapter.notifyDataSetChanged();
                         proDialog.dismiss();

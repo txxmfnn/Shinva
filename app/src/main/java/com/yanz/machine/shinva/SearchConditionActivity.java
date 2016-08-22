@@ -295,8 +295,10 @@ public class SearchConditionActivity extends Activity {
             tvUpQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
             tvBottomQuantity.setTextColor(getResources().getColor(R.color.tv_Red));
             tvQuantity.setTextColor(getResources().getColor(R.color.tv_bgblue));
-            if (stock.getFcsBottomQuantity()>stock.getFcsQuantity()||stock.getFcsTopQuantity()<stock.getFcsQuantity()){
-                tvQuantity.setTextColor(getResources().getColor(R.color.red));
+            if (stock.getFcsQuantity()!=null&&stock.getFcsBottomQuantity()!=null&&stock.getFcsTopQuantity()!=null){
+                if (stock.getFcsBottomQuantity()>stock.getFcsQuantity()||stock.getFcsTopQuantity()<stock.getFcsQuantity()){
+                    tvQuantity.setTextColor(getResources().getColor(R.color.red));
+                }
             }
             return view;
         }

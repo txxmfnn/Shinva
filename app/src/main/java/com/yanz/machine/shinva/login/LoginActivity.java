@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -34,6 +38,7 @@ import com.yanz.machine.shinva.util.JsonUtil;
 import com.yanz.machine.shinva.util.StrUtil;
 
 import java.io.IOException;
+import java.net.NetworkInterface;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -157,8 +162,13 @@ public class LoginActivity extends Activity {
                     AsyncHttpClient client = new AsyncHttpClient();
                     url = HttpUtil.BASE_URL+uri;
                     RequestParams params = new RequestParams();
+                    WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                    WifiInfo info = wifi.getConnectionInfo();
+                    TelephonyManager tm = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+                    params.put("imei",tm.getDeviceId());
                     params.put("cpsCode",name);
                     params.put("password",password);
+                    params.put("mac", info.getMacAddress());
                     client.post(url, params, new TextHttpResponseHandler() {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, String message, Throwable throwable) {

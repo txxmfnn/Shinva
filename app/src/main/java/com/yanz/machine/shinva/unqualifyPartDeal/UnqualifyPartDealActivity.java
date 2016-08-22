@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -58,6 +59,8 @@ public class UnqualifyPartDealActivity extends Activity {
     private Button startMakeDate;
     private Button endMakeDate;
     ProgressDialog proDialog;
+    int pageNumber=1;
+    boolean isLastRow =false;
     String department;
     String checker;
     String technoliger;
@@ -233,7 +236,7 @@ public class UnqualifyPartDealActivity extends Activity {
                 deptAdapter.setCheckItem(i);
                 String[] test = HttpUtil.DEPARTMENTS[i].split("\\|");
                 if (i!=0){
-                    department = test[0];
+                    department = test[1];
                 }
                 mDropDownMenu.setTabText(i==0?headers[0]:test[1]);
                 mDropDownMenu.closeMenu();
@@ -285,6 +288,26 @@ public class UnqualifyPartDealActivity extends Activity {
                 Toast.makeText(getApplicationContext(),"点击功能暂未开放",Toast.LENGTH_SHORT).show();
             }
         });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+                if (isLastRow&&scrollState==SCROLL_STATE_IDLE){
+                    pageNumber=pageNumber+1;
+                    loadMoreData();
+                    isLastRow = false;
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstItem, int itemCount, int totalCount) {
+                int lastItemId = listView.getLastVisiblePosition();
+                if ((lastItemId+1)==totalCount){
+                    if (totalCount>0&&totalCount>9){
+                        isLastRow = true;
+                    }
+                }
+            }
+        });
         mDropDownMenu.setDropDownMenu(Arrays.asList(headers),popupViews,listView);
     }
     private void loadData(){
@@ -293,8 +316,9 @@ public class UnqualifyPartDealActivity extends Activity {
         String partCodeText = partCode.getText().toString();
         String partNameText = partName.getText().toString();
         String planerText = planer.getText().toString();
-
+        pageNumber=1;
         RequestParams params = new RequestParams();
+        params.put("pageNum",pageNumber);
         params.put("planCode",planCodeText);
         params.put("partCode",partCodeText);
         params.put("partName",partNameText);
@@ -303,7 +327,7 @@ public class UnqualifyPartDealActivity extends Activity {
         params.put("technicalCode",technoliger);
         params.put("dealResult",dealResult);
         params.put("maker",planerText);
-        params.put("satrtDate",startDate.getText().toString());
+        params.put("startDate",startDate.getText().toString());
         params.put("endDate",endDate.getText().toString());
         params.put("startMakeDate",startMakeDate.getText().toString());
         params.put("endMakeDate",endMakeDate.getText().toString());
@@ -324,6 +348,56 @@ public class UnqualifyPartDealActivity extends Activity {
                         List<SUnqualifyPartDeal> list;
                         list = gson.fromJson(result,new TypeToken<List<SUnqualifyPartDeal>>(){}.getType());
                         dealList.clear();
+                        dealList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                        proDialog.dismiss();
+                    }else {
+                        proDialog.dismiss();
+                        Toast.makeText(UnqualifyPartDealActivity.this, "数据处理错误", Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    private void loadMoreData(){
+        proDialog = ProgressDialog.show(UnqualifyPartDealActivity.this,"正在查询","请稍候...");
+        String url = HttpUtil.BASE_URL+uri;
+        String planCodeText = planCode.getText().toString();
+        String partCodeText = partCode.getText().toString();
+        String partNameText = partName.getText().toString();
+        String planerText = planer.getText().toString();
+        RequestParams params = new RequestParams();
+        params.put("pageNum",pageNumber);
+        params.put("planCode",planCodeText);
+        params.put("partCode",partCodeText);
+        params.put("partName",partNameText);
+        params.put("departmentCode",department);
+        params.put("checkCode",checker);
+        params.put("technicalCode",technoliger);
+        params.put("dealResult",dealResult);
+        params.put("maker",planerText);
+        params.put("startDate",startDate.getText().toString());
+        params.put("endDate",endDate.getText().toString());
+        params.put("startMakeDate",startMakeDate.getText().toString());
+        params.put("endMakeDate",endMakeDate.getText().toString());
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                proDialog.dismiss();
+                Toast.makeText(UnqualifyPartDealActivity.this,"网络错误",Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                try {
+                    if (responseString.contains("true@@")){
+                        String[] message = responseString.split("@@");
+                        String result = message[1];
+                        Gson gson = new Gson();
+                        List<SUnqualifyPartDeal> list;
+                        list = gson.fromJson(result,new TypeToken<List<SUnqualifyPartDeal>>(){}.getType());
                         dealList.addAll(list);
                         adapter.notifyDataSetChanged();
                         proDialog.dismiss();
@@ -389,7 +463,9 @@ public class UnqualifyPartDealActivity extends Activity {
             tvChecker.setText(partDeal.getCcheckerName());
             tvPartCode.setText(partDeal.getCpartCode()+" 计划员:"+partDeal.getCplanerName());
             tvPartName.setText(partDeal.getCpartName()+"  设计:"+partDeal.getCsheji());
-            tvFoot.setText(partDeal.getCtechnicalPersonName()+"  处理意见:"+partDeal.getCunqualifyDealResult()+"  责任:"+partDeal.getCresponsiblePersonName()+"|"+partDeal.getCresponsibleDepartmentName());
+            String departName =partDeal.getCresponsiblePersonName()+ partDeal.getCresponsibleDepartmentName();
+
+            tvFoot.setText(partDeal.getCtechnicalPersonName()+" 处理意见:"+partDeal.getCunqualifyDealResult()+"  责任:"+partDeal.getCresponsiblePersonName()+"|"+departName);
             return view;
         }
     }

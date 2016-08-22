@@ -33,6 +33,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import com.yanz.machine.shinva.Adapter.BaseViewHolder;
 import com.yanz.machine.shinva.PlanSearchActivity;
 import com.yanz.machine.shinva.R;
+import com.yanz.machine.shinva.application.MyApplication;
 import com.yanz.machine.shinva.entity.SPlan;
 import com.yanz.machine.shinva.util.HttpUtil;
 import com.yyydjk.library.DropDownMenu;
@@ -383,6 +384,10 @@ public class PlanTrackActivity extends Activity {
         String startDateText = startDate.getText().toString();
         String endDateText = endDate.getText().toString();
         pageNumber=1;
+        MyApplication myApp = (MyApplication) getApplication();
+        if (myApp.getUserInfo().getCpsCode()!=null){
+            params.put("cpsCode", myApp.getUserInfo().getCpsCode());
+        }
         params.put("pageNum",pageNumber);
         params.put("outCode",outCodeText);
         params.put("cntNo",cntNoText);
@@ -441,6 +446,7 @@ public class PlanTrackActivity extends Activity {
         String partNameText = partName.getText().toString();
         String startDateText = startDate.getText().toString();
         String endDateText = endDate.getText().toString();
+
         params.put("pageNum",pageNumber);
         params.put("outCode",outCodeText);
         params.put("cntNo",cntNoText);
