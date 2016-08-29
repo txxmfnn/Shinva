@@ -15,10 +15,29 @@ public class SRdRecord implements java.io.Serializable {
 	private String ccode;
 	private String cpartCode;
 	private String cpartName;
+	private String cpartStd;
 	private String cposition;
 	private Double fquantity;
 	private Double fcurrentStock;
 	private String ddate;
+	private String capplyCode;
+
+	public String getCapplyCode() {
+		return capplyCode;
+	}
+
+	public void setCapplyCode(String capplyCode) {
+		this.capplyCode = capplyCode;
+	}
+
+	public String getCpartStd() {
+		return cpartStd;
+	}
+
+	public void setCpartStd(String cpartStd) {
+		this.cpartStd = cpartStd;
+	}
+
 	private String cdepartmentCode;
 	private String cdepartmentName;
 	private String cpersonCode;

@@ -219,7 +219,7 @@ public class UnqualifyPartDealActivity extends Activity {
             @Override
             public void onClick(View view) {
                 proDialog = ProgressDialog.show(UnqualifyPartDealActivity.this,"正在查询","请稍候...");
-                mDropDownMenu.setTabText(constellationPosition == 0 ? headers[3] : "正在查询...");
+                mDropDownMenu.setTabText(constellationPosition == 0 ? headers[4] : "正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
             }

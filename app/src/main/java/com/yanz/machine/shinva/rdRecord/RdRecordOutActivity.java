@@ -19,6 +19,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -94,7 +95,7 @@ public class RdRecordOutActivity extends Activity {
         planCode = ButterKnife.findById(filterView,R.id.et_planTrack_outCode);
         planCode.setHint("计划号");
         cCode = ButterKnife.findById(filterView,R.id.et_planTrack_cntNo);
-        cCode.setHint("出库单号");
+            cCode.setHint("出库单号");
         partCode = ButterKnife.findById(filterView,R.id.et_planTrack_partCode);
         partName = ButterKnife.findById(filterView,R.id.et_planTrack_partName);
         startDate = ButterKnife.findById(filterView, R.id.bn_planTrack_startDate);
@@ -344,24 +345,62 @@ public class RdRecordOutActivity extends Activity {
             if (view==null){
                 view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_line2,null);
             }
-            TextView tvPlanCode = BaseViewHolder.get(view,R.id.tv_item_head);
-            TextView tvWhHome = BaseViewHolder.get(view,R.id.tv_item_other);
-            TextView tvInNum = BaseViewHolder.get(view,R.id.tv_item_num);
-            TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_report);
-            TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);
-            TextView tvPartCode = BaseViewHolder.get(view,R.id.tv_item_code);
-            TextView tvHome = BaseViewHolder.get(view,R.id.tv_item_foot);
+            TextView tvCode = BaseViewHolder.get(view,R.id.tv_item_head);//出库单号
+            TextView tvWhHome = BaseViewHolder.get(view,R.id.tv_item_other);//仓库
+            TextView tvPlanCode = BaseViewHolder.get(view,R.id.tv_item_num);//出库方式
+            TextView tvMaker = BaseViewHolder.get(view,R.id.tv_item_report);//保管员
+            TextView tvPartStd = BaseViewHolder.get(view,R.id.tv_item_foot);//编码
+            TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);//图名
+            TextView tvPartCode = BaseViewHolder.get(view,R.id.tv_item_code);//图号
+            LinearLayout llPosition = BaseViewHolder.get(view,R.id.ll_item_position);//货位行
+            TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_position);//货位
+            TextView tvPositionText = BaseViewHolder.get(view,R.id.tv_item_position_text);//货位标签
+            LinearLayout llIn = BaseViewHolder.get(view,R.id.ll_item_men);//出库信息行`
+            TextView tvDept = BaseViewHolder.get(view,R.id.tv_item_maker);//出库班组
+            TextView tvDeptText = BaseViewHolder.get(view,R.id.tv_item_maker_text);//出库班组标签
+            TextView tvWorkerText = BaseViewHolder.get(view,R.id.tv_item_auditor_text);//出库人标签
+            TextView tvWorker = BaseViewHolder.get(view,R.id.tv_item_auditor);//出库人
+            TextView tvDateText = BaseViewHolder.get(view,R.id.tv_item_finish_text);//出库时间标签
+            TextView tvDate = BaseViewHolder.get(view,R.id.tv_item_finish);//出库时间
+            LinearLayout llNum = BaseViewHolder.get(view,R.id.ll_item_upDown);//数量行
+            TextView tvNumText = BaseViewHolder.get(view,R.id.tv_item_up_text);//出库数量标签
+            TextView tvNum = BaseViewHolder.get(view,R.id.tv_item_up);//出库数量
+            TextView tvNumBeforeText = BaseViewHolder.get(view,R.id.tv_item_down_text);//出库后数量标签
+            TextView tvNumBefore = BaseViewHolder.get(view,R.id.tv_item_down);//出库后数量
+            LinearLayout llApplyCode = BaseViewHolder.get(view,R.id.ll_item_end);//申请单号行
+            TextView tvApplyCode = BaseViewHolder.get(view,R.id.tv_item_end);//申请单号
             SRdRecord record = sRdRecords.get(i);
+            //显示行
+            llPosition.setVisibility(View.VISIBLE);
+            llIn.setVisibility(View.VISIBLE);
+            llNum.setVisibility(View.VISIBLE);
+            llApplyCode.setVisibility(View.VISIBLE);
 
+            tvCode.setVisibility(View.VISIBLE);
+            tvCode.setText(record.getCcode());
             tvPlanCode.setText(record.getCplanCode());
+            tvWhHome.setTextColor(getResources().getColor(R.color.tv_Black));
             tvWhHome.setText(record.getCwhName());
-            tvInNum.setText(" "+record.getFquantity());
-            tvInNum.setTextColor(getResources().getColor(R.color.tv_Red));
-            tvPosition.setText(record.getCposition()+record.getFcurrentStock());
+
+            tvMaker.setText(record.getCmakerName());
+            tvPartStd.setText(record.getCpartStd());
+            tvPartName.setText(record.getCpartName());
+            tvPartCode.setText(record.getCpartCode());
+            tvPositionText.setText("货位:");
+            tvPosition.setText(record.getCposition());
+            tvDeptText.setText("班组:");
+            tvDept.setText(record.getCdepartmentName());
+            tvWorkerText.setText("出库人:");
+            tvWorker.setText(record.getCpersonName());
+            tvDateText.setText(" ");
+            tvDate.setText(record.getDdate());
+            tvNum.setText(" "+record.getFquantity());
+            tvNumText.setText("出库数量:");
+            tvNumBeforeText.setText("出库后数量:");
+            tvNumBefore.setText(" "+record.getFcurrentStock());
+            tvNum.setTextColor(getResources().getColor(R.color.tv_Red));
             tvPosition.setTextColor(getResources().getColor(R.color.tv_bgblue));
-            tvPartName.setText(record.getCpartName()+record.getDdate().substring(0,10));
-            tvPartCode.setText(record.getCpartCode()+record.getCdepartmentName()+record.getCpersonName());
-            tvHome.setText(record.getCcode()+record.getCmakerName());
+            tvApplyCode.setText(record.getCapplyCode());
             return view;
         }
     }
