@@ -105,6 +105,8 @@ public class RdRecordInActivity extends Activity {
         TextView ok = ButterKnife.findById(filterView, R.id.tv_planSearch_search);
         startMakeDate.setVisibility(View.GONE);
         endMakeDate.setVisibility(View.GONE);
+        startDate.setHint("入库时间起始");
+        endDate.setHint("入库时间截止");
         final Calendar c = Calendar.getInstance();
         startDate.setInputType(InputType.TYPE_NULL);
         startDate.setOnClickListener(new View.OnClickListener() {
@@ -269,6 +271,7 @@ public class RdRecordInActivity extends Activity {
     }
     private void loadData(){
         proDialog = ProgressDialog.show(RdRecordInActivity.this,"正在查询","请稍候...");
+        proDialog.setCancelable(true);
         String url = HttpUtil.BASE_URL+uri;
         RequestParams params = new RequestParams();
         params.put("pageNum",pageNumber);
@@ -381,13 +384,11 @@ public class RdRecordInActivity extends Activity {
             llPosition.setVisibility(View.VISIBLE);
             llIn.setVisibility(View.VISIBLE);
             llNum.setVisibility(View.VISIBLE);
-
             tvCode.setVisibility(View.VISIBLE);
             tvCode.setText(record.getCcode());
             tvPlanCode.setText(record.getCplanCode());
             tvWhHome.setTextColor(getResources().getColor(R.color.tv_Black));
             tvWhHome.setText(record.getCwhName());
-
             tvMaker.setText(record.getCmakerName());
             tvPartStd.setText(record.getCpartStd());
             tvPartName.setText(record.getCpartName());

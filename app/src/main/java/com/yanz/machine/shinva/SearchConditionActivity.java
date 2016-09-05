@@ -201,6 +201,7 @@ public class SearchConditionActivity extends Activity {
     }
     private void loadMoreDate(){
         proDialog = ProgressDialog.show(SearchConditionActivity.this,"正在查询","请稍候...");
+        proDialog.setCancelable(true);
         String name = materialName.getText().toString();
         String code = partStd.getText().toString();
         String whName = wHome.getText().toString();

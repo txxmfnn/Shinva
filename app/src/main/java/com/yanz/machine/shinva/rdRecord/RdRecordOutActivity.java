@@ -46,7 +46,7 @@ import butterknife.InjectView;
 import cz.msebera.android.httpclient.Header;
 
 public class RdRecordOutActivity extends Activity {
-    private String uri="/rdRecord/findInList";
+    private String uri="/rdRecord/findOutList";
     private EditText planCode;
     private EditText partCode;
     private EditText partName;
@@ -102,6 +102,10 @@ public class RdRecordOutActivity extends Activity {
         endDate = ButterKnife.findById(filterView, R.id.bn_planTrack_endDate);
         startMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeStartDate);
         endMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeEndDate);
+        startMakeDate.setVisibility(View.GONE);
+        endMakeDate.setVisibility(View.GONE);
+        startDate.setHint("出库时间起始");
+        endDate.setHint("出库时间截止");
         TextView ok = ButterKnife.findById(filterView, R.id.tv_planSearch_search);
         final Calendar c = Calendar.getInstance();
         startDate.setInputType(InputType.TYPE_NULL);
@@ -266,6 +270,7 @@ public class RdRecordOutActivity extends Activity {
     }
     private void loadData(){
         proDialog = ProgressDialog.show(RdRecordOutActivity.this,"正在查询","请稍候...");
+        proDialog.setCancelable(true);
         String url = HttpUtil.BASE_URL+uri;
         RequestParams params = new RequestParams();
         params.put("planCode",planCode.getText().toString());

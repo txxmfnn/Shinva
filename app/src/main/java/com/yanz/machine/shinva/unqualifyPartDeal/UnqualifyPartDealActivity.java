@@ -3,13 +3,11 @@ package com.yanz.machine.shinva.unqualifyPartDeal;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +17,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
@@ -34,7 +30,6 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import com.yanz.machine.shinva.Adapter.BaseViewHolder;
 import com.yanz.machine.shinva.R;
 import com.yanz.machine.shinva.entity.SUnqualifyPartDeal;
-import com.yanz.machine.shinva.orderinfo.OrderInfoSearchActivity;
 import com.yanz.machine.shinva.planSearch.ListDropDownAdapter;
 import com.yanz.machine.shinva.util.HttpUtil;
 import com.yyydjk.library.DropDownMenu;
@@ -70,7 +65,7 @@ public class UnqualifyPartDealActivity extends Activity {
     //填写查询结果适配器
     private String headers[]={
             "班组",
-            "检验员",
+            "计划员",
             "处理人",
             "结果",
             "更多"
@@ -104,7 +99,7 @@ public class UnqualifyPartDealActivity extends Activity {
         deptAdapter = new ListDropDownAdapter(this, Arrays.asList(HttpUtil.DEPARTMENTS));
         deptView.setDividerHeight(0);
         deptView.setAdapter(deptAdapter);
-        checkerAdapter = new ListDropDownAdapter(this, Arrays.asList(HttpUtil.CHECKERS));
+        checkerAdapter = new ListDropDownAdapter(this, Arrays.asList(HttpUtil.MAKERS));
         checkerView.setDividerHeight(0);
         checkerView.setAdapter(checkerAdapter);
         techAdapter = new ListDropDownAdapter(this, Arrays.asList(HttpUtil.TECHNOS));
@@ -118,7 +113,7 @@ public class UnqualifyPartDealActivity extends Activity {
         planCode = ButterKnife.findById(filterView, R.id.et_planTrack_outCode);
         planCode.setHint("计划号");
         planer = ButterKnife.findById(filterView, R.id.et_planTrack_cntNo);
-        planer.setHint("计划员");
+        planer.setHint("处理号");
         partCode = ButterKnife.findById(filterView, R.id.et_planTrack_partCode);
         partName = ButterKnife.findById(filterView, R.id.et_planTrack_partName);
         startDate = ButterKnife.findById(filterView,R.id.bn_planTrack_startDate);
@@ -127,6 +122,10 @@ public class UnqualifyPartDealActivity extends Activity {
         endMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeEndDate);
         TextView ok = ButterKnife.findById(filterView, R.id.tv_planSearch_search);
         final Calendar c = Calendar.getInstance();
+        startDate.setHint("检验日期起始");
+        endDate.setHint("检验日期截止");
+        startMakeDate.setHint("处理日期起始");
+        endMakeDate.setHint("处理日期截止");
         startDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -219,6 +218,7 @@ public class UnqualifyPartDealActivity extends Activity {
             @Override
             public void onClick(View view) {
                 proDialog = ProgressDialog.show(UnqualifyPartDealActivity.this,"正在查询","请稍候...");
+                proDialog.setCancelable(true);
                 mDropDownMenu.setTabText(constellationPosition == 0 ? headers[4] : "正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();
@@ -284,8 +284,15 @@ public class UnqualifyPartDealActivity extends Activity {
         listView.setDividerHeight(1);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getApplicationContext(),"点击功能暂未开放",Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                SUnqualifyPartDeal deal = (SUnqualifyPartDeal)listView.getItemAtPosition(position);
+                String code = deal.getCwlcode();
+                Intent intent = new Intent();
+                intent.putExtra("cwlCode",code);
+                intent.setClass(UnqualifyPartDealActivity.this, QualifyItemActivity.class);
+                startActivity(intent);
+
+                
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -326,7 +333,7 @@ public class UnqualifyPartDealActivity extends Activity {
         params.put("checkCode",checker);
         params.put("technicalCode",technoliger);
         params.put("dealResult",dealResult);
-        params.put("maker",planerText);
+        params.put("wlCode",planerText);
         params.put("startDate",startDate.getText().toString());
         params.put("endDate",endDate.getText().toString());
         params.put("startMakeDate",startMakeDate.getText().toString());
@@ -448,24 +455,39 @@ public class UnqualifyPartDealActivity extends Activity {
             if (view==null){
                 view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_line2,null);
             }
-            TextView tvPlanCode = BaseViewHolder.get(view,R.id.tv_item_head);
-            TextView tvUnQuantity = BaseViewHolder.get(view,R.id.tv_item_other);
-            TextView tvDept = BaseViewHolder.get(view,R.id.tv_item_num);
-            TextView tvChecker = BaseViewHolder.get(view,R.id.tv_item_report);
-            TextView tvPartCode = BaseViewHolder.get(view,R.id.tv_item_code);
-            TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);
-            TextView tvFoot = BaseViewHolder.get(view,R.id.tv_item_foot);
+            TextView tvWlCodeText = BaseViewHolder.get(view,R.id.tv_item_head);//处理号标签
+            TextView tvWlCode = BaseViewHolder.get(view,R.id.tv_item_other);//处理号
+            TextView tvPlanCodeText = BaseViewHolder.get(view,R.id.tv_item_num);//计划号标签
+            TextView tvPlanCode = BaseViewHolder.get(view,R.id.tv_item_report);//计划号
+            TextView tvPartCode = BaseViewHolder.get(view,R.id.tv_item_code);//图号
+            TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);//图名
+            TextView tvUnNum = BaseViewHolder.get(view,R.id.tv_item_foot);//不合格数量
+            LinearLayout llCheck = BaseViewHolder.get(view,R.id.ll_item_position);//检验行
+            TextView tvChecker = BaseViewHolder.get(view,R.id.tv_item_position);//检验员
+            TextView tvCheckerText = BaseViewHolder.get(view,R.id.tv_item_position_text);//检验员标签
+            TextView tvCheckDateText = BaseViewHolder.get(view,R.id.tv_item_time_text);//检验时间标签
+            TextView tvCheckDate = BaseViewHolder.get(view,R.id.tv_item_time);//检验时间
+            //调整显示
+            llCheck.setVisibility(View.VISIBLE);
+            tvCheckDateText.setVisibility(View.VISIBLE);
+            tvCheckDate.setVisibility(View.VISIBLE);
+            tvWlCodeText.setText("处理号:");
+            tvWlCodeText.setTextColor(getResources().getColor(R.color.tv_Gray));
+            tvPlanCodeText.setText("计划号:");
+            tvPlanCodeText.setTextColor(getResources().getColor(R.color.tv_Gray));
+            tvCheckDateText.setText("检验日期:");
+            tvCheckerText.setText("检验员:");
             SUnqualifyPartDeal partDeal = sDealList.get(i);
 
             tvPlanCode.setText(partDeal.getCplanCode());
-            tvUnQuantity.setText(" "+partDeal.getFunQualifyQuantity());
-            tvDept.setText(partDeal.getCdepartmentName());
+            tvPlanCode.setTextColor(getResources().getColor(R.color.tv_bgblue));
+            tvWlCode.setText(partDeal.getCwlcode());
+            tvCheckDate.setText(partDeal.getDcheckDate());
             tvChecker.setText(partDeal.getCcheckerName());
-            tvPartCode.setText(partDeal.getCpartCode()+" 计划员:"+partDeal.getCplanerName());
-            tvPartName.setText(partDeal.getCpartName()+"  设计:"+partDeal.getCsheji());
-            String departName =partDeal.getCresponsiblePersonName()+ partDeal.getCresponsibleDepartmentName();
-
-            tvFoot.setText(partDeal.getCtechnicalPersonName()+" 处理意见:"+partDeal.getCunqualifyDealResult()+"  责任:"+partDeal.getCresponsiblePersonName()+"|"+departName);
+            tvPartCode.setText(partDeal.getCpartCode());
+            tvPartName.setText(partDeal.getCpartName());
+            tvUnNum.setText(" "+partDeal.getFunQualifyQuantity());
+            tvUnNum.setTextColor(getResources().getColor(R.color.tv_Red));
             return view;
         }
     }

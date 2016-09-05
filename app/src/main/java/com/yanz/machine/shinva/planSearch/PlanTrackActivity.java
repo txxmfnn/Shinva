@@ -232,6 +232,7 @@ public class PlanTrackActivity extends Activity {
             @Override
             public void onClick(View view) {
                 proDialog = ProgressDialog.show(PlanTrackActivity.this,"正在查询","请稍候...");
+                proDialog.setCancelable(true);
                 mDropDownMenu.setTabText(constellationPosition==0?headers[3]:"正在查询...");
                 mDropDownMenu.closeMenu();
                 loadData();

@@ -149,6 +149,7 @@ public class LoginActivity extends Activity {
             @Override
             protected void onNoDoubleClick(View view) {
                 final ProgressDialog proDialog = ProgressDialog.show(LoginActivity.this,"登录","请稍候...");
+                proDialog.setCancelable(true);
                 String name = etName.getText().toString();
                 String password = etPass.getText().toString();
                 final Boolean stat = checkBox.isChecked();

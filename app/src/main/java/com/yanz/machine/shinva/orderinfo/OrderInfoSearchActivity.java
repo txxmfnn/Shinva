@@ -374,6 +374,7 @@ public class OrderInfoSearchActivity extends Activity {
     }
     private void loadMoreData(){
         proDialog = ProgressDialog.show(OrderInfoSearchActivity.this,"正在查询","请稍候...");
+        proDialog.setCancelable(true);
         String url = HttpUtil.BASE_URL+uri;
         String orderCodeText = orderCode.getText().toString();
         String auditerText = auditer.getText().toString();
