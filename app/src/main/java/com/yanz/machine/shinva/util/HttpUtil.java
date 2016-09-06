@@ -17,16 +17,16 @@ import java.util.Map;
  */
 public class HttpUtil {
         //创建连接服务器的连接
-//        public static final String BASE_URL =
-//                "http://192.168.4.244:8080/graduation";
         public static final String BASE_URL =
-            "http://192.168.107.49:8080/graduation";
+                "http://192.168.4.244:8080/graduation";
+//        public static final String BASE_URL =
+//            "http://192.168.107.49:8080/graduation";
         public static final String MAKERS[]=
                 {"不限","11687|董强","11012|孙红云","11873|孙培霖","11503|王栋","11601|杨建强","11608|杨玉学","11908|张镇","11985|朱小明"};
         public static final String DEPARTMENTS[]=
                 {"不限","01110405|焊工一班","01110406|焊工二班","01110410|钣金","01110411|配料","01110413|机加工",
             "01110415|组焊班","01110416|零件班","01110420|电抛光班","0111045301|一部半成品仓库","01110422|冻干机班",
-                        "01110499|外邪一","01110599|外协二","01110497|外协三"};
+                        "01110499|外协一","01110599|外协二","01110497|外协三"};
 
         public static final String CHECKERS[]={
                 "不限","11022|李明","11028|贾衍成","11039|徐先斌",

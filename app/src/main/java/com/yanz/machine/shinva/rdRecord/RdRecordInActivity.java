@@ -359,14 +359,16 @@ public class RdRecordInActivity extends Activity {
             }
             TextView tvCode = BaseViewHolder.get(view,R.id.tv_item_head);//入库单号
             TextView tvWhHome = BaseViewHolder.get(view,R.id.tv_item_other);//仓库
-            TextView tvPlanCode = BaseViewHolder.get(view,R.id.tv_item_num);//入库方式
-            TextView tvMaker = BaseViewHolder.get(view,R.id.tv_item_report);//保管员
+            TextView tvPlanCode = BaseViewHolder.get(view,R.id.tv_item_add_plan_code);//入库方式
+
             TextView tvPartStd = BaseViewHolder.get(view,R.id.tv_item_foot);//编码
             TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);//图名
             TextView tvPartCode = BaseViewHolder.get(view,R.id.tv_item_code);//图号
             LinearLayout llPosition = BaseViewHolder.get(view,R.id.ll_item_position);//货位行
-            TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_position);//货位
-            TextView tvPositionText = BaseViewHolder.get(view,R.id.tv_item_position_text);//货位标签
+            TextView tvMakerText = BaseViewHolder.get(view,R.id.tv_item_position_text);//保管员标签
+            TextView tvMaker = BaseViewHolder.get(view,R.id.tv_item_position);//保管员
+            TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_time);//货位
+            TextView tvPositionText = BaseViewHolder.get(view,R.id.tv_item_time_text);//货位标签
             LinearLayout llIn = BaseViewHolder.get(view,R.id.ll_item_men);//入库信息行`
             TextView tvDept = BaseViewHolder.get(view,R.id.tv_item_maker);//入库班组
             TextView tvDeptText = BaseViewHolder.get(view,R.id.tv_item_maker_text);//入库班组标签
@@ -385,6 +387,9 @@ public class RdRecordInActivity extends Activity {
             llIn.setVisibility(View.VISIBLE);
             llNum.setVisibility(View.VISIBLE);
             tvCode.setVisibility(View.VISIBLE);
+            tvPlanCode.setVisibility(View.VISIBLE);
+            tvPositionText.setVisibility(View.VISIBLE);
+            tvPosition.setVisibility(View.VISIBLE);
             tvCode.setText(record.getCcode());
             tvPlanCode.setText(record.getCplanCode());
             tvWhHome.setTextColor(getResources().getColor(R.color.tv_Black));
@@ -394,6 +399,7 @@ public class RdRecordInActivity extends Activity {
             tvPartName.setText(record.getCpartName());
             tvPartCode.setText(record.getCpartCode());
             tvPositionText.setText("货位:");
+            tvMakerText.setText("保管员:");
             tvPosition.setText(record.getCposition());
             tvDeptText.setText("班组:");
             tvDept.setText(record.getCdepartmentName());

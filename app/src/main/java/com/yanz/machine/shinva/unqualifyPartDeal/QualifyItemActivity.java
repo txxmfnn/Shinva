@@ -185,7 +185,11 @@ public class QualifyItemActivity extends AppCompatActivity {
                 tvPlanName.setTextColor(getResources().getColor(R.color.tv_Black));
                 tvGyName.setText(deal.getCsheji());
                 tvGyName.setTextColor(getResources().getColor(R.color.tv_Black));
-                tvTechSubmit.setText(" "+deal.getBtechnicSubmit());
+                if (deal.getBtechnicSubmit()){
+                    tvTechSubmit.setText("已提交");
+                }else {
+                    tvTechSubmit.setText("未提交");
+                }
                 tvTechSubmit.setTextColor(getResources().getColor(R.color.tv_Black));
                 tvFinanceName.setText(deal.getCfinancePersonName());
                 tvFinanceName.setTextColor(getResources().getColor(R.color.tv_Black));

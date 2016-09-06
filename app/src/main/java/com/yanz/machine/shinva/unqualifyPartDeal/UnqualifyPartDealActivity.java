@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -116,6 +117,7 @@ public class UnqualifyPartDealActivity extends Activity {
         planer.setHint("处理号");
         partCode = ButterKnife.findById(filterView, R.id.et_planTrack_partCode);
         partName = ButterKnife.findById(filterView, R.id.et_planTrack_partName);
+        partName.setInputType(InputType.TYPE_CLASS_TEXT);
         startDate = ButterKnife.findById(filterView,R.id.bn_planTrack_startDate);
         endDate = ButterKnife.findById(filterView,R.id.bn_planTrack_endDate);
         startMakeDate = ButterKnife.findById(filterView,R.id.bn_planTrack_makeStartDate);
@@ -370,6 +372,7 @@ public class UnqualifyPartDealActivity extends Activity {
     }
     private void loadMoreData(){
         proDialog = ProgressDialog.show(UnqualifyPartDealActivity.this,"正在查询","请稍候...");
+        proDialog.setCancelable(true);
         String url = HttpUtil.BASE_URL+uri;
         String planCodeText = planCode.getText().toString();
         String partCodeText = partCode.getText().toString();
@@ -482,6 +485,7 @@ public class UnqualifyPartDealActivity extends Activity {
             tvPlanCode.setText(partDeal.getCplanCode());
             tvPlanCode.setTextColor(getResources().getColor(R.color.tv_bgblue));
             tvWlCode.setText(partDeal.getCwlcode());
+            tvWlCode.setTextColor(getResources().getColor(R.color.tv_Black));
             tvCheckDate.setText(partDeal.getDcheckDate());
             tvChecker.setText(partDeal.getCcheckerName());
             tvPartCode.setText(partDeal.getCpartCode());
