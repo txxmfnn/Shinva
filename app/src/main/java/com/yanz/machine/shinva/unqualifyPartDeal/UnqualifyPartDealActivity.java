@@ -248,7 +248,7 @@ public class UnqualifyPartDealActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 checkerAdapter.setCheckItem(i);
-                String[] test = HttpUtil.CHECKERS[i].split("\\|");
+                String[] test = HttpUtil.MAKERS[i].split("\\|");
                 if (i!=0){
                     checker = test[0];
                 }

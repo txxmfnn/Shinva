@@ -143,7 +143,7 @@ public class LoginActivity extends Activity {
             checkBox.setChecked(stat);
         }
         //绑定取消事件
-        bnCancel.setOnClickListener(new HomeListener(this));
+        //bnCancel.setOnClickListener(new HomeListener(this));
 
         bnLogin.setOnClickListener(new ClickUtil() {
             @Override

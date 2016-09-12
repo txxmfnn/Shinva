@@ -276,6 +276,7 @@ public class SearchConditionActivity extends Activity {
             TextView tvQuantity = BaseViewHolder.get(view,R.id.tv_item_num);
             TextView tvPartName = BaseViewHolder.get(view,R.id.tv_item_mid);
             TextView tvPartStd = BaseViewHolder.get(view,R.id.tv_item_foot);
+            TextView tvPositionText = BaseViewHolder.get(view,R.id.tv_item_position_text);
             TextView tvPosition = BaseViewHolder.get(view,R.id.tv_item_position);
             TextView tvBottomQuantity = BaseViewHolder.get(view,R.id.tv_item_down);
             TextView tvUpQuantity = BaseViewHolder.get(view,R.id.tv_item_up);
@@ -289,6 +290,7 @@ public class SearchConditionActivity extends Activity {
             tvPartName.setText(stock.getCcsPartName());
             tvPartStd.setText(stock.getCcsPartStd());
             tvQuantity.setText(" "+stock.getFcsQuantity());
+            tvPositionText.setText("货位:");
             tvPosition.setText(stock.getCcsPosition());
             tvCode.setText(stock.getCcspartCode());
             tvBottomQuantity.setText("↓"+stock.getFcsBottomQuantity());
