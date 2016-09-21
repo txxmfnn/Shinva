@@ -293,8 +293,6 @@ public class UnqualifyPartDealActivity extends Activity {
                 intent.putExtra("cwlCode",code);
                 intent.setClass(UnqualifyPartDealActivity.this, QualifyItemActivity.class);
                 startActivity(intent);
-
-                
             }
         });
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
