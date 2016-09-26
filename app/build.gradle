@@ -9,8 +9,8 @@ android {
         applicationId "com.yanz.machine.shinva"
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 10
-        versionName "1.0.9"
+        versionCode 11
+        versionName "1.0.10"
     }
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'

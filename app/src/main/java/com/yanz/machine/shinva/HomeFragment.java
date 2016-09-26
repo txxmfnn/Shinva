@@ -30,6 +30,7 @@ import com.yanz.machine.shinva.Adapter.Adapter_GridView;
 import com.yanz.machine.shinva.Adapter.MyGridAdapter;
 import com.yanz.machine.shinva.MyView.MyGridView;
 import com.yanz.machine.shinva.entity.UpdateInfo;
+import com.yanz.machine.shinva.logisticsRecive.LogisticsMenuActivity;
 import com.yanz.machine.shinva.orderinfo.OrderInfoSearchActivity;
 import com.yanz.machine.shinva.planSearch.InputPlanActivity;
 import com.yanz.machine.shinva.planSearch.PlanTrackActivity;
@@ -218,7 +219,7 @@ public class HomeFragment extends Fragment {
         menuGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent();
+                Intent intent = new Intent();
                 switch (position){
                     case 0:
                         Toast.makeText(getActivity(),"二次派工功能暂未开放",Toast.LENGTH_SHORT).show();
@@ -230,7 +231,9 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getActivity(),"物流周转功能功能暂未开放",Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
-                        Toast.makeText(getActivity(),"周转接收功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(),"周转接收功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        intent.setClass(getActivity(), LogisticsMenuActivity.class);
+                        startActivity(intent);
                         break;
                     case 4:
                         Toast.makeText(getActivity(),"库存盘点功能功能暂未开放",Toast.LENGTH_SHORT).show();

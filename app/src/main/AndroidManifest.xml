@@ -80,6 +80,10 @@
         <activity
             android:name=".unqualifyPartDeal.QualifyItemActivity"
             android:label="@string/title_activity_scrolling"
+            android:theme="@style/NoActionBar" />
+        <activity
+            android:name=".logisticsRecive.LogisticsMenuActivity"
+            android:label="@string/title_activity_logistics_menu"
             android:theme="@style/NoActionBar"></activity>
     </application>
 
