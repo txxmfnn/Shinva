@@ -84,7 +84,10 @@
         <activity
             android:name=".logisticsRecive.LogisticsMenuActivity"
             android:label="@string/title_activity_logistics_menu"
-            android:theme="@style/NoActionBar"></activity>
+            android:theme="@style/NoActionBar" />
+        <activity android:name=".logisticsRecive.CaptureMoreActivity" />
+        <activity android:name=".logisticsRecive.ShowScanLogisticsActivity" />
+        <activity android:name=".logisticsRecive.LogisticsGetActivity"></activity>
     </application>
 
 </manifest>

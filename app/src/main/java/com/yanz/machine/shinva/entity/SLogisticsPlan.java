@@ -35,7 +35,15 @@ public class SLogisticsPlan implements java.io.Serializable {
 	private String cactReciveDepartmentCode;
 	private String cactReciveDepartmentName;
 	private String cboxNo;
+	private boolean isCheck;
 
+	public boolean isCheck() {
+		return isCheck;
+	}
+
+	public void setCheck(boolean check) {
+		isCheck = check;
+	}
 	// Constructors
 
 	/** default constructor */

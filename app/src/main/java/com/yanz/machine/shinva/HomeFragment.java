@@ -30,6 +30,7 @@ import com.yanz.machine.shinva.Adapter.Adapter_GridView;
 import com.yanz.machine.shinva.Adapter.MyGridAdapter;
 import com.yanz.machine.shinva.MyView.MyGridView;
 import com.yanz.machine.shinva.entity.UpdateInfo;
+import com.yanz.machine.shinva.logisticsRecive.LogisticsGetActivity;
 import com.yanz.machine.shinva.logisticsRecive.LogisticsMenuActivity;
 import com.yanz.machine.shinva.orderinfo.OrderInfoSearchActivity;
 import com.yanz.machine.shinva.planSearch.InputPlanActivity;
@@ -228,11 +229,12 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getActivity(),"检验汇报功能暂未开放",Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        Toast.makeText(getActivity(),"物流周转功能功能暂未开放",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(),"物流周转功能暂未开放",Toast.LENGTH_SHORT).show();
                         break;
                     case 3:
                         //Toast.makeText(getActivity(),"周转接收功能功能暂未开放",Toast.LENGTH_SHORT).show();
-                        intent.setClass(getActivity(), LogisticsMenuActivity.class);
+//                        intent.setClass(getActivity(), LogisticsMenuActivity.class);
+                        intent.setClass(getActivity(), LogisticsGetActivity.class);
                         startActivity(intent);
                         break;
                     case 4:

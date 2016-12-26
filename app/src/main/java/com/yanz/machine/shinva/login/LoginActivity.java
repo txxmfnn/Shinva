@@ -143,7 +143,7 @@ public class LoginActivity extends Activity {
             checkBox.setChecked(stat);
         }
         //绑定取消事件
-        //bnCancel.setOnClickListener(new HomeListener(this));
+        bnCancel.setOnClickListener(new HomeListener(this));
 
         bnLogin.setOnClickListener(new ClickUtil() {
             @Override
@@ -296,6 +296,7 @@ public class LoginActivity extends Activity {
                     .create().show();
         }
     }*/
+
     //读取用户信息
     public String readUserInfo(){
         SharedPreferences sp = getSharedPreferences("USERINFO",0);

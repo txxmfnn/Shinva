@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.yanz.machine.shinva.R;
+import com.yanz.machine.shinva.db.DataBaseHelper;
 import com.yanz.machine.shinva.update.UpdateManager;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.io.IOException;
 
 public class FaceActivity extends Activity {
     private static final int GO_TO_LOGIN_ACTIVITY = 1;
-
+    DataBaseHelper dbHelper;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -38,6 +39,9 @@ public class FaceActivity extends Activity {
         setContentView(R.layout.face_activity);
 
         //getSupportActionBar().hide();//隐藏标题，继承自appActivity，所以用这种方式
+        //创建数据库DatabaseHelper对象,制定数据库版本为1,此处使用相对路径即可
+        dbHelper = new DataBaseHelper(this);
+
         //自动检查更新
         Toast.makeText(FaceActivity.this,"正在检查更新...",Toast.LENGTH_SHORT).show();
         new Thread(){
@@ -70,4 +74,11 @@ public class FaceActivity extends Activity {
         return false;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dbHelper!=null){
+            dbHelper.close();
+        }
+    }
 }
