@@ -3,6 +3,7 @@ package com.yanz.machine.shinva.util;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -52,6 +53,26 @@ public class StrUtil {
         } else {
             return !"".equals(str.trim());
         }
+    }
+    //List转String
+    public static String ListToString(List<?> list){
+        StringBuffer sb = new StringBuffer();
+        if (list!=null && list.size()>0){
+            for (int i=0;i<list.size();i++){
+                if (list.get(i)==null||list.get(i)==""){
+                    continue;
+                }
+                //如果值是list类型则调用自己
+                if (list.get(i) instanceof List) {
+                    sb.append(ListToString((List<?>) list.get(i)));
+                    sb.append("@");
+                }  else {
+                    sb.append(list.get(i));
+                    sb.append("@");
+                }
+            }
+        }
+        return "L"+sb.toString();
     }
 
 }

@@ -396,7 +396,15 @@ public class PlanTrackActivity extends Activity {
         params.put("partName",partNameText);
         params.put("startDate",startDateText);
         params.put("endDate",endDateText);
-        params.put("state",state);
+        if (state=="脱期"){
+            //脱期=1
+            params.put("state","1");
+        }else if (state=="未完工"){
+            //未完工=2
+            params.put("state","2");
+        }else {
+            params.put("state",state);
+        }
         params.put("maker",maker);
         params.put("department",department);
         params.put("techName",techName.getText().toString());

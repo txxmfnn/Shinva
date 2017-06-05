@@ -1,4 +1,4 @@
-package com.yanz.machine.shinva.Adapter;
+package com.yanz.machine.shinva.logisticsRecive;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yanz on 2016-11-01.
+ * Created by yanz on 2017-05-26.
  */
 
-public class LogisticsPlanAdapter extends BaseAdapter{
+public class LogisticsPlanForAdapter extends BaseAdapter {
     List<SLogisticsPlan> list = new ArrayList<SLogisticsPlan>();
     private static SparseBooleanArray isSelected;
     Context context;
@@ -34,13 +34,12 @@ public class LogisticsPlanAdapter extends BaseAdapter{
     public void setCheckedAllListener(CheckedAllListener listener){
         mListener = listener;
     }
-    public LogisticsPlanAdapter(List<SLogisticsPlan> list,Context context){
+    public LogisticsPlanForAdapter(List<SLogisticsPlan> list,Context context){
         this.context = context;
         this.list = list;
         isSelected = new SparseBooleanArray();
         initData();
     }
-
     /**
      * 初始化数据
      * 默认选中状态
@@ -50,15 +49,13 @@ public class LogisticsPlanAdapter extends BaseAdapter{
             getIsSelected().put(i,true);
         }
     }
-
     public static SparseBooleanArray getIsSelected() {
         return isSelected;
     }
 
     public static void setIsSelected(SparseBooleanArray isSelected) {
-        LogisticsPlanAdapter.isSelected = isSelected;
+        LogisticsPlanForAdapter.isSelected = isSelected;
     }
-
     @Override
     public int getCount() {
         return list.size();
@@ -76,15 +73,12 @@ public class LogisticsPlanAdapter extends BaseAdapter{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-
-
+        View view=convertView;
         if (view==null){
             holderView = new HolderView();
-            //得到资源文件
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.item_logistics_recive,parent,false);
-            holderView.cb_button = (CheckBox) view.findViewById(R.id.cb_logistics_recive_checkBox);
+            holderView.cb_button= (CheckBox) view.findViewById(R.id.cb_logistics_recive_checkBox);
             holderView.tv_code = (TextView) view.findViewById(R.id.tv_logistic_recive_list_plan_code);
             holderView.tv_name = (TextView) view.findViewById(R.id.tv_logistic_recive_list_part_name);
             holderView.tv_num = (TextView) view.findViewById(R.id.tv_logistic_recive_list_quantity);
@@ -151,7 +145,6 @@ public class LogisticsPlanAdapter extends BaseAdapter{
     }
     /**
      * 当所有checkbox全选时回调
-     *
      */
     public interface CheckedAllListener{
         void CheckAll(SparseBooleanArray checkall);

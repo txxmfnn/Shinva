@@ -24,7 +24,7 @@ public class LogisticsDaoImpl {
         SQLiteDatabase db = dbHelper.getWritableDatabase();//取得数据库操作
         db.execSQL("insert into s_logistics_plan(cplanCode,igxh,cpartName,cpartCode,fquantity,iautoId) values(?,?,?,?,?,?) ",
                 new Object[]{logisticsPlan.getCplanCode(),logisticsPlan.getIgxh(),logisticsPlan.getCpartName(),logisticsPlan.getCpartCode(),logisticsPlan.getFquantity(),logisticsPlan.getIautoId()});
-        Log.e("meng","保存的记录:"+logisticsPlan.getCplanCode()+"@@"+logisticsPlan.getCpartName());
+        Log.e("meng","保存的记录:"+logisticsPlan.getCplanCode()+"@@"+logisticsPlan.getCpartName()+"iautoId的值:"+logisticsPlan.getIautoId());
         db.close();
     }
     public List<SLogisticsPlan> findAll(){
@@ -40,6 +40,7 @@ public class LogisticsDaoImpl {
             logisticsPlan.setCpartName(cursor.getString(cursor.getColumnIndex("cpartName")));
             logisticsPlan.setCpartCode(cursor.getString(cursor.getColumnIndex("cpartCode")));
             logisticsPlan.setFquantity(cursor.getDouble(cursor.getColumnIndex("fquantity")));
+            logisticsPlan.setIautoId(cursor.getInt(cursor.getColumnIndex("iautoId")));
             list.add(logisticsPlan);
         }
         db.close();

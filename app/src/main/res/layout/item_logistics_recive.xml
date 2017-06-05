@@ -8,7 +8,6 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:text="x"
             android:textColor="@color/tv_Black"
             android:layout_marginRight="20dp"
             android:checked="true"
