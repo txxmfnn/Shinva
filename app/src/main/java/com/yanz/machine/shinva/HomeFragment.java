@@ -97,15 +97,7 @@ public class HomeFragment extends Fragment {
             "库存盘点"
     };
 
-    //存储首页轮播的界面
-    private ArrayList<View> allListView;
-    //首页轮播的界面的资源
-    private int[] resId = {
-            R.drawable.viewpage1,
-            R.drawable.viewpage4,
-            R.drawable.viewpage5,
-            R.drawable.viewpage7,
-            R.drawable.viewpage8};
+
 
     //定义view接收后，初始化init
 
@@ -177,12 +169,7 @@ public class HomeFragment extends Fragment {
         //第二个
         menuGridView = (MyGridView) view.findViewById(R.id.gv_menu);
         menuGridView.setAdapter(new MyGridAdapter(getActivity(),img_menu_classify,img_menu_text));
-        //公告展示栏
-        viewPage = (AbSlidingPlayView) view.findViewById(R.id.viewPager_menu);
-        //设置播放方式为顺序播放
-        viewPage.setPlayType(1);
-        //设置播放间隔时间
-        viewPage.setSleepTime(3000);
+
         menuGridViewSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -267,29 +254,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initViewPager(){
-        if (allListView!=null){
-            allListView.clear();
-            allListView = null;
-        }
-        allListView = new ArrayList<View>();
-        for (int i = 0;i<resId.length;i++){
-            //导入ViewPage布局
-            View view = LayoutInflater.from(getActivity()).inflate(R.layout.pic_item,null);
-            ImageView imageView = (ImageView)view.findViewById(R.id.pic_item);
-            imageView.setImageResource(resId[i]);
 
-            allListView.add(view);
-        }
-        viewPage.addViews(allListView);
-        //轮播效果
-        viewPage.startPlay();
-        viewPage.setOnItemClickListener(new AbOnItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                //跳转
-                Toast.makeText(getActivity(),"功能暂未开放",Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     //二维码扫描跳转到生产计划查询界面

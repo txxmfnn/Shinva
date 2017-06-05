@@ -6,7 +6,7 @@ android {
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
     defaultConfig {
-        applicationId "com.yanz.machine.shinva"
+        applicationId "com.yanz.machine.qingda"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 11

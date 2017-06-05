@@ -15,14 +15,6 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <com.yanz.machine.shinva.view.AbSlidingPlayView
-                android:id="@+id/viewPager_menu"
-                android:background="@color/bg_Black"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="120dp">
-
-            </com.yanz.machine.shinva.view.AbSlidingPlayView>
             <View
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
